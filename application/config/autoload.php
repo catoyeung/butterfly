@@ -65,6 +65,7 @@ $autoload['libraries'] = array();
 */
 
 $autoload['helper'] = array();
+$autoload['helper'] = array('url', 'asset');
 
 
 /*
@@ -81,7 +82,7 @@ $autoload['helper'] = array();
 */
 
 $autoload['config'] = array();
-
+$autoload['config'] = array('asset');
 
 /*
 | -------------------------------------------------------------------

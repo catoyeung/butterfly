@@ -1,13 +1,12 @@
 <?php  if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 /**
- * written by mohamed ali 303030.com 
  * CodeIgniter
  *
- * An open source application development framework for PHP 4.3.2 or newer
+ * An open source application development framework for PHP 5.1.6 or newer
  *
  * @package		CodeIgniter
  * @author		ExpressionEngine Dev Team
- * @copyright	Copyright (c) 2008 - 2009, EllisLab, Inc.
+ * @copyright	Copyright (c) 2008 - 2011, EllisLab, Inc.
  * @license		http://codeigniter.com/user_guide/license.html
  * @link		http://codeigniter.com
  * @since		Version 1.0
@@ -17,7 +16,7 @@
 // ------------------------------------------------------------------------
 
 /**
- * MS SQL Result Class
+ * SQLSRV Result Class
  *
  * This class extends the parent result class: CI_DB_result
  *
@@ -26,7 +25,7 @@
  * @link		http://codeigniter.com/user_guide/database/
  */
 class CI_DB_sqlsrv_result extends CI_DB_result {
-	
+
 	/**
 	 * Number of rows in the result set
 	 *
@@ -35,10 +34,9 @@ class CI_DB_sqlsrv_result extends CI_DB_result {
 	 */
 	function num_rows()
 	{
-		return 100;
 		return @sqlsrv_num_rows($this->result_id);
 	}
-	
+
 	// --------------------------------------------------------------------
 
 	/**
@@ -65,10 +63,9 @@ class CI_DB_sqlsrv_result extends CI_DB_result {
 	function list_fields()
 	{
 		$field_names = array();
-		$i=0;
-		while ($field = sqlsrv_get_field( $this->result_id,$i++))
+		foreach(sqlsrv_field_metadata($this->result_id) as $offset => $field)
 		{
-			$field_names[] = $field;
+			$field_names[] = $field['Name'];
 		}
 		
 		return $field_names;
@@ -87,12 +84,12 @@ class CI_DB_sqlsrv_result extends CI_DB_result {
 	function field_data()
 	{
 		$retval = array();
-		while ($field = sqlsrv_field_metadata($this->result_id))
-		{	
+		foreach(sqlsrv_field_metadata($this->result_id) as $offset => $field)
+		{
 			$F 				= new stdClass();
-			$F->name 		= $field['name'];
-			$F->type 		= $field['type'];
-			$F->max_length	= $field['max_length'];
+			$F->name 		= $field['Name'];
+			$F->type 		= $field['Type'];
+			$F->max_length	= $field['Size'];
 			$F->primary_key = 0;
 			$F->default		= '';
 			
@@ -108,7 +105,7 @@ class CI_DB_sqlsrv_result extends CI_DB_result {
 	 * Free the result
 	 *
 	 * @return	null
-	 */		
+	 */
 	function free_result()
 	{
 		if (is_resource($this->result_id))
@@ -132,9 +129,9 @@ class CI_DB_sqlsrv_result extends CI_DB_result {
 	 */
 	function _data_seek($n = 0)
 	{
-		return $this->result_id ;//sqlsrv_data_seek($this->result_id, $n);
+		// Not implemented
 	}
-	
+
 	// --------------------------------------------------------------------
 
 	/**
@@ -147,9 +144,9 @@ class CI_DB_sqlsrv_result extends CI_DB_result {
 	 */
 	function _fetch_assoc()
 	{
-		return sqlsrv_fetch_array($this->result_id ,SQLSRV_FETCH_ASSOC);
+		return sqlsrv_fetch_array($this->result_id, SQLSRV_FETCH_ASSOC);
 	}
-	
+
 	// --------------------------------------------------------------------
 
 	/**
@@ -168,5 +165,5 @@ class CI_DB_sqlsrv_result extends CI_DB_result {
 }
 
 
-/* End of file sqlsrv_result.php */
-/* Location: ./system/database/drivers/sqlsrv/sqlsrv_result.php */
+/* End of file mssql_result.php */
+/* Location: ./system/database/drivers/mssql/mssql_result.php */
