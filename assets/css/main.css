@@ -3,6 +3,10 @@ body {
     background-image: url(../img/body-bg.png);
 }
 
+strong {
+    font-weight: bold;
+}
+
 #wrapper {
     width: 100%;
 }
@@ -33,10 +37,10 @@ h1 {
 }
 
 #nav {
-    position: relative;
+    position: static;
     float: left;
-    left: -50%;
-    font: bold 12px Arial, Helvetica, Sans-serif;
+    margin-left: -50%;
+    font: bold 12px SimHei, Arial, Helvetica, Sans-serif;
     border: 1px solid #121314;
     overflow: hidden;
 }
@@ -72,10 +76,11 @@ h1 {
     background-image: -webkit-gradient( linear, left bottom, left top, color-stop(0.09, rgb(77,79,79)), color-stop(0.55, rgb(67,70,71)), color-stop(0.78, rgb(69,70,71)) );
     background-image: -moz-linear-gradient( center bottom, rgb(77,79,79) 9%, rgb(67,70,71) 55%, rgb(69,70,71) 78% );
     background-image: -o-linear-gradient( center bottom, rgb(77,79,79) 9%, rgb(67,70,71) 55%, rgb(69,70,71) 78% );
-    left: -999em;
-    margin: 35px 0 0;
     position: absolute;
+    left: -999em;
+    top: 31px;
     width: 160px;
+    text-align: left;
     z-index: 9999;
     box-shadow: 0 0 15px rgba(0, 0, 0, 0.4) inset; 
     -moz-box-shadow: 0 0 15px rgba(0, 0, 0, 0.4) inset; 
@@ -103,7 +108,6 @@ h1 {
     background: -moz-linear-gradient( center bottom, rgb(77,79,79) 9%, rgb(67,70,71) 55%, rgb(69,70,71) 78% );
     background: -o-linear-gradient( center bottom, rgb(77,79,79) 9%, rgb(67,70,71) 55%, rgb(69,70,71) 78% );
     text-shadow: 0 1px 0 rgba(255, 255, 255, 0.2), 0 -1px #000;
-
 }
 
 #nav li ul a:hover, 
@@ -118,15 +122,13 @@ h1 {
     text-shadow: 0 1px rgba(255, 255, 255, 0.3);
 }
 
-
-
 #nav li:hover ul {
     left: auto;
 }
 
 
 #nav li li ul {
-    margin: 0 0 0 160px;
+    margin: 0 0 0 500px;
     visibility:hidden;
 }
 
@@ -134,19 +136,11 @@ h1 {
     visibility:visible;
 }
 
-#nav ul ul li:last-child > a {
-    border-radius:0 0 10px 10px;
-}
-
-#nav ul ul ul li:first-child > a {
-    border-radius:0 10px 0 0;
-}
-
 h2 {
     width: 960px;
     text-align: left;
     margin: 80px auto 0 auto;
-    font: bold 30px Arial, Helvetica, Sans-serif;
+    font: bold 30px SimHei, Arial, Helvetica, Sans-serif;
     color: #fff;
     text-shadow: 1px 1px 1px rgba(0,0,0,0.1);
 }
@@ -154,7 +148,6 @@ h2 {
 #content {
     background: url(../img/content-bg.png);
     width: 100%;
-    height: 500px;
     text-align: center;
 }
 
@@ -162,6 +155,7 @@ h2 {
     width: 960px;
     margin: auto;
     padding-top: 50px;
+    padding-bottom: 50px;
 }
 
 #login-form-div {
@@ -284,4 +278,89 @@ h2 {
     border: 1px solid #3079ed;
     padding: 5px;
     margin: 15px auto 0 auto;
+}
+
+#notices-div {
+    text-align: left;
+}
+
+.notice {
+    width: 600px;
+}
+
+.notice .notice-title {
+    font: italic bold 24px Lobster, SimHei, Arial, Helvetica, Sans-serif;
+    color: #111;
+    padding-bottom: 8px;
+}
+
+.notice .meta-info {
+    font: 14px Lobster, SimHei, Arial, Helvetica, Sans-serif;
+    color: #585858;
+    margin-bottom: 20px;
+}
+
+.notice .notice-content {
+    font: 15px Arial,SimHei,Helvetica, Sans-serif;
+    color: #111;
+    line-height: 16px;
+}
+
+.notice-content p {
+    line-height: 125%;
+    margin-bottom: 10px;
+}
+
+#notices-div .horizontal-hr {
+    margin-top: 30px;
+    margin-bottom: 50px;
+    height: 0;
+    border-top: 1px solid #dbdbdb;
+    border-bottom: 1px solid #fff;
+    width: 600px;
+}
+
+#footer {
+    background: url('../img/footer-topbg.png') repeat-x;
+    padding-top: 60px;
+    padding-bottom: 60px;
+}
+
+#footer-list {
+    width: 960px;
+    margin: auto;
+    padding: 0;
+}
+
+#footer-list li {
+    width: 30%;
+}
+
+#footer-list li p.title {
+    font: bold 24px Lobster, SimHei, Arial, Helvetica, Sans-serif;
+    color: #ffffff;
+    text-shadow: 1px 1px 1px rgba(0,0,0,0.6);
+    margin-bottom: 20px;
+}
+
+#footer-list li p.description {
+    font: 15px Lobster, SimHei, Arial, Helvetica, Sans-serif;
+    color: #ffffff;
+    text-shadow: 1px 1px 1px rgba(0,0,0,0.6);
+}
+
+#footer .horizontal-hr {
+    border-top: 1px solid #7ebac3;
+    border-bottom: 1px solid #a8d7df;
+    width: 960px;
+    margin: 30px auto 20px auto;
+}
+
+#footer-remark {
+    width: 960px;
+    margin: auto;
+    font: 16px Lobster, SimHei, Arial, Helvetica, Sans-serif;
+    color: #ffffff;
+    text-shadow: 1px 1px 1px rgba(0,0,0,0.6);
+    text-align: right;
 }

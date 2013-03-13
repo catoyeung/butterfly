@@ -23,10 +23,13 @@ class Pages extends CI_Controller {
             // Whoops, we don't have a page for that!
             show_404();
         }
-        $data['title'] = 'Home'; // Capitalize the first letter
+         // Capitalize the first letter
         if ($_SERVER['REQUEST_METHOD'] === 'GET') {
             // access home page, not log in
             $data['flash'] = $this->session->flashdata('flash');
+            if (!$this->session->userdata('logged_in_user')) {
+                $data['title'] = '登入';
+            }
         } elseif ($_SERVER['REQUEST_METHOD'] === 'POST') {
             // log in portal
             $username = $this->input->post('username');

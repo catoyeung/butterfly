@@ -51,7 +51,12 @@
                 <div id="nav"> 
                     <ul>
                     <li><a href="<?php echo base_url(); ?>#">我的工作(2)</a></li> 
-                    <li><a href="<?php echo base_url(); ?>notice">通告(1)</a></li>
+                    <li><a href="<?php echo base_url(); ?>notice">通告(1)</a>
+                        <ul>
+                            <li><a href="<?php echo base_url(); ?>notice/create">張貼通告</a></li> 
+                            <li><a href="">所有通告</a></li>
+                        </ul> 
+                    </li>
                     <li><a href="<?php echo base_url(); ?>#">我的顧客(3)</a></li> 
                     <!--<li><a href="#">Three Levels</a> 
                             <ul> 
@@ -78,5 +83,9 @@
                 </div>
                 <?php } ?>
             </div>
-            <h2>通告</h2>
+            <?php 
+            if (isset($title)) {
+                echo '<h2>'.$title.'</h2>';
+            }
+            ?>
         </div>
