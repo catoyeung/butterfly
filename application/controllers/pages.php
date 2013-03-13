@@ -8,17 +8,13 @@ class Pages extends CI_Controller {
         $this->load->model('Users');
     }
     
-	/*public function view($page = 'home')
-	{
-        if ( ! file_exists('application/views/pages/'.$page.'.php'))
+    public function _remap($method, $params = array()) {
+        if (method_exists($this, $method))
         {
-            // Whoops, we don't have a page for that!
-            show_404();
+            return call_user_func_array(array($this, $method), $params);
         }
-
-        $data['title'] = ucfirst($page); // Capitalize the first letter
-        $this->load->view('pages/'.$page, $data);
-	}*/
+        show_404();
+    }
     
     public function index()
     {
@@ -31,13 +27,13 @@ class Pages extends CI_Controller {
         if ($_SERVER['REQUEST_METHOD'] === 'GET') {
             // access home page, not log in
             $data['flash'] = $this->session->flashdata('flash');
-            print_r($this->Users->load_by_id(1));
         } elseif ($_SERVER['REQUEST_METHOD'] === 'POST') {
             // log in portal
             $username = $this->input->post('username');
             $password = $this->input->post('password');
-            if ($username == 'admin' and $password == 'admin') {
-                $this->session->set_flashdata('flash', array('info'=>array($username.',你剛成功登入')));
+            if ($this->Users->validate($username, $password)) {
+                $logged_in_user = $this->session->userdata('logged_in_user');
+                $this->session->set_flashdata('flash', array('info'=>array($logged_in_user['display_name'].',你剛成功登入')));
                 redirect('');
             }
         }

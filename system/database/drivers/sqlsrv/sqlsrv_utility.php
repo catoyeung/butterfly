@@ -1,13 +1,12 @@
 <?php  if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 /**
- * written by mohamed ali 303030.com 
  * CodeIgniter
  *
- * An open source application development framework for PHP 4.3.2 or newer
+ * An open source application development framework for PHP 5.1.6 or newer
  *
  * @package		CodeIgniter
  * @author		ExpressionEngine Dev Team
- * @copyright	Copyright (c) 2008 - 2009, EllisLab, Inc.
+ * @copyright	Copyright (c) 2008 - 2011, EllisLab, Inc.
  * @license		http://codeigniter.com/user_guide/license.html
  * @link		http://codeigniter.com
  * @since		Version 1.0
@@ -17,7 +16,7 @@
 // ------------------------------------------------------------------------
 
 /**
- * MS SQL Utility Class
+ * SQLSRV Utility Class
  *
  * @category	Database
  * @author		ExpressionEngine Dev Team
@@ -53,7 +52,7 @@ class CI_DB_sqlsrv_utility extends CI_DB_utility {
 	}
 
 	// --------------------------------------------------------------------
-	
+
 	/**
 	 * Repair table query
 	 *
@@ -71,7 +70,7 @@ class CI_DB_sqlsrv_utility extends CI_DB_utility {
 	// --------------------------------------------------------------------
 
 	/**
-	 * sqlsrv Export
+	 * MSSQL Export
 	 *
 	 * @access	private
 	 * @param	array	Preferences
@@ -83,42 +82,7 @@ class CI_DB_sqlsrv_utility extends CI_DB_utility {
 		return $this->db->display_error('db_unsuported_feature');
 	}
 
-	/**
-	 *
-	 * The functions below have been deprecated as of 1.6, and are only here for backwards
-	 * compatibility.  They now reside in dbforge().  The use of dbutils for database manipulation
-	 * is STRONGLY discouraged in favour if using dbforge.
-	 *
-	 */
-
-	/**
-	 * Create database
-	 *
-	 * @access	private
-	 * @param	string	the database name
-	 * @return	bool
-	 */
-	function _create_database($name)
-	{
-		return "CREATE DATABASE ".$name;
-	}
-
-	// --------------------------------------------------------------------
-
-	/**
-	 * Drop database
-	 *
-	 * @access	private
-	 * @param	string	the database name
-	 * @return	bool
-	 */
-	function _drop_database($name)
-	{
-		return "DROP DATABASE ".$name;
-	}
-
 }
 
-
-/* End of file sqlsrv_utility.php */
-/* Location: ./system/database/drivers/sqlsrv/sqlsrv_utility.php */
+/* End of file mssql_utility.php */
+/* Location: ./system/database/drivers/mssql/mssql_utility.php */

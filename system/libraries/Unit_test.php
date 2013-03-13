@@ -34,6 +34,9 @@ class CI_Unit_test {
 	var $_template				= NULL;
 	var $_template_rows			= NULL;
 	var $_test_items_visible	= array();
+    
+    var $no_of_failed = 0;
+    var $no_of_passed = 0;
 
 	public function __construct()
 	{
@@ -146,6 +149,11 @@ class CI_Unit_test {
 		$this->_parse_template();
 
 		$r = '';
+        $r .= '<div style="color: red">'.$this->no_of_failed.' failed</div>';
+        $r .= '<div style="color: green">'.$this->no_of_passed.' passed</div>';
+        
+        $failed_test_name_list = array();
+        
 		foreach ($result as $res)
 		{
 			$table = '';
@@ -157,10 +165,14 @@ class CI_Unit_test {
 					if ($val == $CI->lang->line('ut_passed'))
 					{
 						$val = '<span style="color: #0C0;">'.$val.'</span>';
+                        $this->no_of_passed++;
+                        $failed_test_name_list[] = $res['Test Name'];
 					}
 					elseif ($val == $CI->lang->line('ut_failed'))
 					{
 						$val = '<span style="color: #C00;">'.$val.'</span>';
+                        $this->no_of_failed++;
+                        $failed_test_name_list[] = $res['Test Name'];
 					}
 				}
 
@@ -172,7 +184,16 @@ class CI_Unit_test {
 
 			$r .= str_replace('{rows}', $table, $this->_template);
 		}
-
+        $failed_test_text = '';
+        if (count($failed_test_name_list)>0) {
+            $failed_test_text .= '<p style="color: red">Failed tests</p>';
+        }
+        $failed_test_text .= '<ul>';
+        foreach ($failed_test_name_list as $failed_test_name) {
+            $failed_test_text .= '<li>'.$failed_test_name.'</li>';
+        }
+        $failed_test_text .= '</ul>';
+        $r = $failed_test_text.$r;
 		return $r;
 	}
 

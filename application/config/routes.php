@@ -39,8 +39,15 @@
 */
 
 $route['default_controller'] = 'pages/index';
-$route['migrate/(:num)'] = 'migrate/index/$1';
+
+// static pages
+$route['notice'] = 'notice/index';
+
+$route['test'] = 'test/index';
+$route['test/:any'] = 'test/$1';
+
 $route['(:any)'] = 'pages/$1';
+
 $route['404_override'] = '';
 
 

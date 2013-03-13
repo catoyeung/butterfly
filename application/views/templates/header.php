@@ -9,21 +9,34 @@
 <html>
 <body>
     <?php
-    if ($_SERVER['REQUEST_METHOD'] === 'GET' && is_array($flash)) {
+    if (isset($flash) && is_array($flash)) {
     ?>
     <div id="flash-overlay"></div>
     <div id="flash-message">
         <div class="container">
-            <ul class="message-list info">
-                <li>你剛成功登入</li>
-            </ul>
-            <ul class="message-list warning">
-                <li>你今天有１個客人需要聯絡</li>
-            </ul>
-            <ul class="message-list alert">
-                <li>你剛成功登入</li>
-                <li>你今天有１個客人需要回覆</li>
-            </ul>
+            <?php
+            if (isset($flash['alert']) && is_array($flash['alert'])) {
+                echo '<ul class="message-list alert">';
+                foreach($flash['alert'] as $a) {
+                    echo '<li>'.$a.'</li>';
+                }
+                echo '</ul>';
+            }
+            if (isset($flash['warning']) && is_array($flash['warning'])) {
+                echo '<ul class="message-list warning">';
+                foreach($flash['warning'] as $w) {
+                    echo '<li>'.$w.'</li>';
+                }
+                echo '</ul>';
+            }
+            if (isset($flash['info']) && is_array($flash['info'])) {
+                echo '<ul class="message-list info">';
+                foreach($flash['info'] as $i) {
+                    echo '<li>'.$i.'</li>';
+                }
+                echo '</ul>';
+            }
+            ?>
             <button class="already-read-btn">我已看過所有提示，謝謝。</button>
         </div>
     </div>
@@ -32,5 +45,38 @@
     ?>
     <div id="wrapper">
         <div id="header">
-            <h1>Home</h1>
+            <h1>Butterfly Portal</h1>
+            <div id="nav-container">
+                <?php if ($this->session->userdata('logged_in_user')) { ?>
+                <div id="nav"> 
+                    <ul>
+                    <li><a href="<?php echo base_url(); ?>#">我的工作(2)</a></li> 
+                    <li><a href="<?php echo base_url(); ?>notice">通告(1)</a></li>
+                    <li><a href="<?php echo base_url(); ?>#">我的顧客(3)</a></li> 
+                    <!--<li><a href="#">Three Levels</a> 
+                            <ul> 
+                            <li><a href="#">Level 2.1</a></li> 
+                            <li><a href="#">Level 2.2</a></li> 
+                            <li><a href="#">Level 2.3</a> 
+                                    <ul> 
+                                    <li><a href="#">Level 2.3.1</a></li> 
+                                    <li><a href="#">Level 2.3.2</a></li> 
+                                    <li><a href="#">Level 2.3.3</a></li> 
+                                    <li><a href="#">Level 2.3.4</a></li> 
+                                    <li><a href="#">Level 2.3.5</a></li> 
+                                    <li><a href="#">Level 2.3.6</a></li> 
+                                    <li><a href="#">Level 2.3.7</a></li> 
+                                    </ul> 
+                            </li> 
+                            <li><a href="#">Level 2.4</a></li> 
+                            <li><a href="#">Level 2.5</a></li> 
+                            </ul> 
+                    </li> 
+                    <li><a href="#">Services</a></li> 
+                    <li><a href="#">Contact Us</a></li> -->
+                    </ul> 
+                </div>
+                <?php } ?>
+            </div>
+            <h2>通告</h2>
         </div>
