@@ -42,9 +42,10 @@ $route['default_controller'] = 'pages/index';
 
 // static pages
 $route['notice'] = 'notice/index';
+$route['notice/(:any)'] = 'notice/$1';
 
 $route['test'] = 'test/index';
-$route['test/:any'] = 'test/$1';
+$route['test/(:any)'] = 'test/$1';
 
 $route['(:any)'] = 'pages/$1';
 

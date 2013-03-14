@@ -114,12 +114,17 @@ h1 {
 #nav ul li li:hover > a  {
     color: #2c2c2c;
     background: #5C9ACD;
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#3D6FB1', endColorstr='#5C9ACD'); /* for IE */
     background: -webkit-gradient( linear, left bottom, left top, color-stop(0.17, rgb(61,111,177)), color-stop(0.51, rgb(80,136,199)), color-stop(1, rgb(92,154,205)) );
     background: -moz-linear-gradient( center bottom, rgb(61,111,177) 17%, rgb(80,136,199) 51%, rgb(92,154,205) 100% );
     background: -o-linear-gradient( center bottom, rgb(61,111,177) 17%, rgb(80,136,199) 51%, rgb(92,154,205) 100% );
     border-bottom: 1px solid rgba(0,0,0,0.6);
     border-top: 1px solid #7BAED9;
     text-shadow: 0 1px rgba(255, 255, 255, 0.3);
+}
+
+#nav ul li li:hover > a:first-child {
+    border-top: none;
 }
 
 #nav li:hover ul {
