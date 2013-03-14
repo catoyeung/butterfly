@@ -14,7 +14,17 @@ INSERT INTO Users (username, password, display_name, post, belongs_to, deleted, 
 values
 ('admin','admin','Cato Yeung','Programmer','admin',0,0)
 
-insert into tableA (field1,field2,field3) 
+CREATE TABLE Notice
+(notice_id int NOT NULL IDENTITY(1,1),
+title varchar(100) NOT NULL,
+content text NOT NULL,
+created_at datetime NOT NULL,
+updated_at datetime,
+PRIMARY KEY (notice_id))
+
+TRUNCATE TABLE Notice;
+
+insert into Notice (title,content,created_at) 
 values
 ('xxxa','xxxxb','xxxxc'),
 ('xxxa','xxxxb','xxxxc'),

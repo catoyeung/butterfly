@@ -325,6 +325,44 @@ h2 {
     width: 600px;
 }
 
+#notice-create-div {
+    text-align: left;
+    width: 600px;
+}
+
+#notice-create-div form > div {
+    text-align: left;
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+#notice-create-div div .title{
+    width: 100%;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+#notice-create-div div.author{
+    width: 100%;
+    box-sizing: border-box;
+    font: 16px Lobster, SimHei, Arial, Helvetica, Sans-serif;
+}
+
+#notice-create-div div .content{
+    width: 600px;
+    height: 400px;
+    margin: 0;
+    box-sizing: border-box;
+    font: 15px "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-weight: 300;
+    line-height: 1.625;
+}
+
+.input-prompt {
+    font-style: italic;
+    color: #aaa;
+}
+
 #footer {
     background: url('../img/footer-topbg.png') repeat-x;
     padding-top: 60px;

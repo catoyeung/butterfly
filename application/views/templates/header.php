@@ -6,10 +6,12 @@
     <link href="<?php echo css_url()?>main.css" rel="stylesheet" type="text/css">
     <link href='http://fonts.googleapis.com/css?family=Droid+Sans|Lobster' rel='stylesheet' type='text/css'>
 </head>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 <html>
 <body>
     <?php
-    if (isset($flash) && is_array($flash)) {
+    $flash = $this->session->flashdata('flash');
+    if (!empty($flash)) {
     ?>
     <div id="flash-overlay"></div>
     <div id="flash-message">

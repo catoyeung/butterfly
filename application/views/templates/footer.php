@@ -10,7 +10,7 @@
             <div id="footer-remark">此網站由Cato Yeung設計及管理</div>
         </div>
     </div>
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    
     <script>
     $(document).ready(function() {
         $("#flash-message .already-read-btn").click(function() {
