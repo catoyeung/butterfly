@@ -1,9 +1,15 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-class Notice extends CI_Controller {
+class Notice extends MY_Controller {
+    
+    public function __construct() {
+        parent::__construct();
+        $this->load->model('Notice_model');
+    }
     
 	public function index(){
         $data['title'] = '通告';
+        $data['notices'] = $this->Notice_model->get_all();
         $this->load->view('templates/header', $data);
         $this->load->view('notice/index', $data);
         $this->load->view('templates/footer', $data);
@@ -20,9 +26,10 @@ class Notice extends CI_Controller {
             // user post notice
             $notice_title = $this->input->post('notice_title');
             $notice_content = $this->input->post('notice_content');
-            $this->load->model('Notice_model');
+            $logged_in_user = $this->session->userdata('logged_in_user');
             $result = $this->Notice_model->create(array('title'=>$notice_title,
                                               'content'=>$notice_content,
+                                              'created_by_user'=>$logged_in_user['user_id'],
                                               'created_at'=>microtime_to_mssql_time(microtime())
                                         ));
             if($result) {

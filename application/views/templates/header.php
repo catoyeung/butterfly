@@ -47,6 +47,18 @@
     ?>
     <div id="wrapper">
         <div id="header">
+            <div id="account-div">
+                <ul>
+                    <?php 
+                    $logged_in_user = $this->session->userdata('logged_in_user');
+                    if (!empty($logged_in_user)) {
+                        echo '<li>您好! '.$logged_in_user['display_name'].'</li>';
+                        echo '<li><a href="'.base_url().'logout">登出</a></li>';
+                        echo '<li>帳戶設定</li>';
+                    } 
+                    ?>
+                </ul>
+            </div>
             <h1>Butterfly Portal</h1>
             <div id="nav-container">
                 <?php if ($this->session->userdata('logged_in_user')) { ?>
@@ -56,7 +68,7 @@
                     <li><a href="<?php echo base_url(); ?>notice">通告(1)</a>
                         <ul>
                             <li><a href="<?php echo base_url(); ?>notice/create">張貼通告</a></li> 
-                            <li><a href="">所有通告</a></li>
+                            <li><a href="<?php echo base_url(); ?>notice">所有通告</a></li>
                         </ul> 
                     </li>
                     <li><a href="<?php echo base_url(); ?>#">我的顧客(3)</a></li> 

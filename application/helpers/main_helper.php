@@ -12,7 +12,12 @@ function microtime_to_mssql_time($mt) {
 function add_flash_message($type='info', $message='default message') {
     $ci =& get_instance();
     $flash = $ci->session->flashdata('flash');
-    array_push($flash['type'], $message);
+    if (isset($flash['info'])) {
+        array_push($flash[$type], $message);
+    } else {
+        $flash[$type] = array($message);
+    }
+    
     $ci->session->set_flashdata('flash', $flash);
 }
 

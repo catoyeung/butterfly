@@ -1,5 +1,5 @@
 <?php
-class Users extends CI_Model {
+class Users_model extends CI_Model {
 
     protected $user_id;
     protected $username;
@@ -30,7 +30,8 @@ class Users extends CI_Model {
         $result = $query->result();
         if (count($result) >= 1) {
             $this->load->library('session');
-            $logged_in_user = array('username'=> $result[0]->username,
+            $logged_in_user = array('user_id' => $result[0]->user_id,
+                                    'username'=> $result[0]->username,
                                     'display_name'=> $result[0]->display_name,
                                     'post'=> $result[0]->post,
                                     'belongs_to'=>$result[0]->belongs_to);
