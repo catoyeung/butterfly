@@ -17,11 +17,11 @@ class Customerservice extends MY_Controller {
         $this->load->view('templates/footer', $data);
     }
     
-    public function clients() {
+    public function client() {
         $data = array();
         $data['title'] = '所有客戶查詢';
         $this->load->view('templates/header', $data);
-        $this->load->view('customerservice/clients', $data);
+        $this->load->view('customerservice/client', $data);
         $this->load->view('templates/footer', $data);
     }
 }

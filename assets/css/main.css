@@ -8,6 +8,8 @@ strong {
     font-weight: bold;
 }
 
+#ui-datepicker-div { font-size: 12px; }
+
 #wrapper {
     width: 100%;
 }
@@ -439,6 +441,46 @@ h2 {
 .input-prompt {
     font-style: italic;
     color: #aaa;
+}
+
+#clients-filter {
+    width: 960px;
+    color: #414141;
+    text-shadow: 1px 1px 1px #ffffff;
+}
+
+#clients-filter table {
+    width: 960px;
+    background: #efefef;
+    text-align: left;
+}
+
+#clients-filter .filter-title {
+    background: #e3e3e3;
+    text-align: center;
+    padding: 5px 0;
+}
+
+#clients-filter th {
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-right: 10px;
+    text-align: right;
+    border: 1px solid #e3e3e3;
+}
+
+#clients-filter .ui-datepicker {
+    font-size:11px;
+}
+
+#clients-filter td {
+    border: 1px solid #e3e3e3;
+    vertical-align: middle;
+}
+
+#clients-div {
+    width: 960px;
+    text-align: left;
 }
 
 #footer {
