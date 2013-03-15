@@ -44,6 +44,8 @@ $route['default_controller'] = 'pages/index';
 $route['notice'] = 'notice/index';
 $route['notice/(:any)'] = 'notice/$1';
 
+$route['customerservice/(:any)'] = 'customerservice/$1';
+
 $route['test'] = 'test/index';
 $route['test/(:any)'] = 'test/$1';
 

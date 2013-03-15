@@ -2,9 +2,8 @@
     <div class="container">
         <div id="notice-create-div">
             <form action="<?php echo base_url(); ?>notice/create" method="post">
-                <div><input class="title" type="text" title="請輸入通告標題..." name="notice_title"/></div>
-                <div class="author">作者: Cecilia</div>
-                <div><textarea class="content" title="請輸入通告內容..." name="notice_content">請輸入通告內容...</textarea></div>
+                <div><input class="title" type="text" placeholder="請輸入通告標題..." name="notice_title"/></div>
+                <div><textarea class="content" name="notice_content"></textarea></div>
                 <div><input id="post-notice-btn" type="submit" value="張貼"/></div>
                 <!-- We use nic javascript editor here -->
                 <script type="text/javascript" src="http://js.nicedit.com/nicEdit-latest.js"></script>
@@ -13,6 +12,7 @@
                     bkLib.onDomLoaded(function() { nicEditors.allTextAreas() });
                 //]]>
                 </script>
+                <!--
                 <script>
                     $('input[type=text][title]').each(function (i) {
                         $(this).addClass('input-prompt');
@@ -34,6 +34,7 @@
                         });
                     });
                 </script>
+                -->
             </form>
         </div>
     </div>

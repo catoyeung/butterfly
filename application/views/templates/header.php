@@ -1,10 +1,17 @@
 <!DOCTYPE HTML>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <title>Home</title>
+    <title><?php 
+            if (isset($title)) {
+                echo 'Butterfly Portal - '.$title;
+            } else {
+                echo 'Butterfly Portal';
+            }
+            ?></title>
     <link href="<?php echo css_url()?>reset.css" rel="stylesheet" type="text/css">
     <link href="<?php echo css_url()?>main.css" rel="stylesheet" type="text/css">
     <link href='http://fonts.googleapis.com/css?family=Droid+Sans|Lobster' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="<?php echo css_url()?>chosen/chosen.css" />
 </head>
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 <html>
@@ -67,11 +74,30 @@
                     <li><a href="<?php echo base_url(); ?>#">我的工作(2)</a></li> 
                     <li><a href="<?php echo base_url(); ?>notice">通告(1)</a>
                         <ul>
-                            <li><a href="<?php echo base_url(); ?>notice/create">張貼通告</a></li> 
                             <li><a href="<?php echo base_url(); ?>notice">所有通告</a></li>
-                        </ul> 
+                            <li><a href="<?php echo base_url(); ?>notice/create">張貼通告</a></li>
+                        </ul>
                     </li>
-                    <li><a href="<?php echo base_url(); ?>#">我的顧客(3)</a></li> 
+                    <li><a href="<?php echo base_url(); ?>customerservice/myclients">客戶服務</a>
+                        <ul>
+                            <li><a href="<?php echo base_url(); ?>customerservice/clients">所有客戶查詢</a></li>
+                            <li><a href="<?php echo base_url(); ?>customerservice/phonein">客戶來電查詢</a></li>
+                            <li><a href="<?php echo base_url(); ?>customerservice/webenquiry">客戶網頁查詢</a></li>
+                            <li><a href="<?php echo base_url(); ?>customerservice/manualenquiry">人手輸入查詢</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="<?php echo base_url(); ?>sales/myclients">電話傳銷</a>
+                        <ul>
+                            <li><a href="<?php echo base_url(); ?>sales/clients">所有客戶</a></li>
+                            <li><a href="<?php echo base_url(); ?>sales/newbooking">成功預約客戶</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="<?php echo base_url(); ?>reception">接待</a>
+                        <ul>
+                            <li><a href="<?php echo base_url(); ?>reception">客戶上門查詢</a></li>
+                            <li><a href="<?php echo base_url(); ?>reception/showup">客戶出席預約</a></li>
+                        </ul>
+                    </li> 
                     <!--<li><a href="#">Three Levels</a> 
                             <ul> 
                             <li><a href="#">Level 2.1</a></li> 

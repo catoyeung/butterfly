@@ -367,19 +367,19 @@ h2 {
     margin-bottom: 20px;
 }
 
-#notice-create-div div .title{
+#notice-create-div div .title {
     width: 100%;
     margin: 0;
     box-sizing: border-box;
 }
 
-#notice-create-div div.author{
+/*#notice-create-div div.author{
     width: 100%;
     box-sizing: border-box;
     font: 16px Lobster, SimHei, Arial, Helvetica, Sans-serif;
-}
+}*/
 
-#notice-create-div div .content{
+#notice-create-div div .content {
     width: 600px;
     height: 400px;
     margin: 0;
@@ -387,6 +387,53 @@ h2 {
     font: 15px "Helvetica Neue", Helvetica, Arial, sans-serif;
     font-weight: 300;
     line-height: 1.625;
+}
+
+#manualenquiry-form-div {
+    width: 600px;
+    font-family: 'Droid Sans', SimHei, Arial, sans-serif;
+    color: #414141;
+    text-shadow: 1px 1px 1px #ffffff;
+    font-size: 15px;
+}
+
+#manualenquiry-form {
+    width: 600px;
+}
+
+#manualenquiry-form table {
+    border: 1px solid #cccccc;
+    box-sizing: border-box;
+    width: 600px;
+    background: #efefef;
+}
+
+#manualenquiry-form th {
+    width: 150px;
+    text-align: right;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    vertical-align: middle;
+}
+
+#manualenquiry-form td {
+    width: 450px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    vertical-align: middle;
+    text-align: left;
+}
+
+#manualenquiry-form td.section {
+    text-align: center;
+}
+
+#manualenquiry-form input[type="text"] {
+    width: 150px;
+}
+
+#manualenquiry-form td.section {
+    background: #e3e3e3;
 }
 
 .input-prompt {
