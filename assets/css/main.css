@@ -8,7 +8,53 @@ strong {
     font-weight: bold;
 }
 
+a {
+    color: inherit;
+}
+
 #ui-datepicker-div { font-size: 12px; }
+
+#ui-timepicker-div { font-size: 12px; }
+
+.outer {
+    display: table; 
+    position: static;
+    margin: auto;
+}
+
+.middle {
+    display: table-cell; 
+    vertical-align: middle; 
+    position: static;
+}
+
+.blue-btn {
+    background: #4d90fe; 
+    color: #fff; 
+    border: 1px solid #3079ed; 
+    padding: 5px; 
+    margin: 10px 1px;
+}
+
+.blue-btn:active {
+    position: relative;
+    top: 1px;
+    left: 1px;
+}
+
+.grey-btn {
+    background: #f1f1f1; 
+    color: #444; 
+    border: 1px solid rgba(0,0,0,0.1); 
+    padding: 5px; 
+    margin: 10px 1px;
+}
+
+.grey-btn:active {
+    position: relative;
+    top: 1px;
+    left: 1px;
+}
 
 #wrapper {
     width: 100%;
@@ -263,14 +309,27 @@ h2 {
     border: 1px solid #909090;
     opacity: 1.0;
     margin: auto;
-    width: 660px;
-    height: 450px;
-    margin-left: -330px;
-    margin-top: -225px;
+    width: 400px;
+    height: 350px;
+    margin-left: -200px;
+    margin-top: -175px;
     text-align: center;
 }
 
+#flash-message .title {
+    width: 100%;
+    color: #3a87ad;
+    text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5);
+    background-color: #d9edf7;
+    border: 1px solid #bce8f1;
+    text-align: center;
+    box-sizing: border-box;
+    padding: 10px;
+    margin-bottom: 20px;
+}
+
 #flash-message .message-list {
+    margin: 0 20px;
     padding: 8px 35px 3px 14px;
     text-align: left;
 }
@@ -443,25 +502,25 @@ h2 {
     color: #aaa;
 }
 
-#clients-filter {
+#customers-filter {
     width: 960px;
     color: #414141;
     text-shadow: 1px 1px 1px #ffffff;
 }
 
-#clients-filter table {
+#customers-filter table {
     width: 960px;
     background: #efefef;
     text-align: left;
 }
 
-#clients-filter .filter-title {
+#customers-filter .filter-title {
     background: #e3e3e3;
     text-align: center;
     padding: 5px 0;
 }
 
-#clients-filter th {
+#customers-filter th {
     padding-top: 10px;
     padding-bottom: 10px;
     padding-right: 10px;
@@ -469,18 +528,137 @@ h2 {
     border: 1px solid #e3e3e3;
 }
 
-#clients-filter .ui-datepicker {
+#customers-filter .ui-datepicker {
     font-size:11px;
 }
 
-#clients-filter td {
+#customers-filter td {
     border: 1px solid #e3e3e3;
     vertical-align: middle;
 }
 
-#clients-div {
+#customers-sorting {
+    width: 960px;
+    color: #414141;
+    text-shadow: 1px 1px 1px #ffffff;
+}
+
+#customers-sorting table {
+    width: 960px;
+    background: #efefef;
+    text-align: left;
+}
+
+#customers-sorting .sorting-title {
+    background: #e3e3e3;
+    text-align: center;
+    padding: 5px 0;
+}
+
+#customers-sorting td {
+    border: 1px solid #e3e3e3;
+    vertical-align: middle;
+    padding: 10px 0;
+}
+
+.applied-filter {
+    background: #e3e3e3;
+    text-align: center;
+    padding: 5px 0;
+    width: 960px;
+    color: #414141;
+    text-shadow: 1px 1px 1px #ffffff;
+}
+
+#customers-div {
     width: 960px;
     text-align: left;
+    margin-top: 50px;
+}
+
+.customer {
+    border: 1px solid #333;
+    margin-bottom: 50px;
+}
+
+.customer-info-table {
+    width: 100%;
+    background: #efefef;
+    color: #414141;
+    text-shadow: 1px 1px 1px #ffffff;
+}
+
+.customer-info-table td {
+    padding: 8px 0;
+    border: 1px solid #e3e3e3;
+    vertical-align: middle;
+    width: 240px;
+}
+
+.customer .stage {
+    background: #efefef;
+    color: #414141;
+    text-shadow: 1px 1px 1px #ffffff;
+}
+
+.customer .stage .stage-description {
+    background: #333;
+    text-align: center;
+    padding: 5px 0;
+    width: 100%;
+    color: #fff;
+    text-shadow: 1px 1px 1px #414141;
+}
+
+.customer .stage .stage-journal td{
+    padding: 10px 0;
+    border: 1px solid #e3e3e3;
+}
+
+.customer .action {
+    padding: 10px 10px;
+    background: #efefef;
+}
+
+.customer .action button {
+    background: #4d90fe;
+    color: #fff;
+    border: 1px solid #3079ed;
+    padding: 5px;
+    margin: 0;
+}
+
+.customer .action button:active {
+    position: relative;
+    top: 1px;
+    left: 1px;
+}
+
+#popup-action {
+    position: fixed;
+    top:0px;
+    bottom:0px;
+    left:0px;
+    right:0px;
+    z-index: 1002;
+    overflow: hidden;
+}
+
+#popup-action .outer {
+    height: 100%;
+}
+
+#popup-action .inner {
+    background-color:#fff;
+    border: 1px solid #909090;
+    text-align: left;
+    padding: 20px;
+    color: #414141;
+    text-shadow: 1px 1px 1px #ffffff;
+}
+
+#popup-action table td {
+    padding: 0 10px 10px 0;
 }
 
 #footer {

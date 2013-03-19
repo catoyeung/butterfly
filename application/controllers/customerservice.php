@@ -1,5 +1,5 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
-
+/*
 class Customerservice extends MY_Controller {
     
     public function __construct() {
@@ -24,4 +24,4 @@ class Customerservice extends MY_Controller {
         $this->load->view('customerservice/client', $data);
         $this->load->view('templates/footer', $data);
     }
-}
+}*/

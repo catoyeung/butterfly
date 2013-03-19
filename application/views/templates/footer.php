@@ -10,14 +10,5 @@
             <div id="footer-remark">此網站由Cato Yeung設計及管理</div>
         </div>
     </div>
-    
-    <script>
-    $(document).ready(function() {
-        $("#flash-message .already-read-btn").click(function() {
-            $("#flash-message").hide();
-            $("#flash-overlay").hide();
-        });
-    });
-    </script>
 </body>
 </html>
