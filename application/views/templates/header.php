@@ -78,7 +78,6 @@
                     if (!empty($logged_in_user)) {
                         echo '<li>您好! '.$logged_in_user['display_name'].'</li>';
                         echo '<li><a href="'.base_url().'logout">登出</a></li>';
-                        echo '<li>帳戶設定</li>';
                     } 
                     ?>
                 </ul>
@@ -88,40 +87,44 @@
                 <?php if ($this->session->userdata('logged_in_user')) { ?>
                 <div id="nav"> 
                     <ul>
-                        <!--
-                    <li><a href="<?php echo base_url(); ?>#">我的工作(2)</a></li> -->
-                    <li><a href="<?php echo base_url(); ?>notice">通告(1)</a>
-                        <ul>
-                            <li><a href="<?php echo base_url(); ?>notice">所有通告</a></li>
-                            <li><a href="<?php echo base_url(); ?>notice/create">張貼通告</a></li>
-                        </ul>
-                    </li>
-                    <li><a href="">客戶服務</a>
-                        <ul>
-                            <li><a href="<?php echo base_url(); ?>customer?identity=cs">所有客戶</a></li>
-                            <li><a href="<?php echo base_url(); ?>manualenquiry/create">客戶來電查詢</a></li>
-                        </ul>
-                    </li>
-                    <li><a href="">電話傳銷</a>
-                        <ul>
-                            <li><a href="<?php echo base_url(); ?>customer?identity=sales">所有客戶</a></li>
-                            <li><a href="<?php echo base_url(); ?>booking/create">成功預約客戶</a></li>
-                        </ul>
-                    </li>
-                    <li><a href="<?php echo base_url(); ?>reception">接待</a>
-                        <ul>
-                            <li><a href="<?php echo base_url(); ?>customer">所有客戶</a></li>
-                            <li><a href="<?php echo base_url(); ?>reception">客戶上門查詢</a></li>
-                            <li><a href="<?php echo base_url(); ?>reception/showup">客戶出席預約</a></li>
-                        </ul>
-                    </li> 
-                    <li><a href="<?php echo base_url(); ?>consultant">顧問</a>
-                        <ul>
-                            <li><a href="<?php echo base_url(); ?>consultant/refer">推薦朋友</a></li>
-                            <li><a href="<?php echo base_url(); ?>consultant/showup">客戶出席預約</a></li>
-                            <li><a href="<?php echo base_url(); ?>consultant/showup">反捐獻清單</a></li>
-                        </ul>
-                    </li> 
+                        <li><a>管理</a>
+                            <ul>
+                                <li><a href="">用戶管理</a></li>
+                                <li><a href="">用戶身份管理</a></li>
+                            </ul>
+                        </li>
+                        <li><a>通告</a>
+                            <ul>
+                                <li><a href="<?php echo base_url(); ?>notice">所有通告</a></li>
+                                <li><a href="<?php echo base_url(); ?>notice/create">張貼通告</a></li>
+                            </ul>
+                        </li>
+                        <li><a>客戶服務</a>
+                            <ul>
+                                <li><a href="<?php echo base_url(); ?>customer?identity=cs">所有客戶</a></li>
+                                <li><a href="<?php echo base_url(); ?>manualenquiry/create">客戶來電查詢</a></li>
+                            </ul>
+                        </li>
+                        <li><a>電話傳銷</a>
+                            <ul>
+                                <li><a href="<?php echo base_url(); ?>customer?identity=sales">所有客戶</a></li>
+                                <li><a href="<?php echo base_url(); ?>booking/create">成功預約客戶</a></li>
+                            </ul>
+                        </li>
+                        <li><a>接待</a>
+                            <ul>
+                                <li><a href="<?php echo base_url(); ?>customer">所有客戶</a></li>
+                                <li><a href="<?php echo base_url(); ?>reception">客戶上門查詢</a></li>
+                                <li><a href="<?php echo base_url(); ?>reception/showup">客戶出席預約</a></li>
+                            </ul>
+                        </li> 
+                        <li><a>顧問</a>
+                            <ul>
+                                <li><a href="<?php echo base_url(); ?>consultant/refer">推薦朋友</a></li>
+                                <li><a href="<?php echo base_url(); ?>consultant/showup">客戶出席預約</a></li>
+                                <li><a href="<?php echo base_url(); ?>consultant/showup">反捐獻清單</a></li>
+                            </ul>
+                        </li> 
                     <!--<li><a href="#">Three Levels</a> 
                             <ul> 
                             <li><a href="#">Level 2.1</a></li> 

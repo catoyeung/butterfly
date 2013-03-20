@@ -11,11 +11,11 @@
                     </tr>
                     <tr>
                         <td class="field-name">登入名稱：</td>
-                        <td class="field"><input type="text" name="username"/></td>
+                        <td class="field"><input type="text" name="username" style="width: 150px;"/></td>
                     </tr>
                     <tr>
                         <td class="field-name">密碼：</td>
-                        <td class="field"><input type="password" name="password"/></td>
+                        <td class="field"><input type="password" name="password" style="width: 150px;"/></td>
                     </tr>
                     <tr>
                         <td class="field-name"></td>
