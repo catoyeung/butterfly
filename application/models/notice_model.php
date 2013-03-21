@@ -18,20 +18,20 @@ class Notice_model extends CI_Model {
     
     public function create($raw)
     {
-        $query = $this->db->insert('Notice', array('title' => $raw['title'],
-                                                   'content' => $raw['content'],
-                                                   'created_by_user' => $raw['created_by_user'],
+        $query = $this->db->insert('Notice', array('title' => $this->db->escape_str($raw['title']),
+                                                   'content' => $this->db->escape_str($raw['content']),
+                                                   'created_by_user' => $this->db->escape_str($raw['created_by_user']),
                                                    'deleted' => FALSE,
-                                                   'created_at' => $raw['created_at'],
-                                                   'updated_at' => isset($raw['updated_at']) ? $raw['updated_at']:''));
+                                                   'created_at' => $this->db->escape_str($raw['created_at']),
+                                                   'updated_at' => isset($raw['updated_at']) ? $this->db->escape_str($raw['updated_at']) : ''));
         return $query;
     }
     
     public function get_all()
     {
-        $this->db->select('Notice.*, Users.display_name');
+        $this->db->select('Notice.*, Crm_user.display_name');
         $this->db->from('Notice');
-        $this->db->join('Users', 'Users.user_id = Notice.created_by_user');
+        $this->db->join('Crm_user', 'Crm_user.crm_user_id = Notice.created_by_user');
         $query = $this->db->get();
         return $query->result();
     }

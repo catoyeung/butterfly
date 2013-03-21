@@ -1,9 +1,6 @@
 <div id="content">
     <div class="container">
         <div id="login-form-div">
-            <?php
-            if(!$this->session->userdata('logged_in_user')){
-            ?>
             <form id="login-form" action="<?php echo base_url(); ?>account/login" method="post">
                 <table>
                     <tr>
@@ -23,13 +20,6 @@
                     </tr>
                 </table>
             </form>
-            <?php
-            } else {
-            ?>
-            
-            <?php
-            }
-            ?>
         </div>
     </div>
 </div>

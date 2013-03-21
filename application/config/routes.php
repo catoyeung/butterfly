@@ -40,20 +40,21 @@
 
 $route['default_controller'] = 'pages/index';
 
-// static pages
-$route['notice'] = 'notice/index';
+$route['account/(:any)'] = 'account/$1';
 $route['notice/(:any)'] = 'notice/$1';
+$route['post/(:any)'] = 'post/$1';
 
-$route['manualenquiry/(:any)'] = 'manualenquiry/$1';
+// this route need to be put at last because
+// routes are load from top to bottom
+$route['(:any)'] = 'pages/$1';
+
+
+/*$route['manualenquiry/(:any)'] = 'manualenquiry/$1';
 
 $route['customer'] = 'customer/index';
-$route['customer/(:any)'] = 'customer/$1';
-//$route['customerservice/(:any)'] = 'customerservice/$1';
+$route['customer/(:any)'] = 'customer/$1';*/
 
-$route['test'] = 'test/index';
-$route['test/(:any)'] = 'test/$1';
 
-$route['(:any)'] = 'pages/$1';
 
 $route['404_override'] = '';
 

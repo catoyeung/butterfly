@@ -19,56 +19,53 @@
 <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.2/jquery-ui.min.js"></script>
 <!-- jquery time picker -->
 <script src="<?php echo js_url()?>jqueryui-timepicker/jquery.ui.timepicker.js"></script>
+<!-- mustache javascript template -->
+<script src="<?php echo js_url()?>mustache/mustache.js"></script>
+<script>
+    // flash message effect
+    <?php 
+        $flash = $this->session->flashdata('flash');
+    ?>
+    $(document).ready(function() {
+        var flash = JSON.parse('<?php echo json_encode($flash) ?>');
+        var template = $('#flash-message-template').html();
+        var html = Mustache.to_html(template, flash);
+        $('body').prepend(html);
+        $('#flash-message').fadeIn(1000).delay(5000).fadeOut(1000);
+    });
+</script>
+<script id="flash-message-template" type="text/template">
+<div id="flash-message" style="display: none;">
+    <div class="container">
+        {{#info.length}}
+            <ul class="message-list info">
+            {{#info}}
+                <li>{{message}}</li>
+            {{/info}}
+            </ul>
+        {{/info.length}}
+        
+        {{#warning.length}}
+        <ul class="message-list warning">
+        {{#warning}}
+            <li>{{message}}</li>
+        {{/warning}}        
+        </ul>
+        {{/warning.length}}
+        
+        {{#alert.length}}
+        <ul class="message-list alert">
+        {{#alert}}
+            <li>{{message}}</li>
+        {{/alert}}
+        </ul>
+        {{/alert.length}}
+     </div>
+</div>
+</script>
 <html>
 <body>
-    <?php
-    $flash = $this->session->flashdata('flash');
-    if (!empty($flash)) {
-    ?>
-    <div id="flash-overlay" style="display: none;"></div>
-    <div id="flash-message" style="display: none;">
-        <div class="container" style="top: 0;">
-            <div class="title">提示</div>
-            <?php
-            if (isset($flash['alert']) && is_array($flash['alert'])) {
-                echo '<ul class="message-list alert">';
-                foreach($flash['alert'] as $a) {
-                    echo '<li>'.$a.'</li>';
-                }
-                echo '</ul>';
-            }
-            if (isset($flash['warning']) && is_array($flash['warning'])) {
-                echo '<ul class="message-list warning">';
-                foreach($flash['warning'] as $w) {
-                    echo '<li>'.$w.'</li>';
-                }
-                echo '</ul>';
-            }
-            if (isset($flash['info']) && is_array($flash['info'])) {
-                echo '<ul class="message-list info">';
-                foreach($flash['info'] as $i) {
-                    echo '<li>'.$i.'</li>';
-                }
-                echo '</ul>';
-            }
-            ?>
-            <button class="already-read-btn">我已看過所有提示，謝謝。</button>
-        </div>
-    </div>
-    <script>
-    $(document).ready(function() {
-        $('#flash-overlay').fadeIn(1000);
-        $('#flash-message').fadeIn(1000);
-        $('#flash-message .container').animate({'top': '50%'}, 1000);
-        $("#flash-message .already-read-btn").click(function() {
-            $("#flash-message").remove();
-            $("#flash-overlay").remove();
-        });
-    });
-    </script>
-    <?php
-    }
-    ?>
+    <?php print_r($flash);echo 'hello'; ?>
     <div id="wrapper">
         <div id="header">
             <div id="account-div">
@@ -77,7 +74,7 @@
                     $logged_in_user = $this->session->userdata('logged_in_user');
                     if (!empty($logged_in_user)) {
                         echo '<li>您好! '.$logged_in_user['display_name'].'</li>';
-                        echo '<li><a href="'.base_url().'logout">登出</a></li>';
+                        echo '<li><a href="'.base_url().'account/logout">登出</a></li>';
                     } 
                     ?>
                 </ul>
@@ -87,38 +84,38 @@
                 <?php if ($this->session->userdata('logged_in_user')) { ?>
                 <div id="nav"> 
                     <ul>
-                        <li><a>管理</a>
+                        <li><a href='#'>管理</a>
                             <ul>
-                                <li><a href="">用戶管理</a></li>
-                                <li><a href="">用戶身份管理</a></li>
+                                <li><a href="<?php echo base_url(); ?>post/view">用戶身份管理</a></li>
+                                <li><a href="<?php echo base_url(); ?>crm_user/view">用戶管理</a></li>
                             </ul>
                         </li>
-                        <li><a>通告</a>
+                        <li><a href='#'>通告</a>
                             <ul>
-                                <li><a href="<?php echo base_url(); ?>notice">所有通告</a></li>
+                                <li><a href="<?php echo base_url(); ?>notice/view">所有通告</a></li>
                                 <li><a href="<?php echo base_url(); ?>notice/create">張貼通告</a></li>
                             </ul>
                         </li>
-                        <li><a>客戶服務</a>
+                        <li><a href='#'>客戶服務</a>
                             <ul>
                                 <li><a href="<?php echo base_url(); ?>customer?identity=cs">所有客戶</a></li>
                                 <li><a href="<?php echo base_url(); ?>manualenquiry/create">客戶來電查詢</a></li>
                             </ul>
                         </li>
-                        <li><a>電話傳銷</a>
+                        <li><a href='#'>電話傳銷</a>
                             <ul>
                                 <li><a href="<?php echo base_url(); ?>customer?identity=sales">所有客戶</a></li>
                                 <li><a href="<?php echo base_url(); ?>booking/create">成功預約客戶</a></li>
                             </ul>
                         </li>
-                        <li><a>接待</a>
+                        <li><a href='#'>接待</a>
                             <ul>
                                 <li><a href="<?php echo base_url(); ?>customer">所有客戶</a></li>
                                 <li><a href="<?php echo base_url(); ?>reception">客戶上門查詢</a></li>
                                 <li><a href="<?php echo base_url(); ?>reception/showup">客戶出席預約</a></li>
                             </ul>
                         </li> 
-                        <li><a>顧問</a>
+                        <li><a href='#'>顧問</a>
                             <ul>
                                 <li><a href="<?php echo base_url(); ?>consultant/refer">推薦朋友</a></li>
                                 <li><a href="<?php echo base_url(); ?>consultant/showup">客戶出席預約</a></li>

@@ -13,9 +13,9 @@ function add_flash_message($type='info', $message='default message') {
     $ci =& get_instance();
     $flash = $ci->session->flashdata('flash');
     if (isset($flash['info'])) {
-        array_push($flash[$type], $message);
+        array_push($flash[$type], array('message'=>$message));
     } else {
-        $flash[$type] = array($message);
+        $flash[$type] = array('message'=>$message);
     }
     
     $ci->session->set_flashdata('flash', $flash);

@@ -1,4 +1,5 @@
 body {
+    position: relative;
     background: #8ec7d0 ;
     background-image: url(../img/body-bg.png);
     overflow-x: hidden;
@@ -56,6 +57,11 @@ a {
     left: 1px;
 }
 
+.container {
+    font: 14px 'Droid Sans' , SimHei, Arial, Helvetica, Sans-serif;
+    color: #585858;
+}
+
 #wrapper {
     width: 100%;
 }
@@ -78,7 +84,7 @@ a {
     font: bold 12px  Arial, SimHei, Helvetica, Sans-serif;
     color: #fff;
     text-shadow: 1px 1px 1px rgba(0,0,0,0.1);
-    
+    overflow-x: hidden;
 }
 
 #account-div ul {
@@ -290,7 +296,60 @@ h2 {
     display: block;
 }
 
-#flash-overlay {
+#flash-message {
+    position: absolute;
+    top: 300px;
+    left: 0;
+    width: 100%;
+    z-index: 1002;
+}
+
+#flash-message .container {
+    position: relative;
+    width: 660px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+#flash-message .message-list {
+    margin: 0 20px 0 20px;
+    padding: 8px 0 3px 0;
+}
+
+#flash-message .message-list li {
+    padding-left: 0;
+    margin-bottom: 5px;
+}
+
+#flash-message .success {
+    color: #c09853;
+    text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5);
+    background-color: #fcf8e3;
+    border: 1px solid #fbeed5;
+}
+
+#flash-message .info {
+    color: #3a87ad;
+    text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5);
+    background-color: #d9edf7;
+    border: 1px solid #bce8f1;
+}
+
+#flash-message .warning {
+    color: #c09853;
+    text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5);
+    background-color: #fcf8e3;
+    border: 1px solid #fbeed5;
+}
+
+#flash-message .alert {
+    color: #b94a48;
+    text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5);
+    background-color: #f2dede;
+    border: 1px solid #eed3d7;
+}
+
+/*#flash-overlay {
     position:fixed;
     top:0px;
     bottom:0px;
@@ -385,7 +444,7 @@ h2 {
     border: 1px solid #3079ed;
     padding: 5px;
     margin: 15px auto 0 auto;
-}
+}*/
 
 #notices-div {
     text-align: left;

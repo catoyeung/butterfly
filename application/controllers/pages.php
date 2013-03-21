@@ -1,48 +1,34 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-class Pages extends MY_Controller {
+class Pages extends CI_Controller {
 
     public function __construct() {
         parent::__construct();
-        $this->load->library('session');
-        $this->load->model('Users_model');
-    }
-    
-    public function _remap($method, $params = array()) {
-        if (method_exists($this, $method))
-        {
-            return call_user_func_array(array($this, $method), $params);
-        }
-        show_404();
+        $this->load->model('Authentication_model');
     }
     
     public function index()
     {
-        if ( ! file_exists('application/views/pages/home.php'))
-        {
-            // Whoops, we don't have a page for that!
-            show_404();
-        }
-         // Capitalize the first letter
-        $data = array();
         if ($_SERVER['REQUEST_METHOD'] === 'GET') {
-            // access home page, not log in
-            if (!$this->session->userdata('logged_in_user')) {
+            if($this->Authentication_model->user_is_logged_in()) {
+                redirect('notice/view');
+            } else {
+                $data = array();
                 $data['title'] = '登入';
-            }
-        } elseif ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            // log in portal
-            $username = $this->input->post('username');
-            $password = $this->input->post('password');
-            if ($this->Users_model->validate($username, $password)) {
-                $logged_in_user = $this->session->userdata('logged_in_user');
-                add_flash_message('info', $logged_in_user['display_name'].'，你剛成功登入。');
-                redirect('');
+                $this->load->view('templates/header', $data);
+                $this->load->view('pages/home', $data);
+                $this->load->view('templates/footer', $data);
             }
         }
-        $this->load->view('templates/header', $data);
-        $this->load->view('pages/home', $data);
-        $this->load->view('templates/footer', $data);
+        
+    }
+    
+    /*public function login()
+    {
+        $this->load->model('authentication');
+        if ($this->input->server('REQUEST_METHOD') === 'POST') {
+            
+        }
     }
     
     public function logout()
@@ -50,5 +36,5 @@ class Pages extends MY_Controller {
         $this->session->unset_userdata('logged_in_user');
         add_flash_message('info', '你剛成功登出。');
         redirect('');
-    }
+    }*/
 }

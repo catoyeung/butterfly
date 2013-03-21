@@ -7,25 +7,25 @@ class Notice extends MY_Controller {
         $this->load->model('Notice_model');
     }
     
-	public function index(){
+	public function view(){
         $data['title'] = '通告';
         $data['notices'] = $this->Notice_model->get_all();
         $this->load->view('templates/header', $data);
-        $this->load->view('notice/index', $data);
+        $this->load->view('notice/view', $data);
         $this->load->view('templates/footer', $data);
     }
     
     public function create() {
-        if ($_SERVER['REQUEST_METHOD'] === 'GET') {
+        if ($this->input->server('REQUEST_METHOD') === 'GET') {
             // user access notice posting form
             $data['title'] = '張貼通告';
             $this->load->view('templates/header', $data);
             $this->load->view('notice/create', $data);
             $this->load->view('templates/footer', $data);
-        } elseif ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            // user post notice
-            $notice_title = $this->input->post('notice_title');
-            $notice_content = $this->input->post('notice_content');
+        } elseif ($this->input->server('REQUEST_METHOD') === 'POST') {
+            // user create notice
+            $notice_title = addslashes($this->input->post('notice_title'));
+            $notice_content = addslashes($this->input->post('notice_content'));
             $logged_in_user = $this->session->userdata('logged_in_user');
             $result = $this->Notice_model->create(array('title'=>$notice_title,
                                               'content'=>$notice_content,
@@ -37,7 +37,7 @@ class Notice extends MY_Controller {
             } else {
                 add_flash_message('alert', '通告不能張貼，請聯絡系統管理員。');
             }
-            redirect('notice');
+            redirect('notice/view');
         }
     }
 }

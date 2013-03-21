@@ -1,18 +1,31 @@
-CREATE TABLE Users
-(user_id int NOT NULL IDENTITY(1,1),
+CREATE TABLE Post
+(post_id int NOT NULL IDENTITY(1,1),
+post_name varchar(50) NOT NULL,
+created_at datetime NOT NULL,
+PRIMARY KEY (post_id),
+UNIQUE (post_name))
+
+INSERT INTO Post (post_name, created_at)
+values
+('Admin', '2013-03-21 07:07:23.367')
+
+CREATE TABLE Crm_user
+(crm_user_id int NOT NULL IDENTITY(1,1),
 username varchar(25) NOT NULL,
 password varchar(50) NOT NULL,
 display_name varchar(50) NOT NULL,
-post varchar(25) NOT NULL,
-belongs_to varchar(25) NOT NULL,
+post_id int NOT NULL,
 deleted bit NOT NULL,
 inactive bit NOT NULL,
-PRIMARY KEY (user_id),
-UNIQUE (username, password, display_name))
+created_at datetime NOT NULL,
+updated_at datetime,
+PRIMARY KEY (crm_user_id),
+UNIQUE (username, display_name))
+FOREIGN KEY ( post_id ) REFERENCES Post (post_id))
 
-INSERT INTO Users (username, password, display_name, post, belongs_to, deleted, inactive)
+INSERT INTO Crm_user (username, password, display_name, post, deleted, inactive, created_at)
 values
-('admin','admin','Cato Yeung','Programmer','admin',0,0)
+('admin','admin','Cato Yeung','admin',0,0,'2013-03-21 07:07:23.367')
 
 CREATE TABLE Notice
 (notice_id int NOT NULL IDENTITY(1,1),
@@ -23,7 +36,7 @@ deleted bit NOT NULL,
 created_at datetime NOT NULL,
 updated_at datetime,
 PRIMARY KEY (notice_id),
-FOREIGN KEY ( created_by_user ) REFERENCES Users (user_id))
+FOREIGN KEY ( created_by_user ) REFERENCES Crm_user (crm_user_id))
 
 TRUNCATE TABLE Notice;
 
@@ -33,3 +46,7 @@ values
 ('xxxa','xxxxb','xxxxc'),
 ('xxxa','xxxxb','xxxxc'),
 ('xxxa','xxxxb','xxxxc')
+
+ALTER TABLE Post
+ADD deleted bit NOT NULL
+DEFAULT 0
