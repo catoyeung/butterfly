@@ -16,7 +16,7 @@
     {{/notices}}
 {{/notices.length}}
 {{^notices.length}}        
-暫時沒有人張貼通告。
+暫時沒有通告。
 {{/notices.length}}
 </script>
 

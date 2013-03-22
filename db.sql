@@ -50,3 +50,20 @@ values
 ALTER TABLE Post
 ADD deleted bit NOT NULL
 DEFAULT 0
+
+ALTER TABLE {TABLENAME} 
+ADD {COLUMNNAME} {TYPE} {NULL|NOT NULL} 
+CONSTRAINT {CONSTRAINT_NAME} DEFAULT {DEFAULT_VALUE}
+
+CREATE TABLE Brand
+(brand_id int NOT NULL IDENTITY(1,1),
+brand_name varchar(100) NOT NULL,
+deleted bit NOT NULL,
+created_at datetime NOT NULL,
+updated_at datetime,
+PRIMARY KEY (brand_id))
+
+CREATE TABLE Crm_user_belongs_to_brand
+(crm_user_id int NOT NULL,
+brand_id int NOT NULL,
+FOREIGN KEY ( brand_id ) REFERENCES Brand (brand_id))

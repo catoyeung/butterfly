@@ -1,7 +1,7 @@
 <div id="content">
     <div class="container">
         <div id="models-div">
-            <div class="create-btn-div"><button onclick="location.href='<?php echo base_url(); ?>user/create'">新增用戶身份</button></div>
+            <div class="create-btn-div"><button onclick="location.href='<?php echo base_url(); ?>user/create'">新增用戶</button></div>
         </div>
     </div>
 </div>
@@ -41,7 +41,7 @@
 </table>
 {{/users.length}}
 {{^users.length}}        
-暫時沒有人張貼通告。
+暫時沒有用戶。
 {{/users.length}}
 </script>
 
@@ -49,7 +49,6 @@
 $(document).ready(function() {
     var data = {};
     data.users = JSON.parse('<?php echo json_encode($users) ?>');
-    console.log(data.users);
     var template = $('#models-div-template').html();
     var html = Mustache.to_html(template, data);
     $('#models-div').prepend(html);

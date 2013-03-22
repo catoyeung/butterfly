@@ -30,6 +30,7 @@
     ?>
     $(document).ready(function() {
         var flash = JSON.parse('<?php echo json_encode($flash) ?>');
+        console.log(flash);
         var template = $('#flash-message-template').html();
         var html = Mustache.to_html(template, flash);
         $('body').prepend(html);
@@ -47,21 +48,21 @@
             </ul>
         {{/info.length}}
         
-        {{#hasWarning}}
+        {{#warning.length}}
         <ul class="message-list warning">
         {{#warning}}
             <li>{{message}}</li>
         {{/warning}}        
         </ul>
-        {{/hasWarning}}
+        {{/warning.length}}
         
-        {{#hasAlert}}
+        {{#alert.length}}
         <ul class="message-list alert">
         {{#alert}}
             <li>{{message}}</li>
         {{/alert}}
         </ul>
-        {{/hasAlert}}
+        {{/alert.length}}
      </div>
 </div>
 </script>
@@ -87,6 +88,7 @@
                     <ul>
                         <li><a href='#'>管理</a>
                             <ul>
+                                <li><a href="<?php echo base_url(); ?>brand/view">品牌管理</a></li>
                                 <li><a href="<?php echo base_url(); ?>post/view">用戶身份管理</a></li>
                                 <li><a href="<?php echo base_url(); ?>user/view">用戶管理</a></li>
                             </ul>
@@ -100,7 +102,7 @@
                         <li><a href='#'>客戶服務</a>
                             <ul>
                                 <li><a href="<?php echo base_url(); ?>customer?identity=cs">所有客戶</a></li>
-                                <li><a href="<?php echo base_url(); ?>manualenquiry/create">客戶來電查詢</a></li>
+                                <li><a href="<?php echo base_url(); ?>enquiry/create">輸入查詢</a></li>
                             </ul>
                         </li>
                         <li><a href='#'>電話傳銷</a>

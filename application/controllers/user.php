@@ -5,6 +5,9 @@ class User extends MY_Controller {
     public function __construct() {
         parent::__construct();
         $this->load->model('Crm_user_model');
+        $this->load->model('Post_model');
+        $this->load->model('Brand_model');
+        $this->load->model('Crm_user_belongs_to_brand_model');
     }
     
 	public function view(){
@@ -19,24 +22,33 @@ class User extends MY_Controller {
         if ($this->input->server('REQUEST_METHOD')=='GET') {
             // user access notice create form
             $data['title'] = '新增用戶';
-            $this->load->model('Post_model');
             $data['posts'] = $this->Post_model->get_all();
+            $data['brands'] = $this->Brand_model->get_all();
             $this->load->view('templates/header', $data);
             $this->load->view('user/create', $data);
             $this->load->view('templates/footer', $data);
         } elseif ($this->input->server('REQUEST_METHOD')=='POST') {
             // user create form with post request
+            $this->db->trans_start();
             $username = $this->input->post('username');
             $password = $this->input->post('password');
             $post_id = $this->input->post('post_id');
             $display_name = $this->input->post('display_name');
-            $result = $this->Crm_user_model->create(array('username'=>$username,
+            $this->Crm_user_model->create(array('username'=>$username,
                                                           'password'=>$password,
                                                           'post_id'=>$post_id,
                                                           'display_name'=>$display_name,
                                                       'created_at'=>microtime_to_mssql_time(microtime())
                                         ));
-            if($result) {
+            $brand_ids = $this->input->post('brand_ids');
+            $logged_in_user = $this->session->userdata('logged_in_user');
+            foreach ($brand_ids as $brand_id)
+            {
+                $this->Crm_user_belongs_to_brand_model->create(array('crm_user_id'=>$logged_in_user['crm_user_id'],
+                                                               'brand_id'=>$brand_id));
+            }
+            $this->db->trans_complete();
+            if($this->db->trans_status() === False) {
                 add_flash_message('info', '用戶已新增。');
             } else {
                 add_flash_message('alert', '用戶不能新增，請聯絡系統管理員。');
@@ -48,11 +60,23 @@ class User extends MY_Controller {
     public function edit($crm_user_id) {
         if ($this->input->server('REQUEST_METHOD')=='GET') {
             $data['title'] = '編輯用戶';
+            
             $data['user_id'] = $crm_user_id;
             $this->load->model('Post_model');
             $data['posts'] = $this->Post_model->get_all();
             $result = $this->Crm_user_model->get_by(array('Crm_user_id'=>$crm_user_id));
             $data['user'] = $result[0];
+            
+            $data['brands'] = $this->Brand_model->get_all();
+            $result = $this->Crm_user_belongs_to_brand_model->get_all();
+            $belonging_brand_ids = array();
+            foreach ($result as $r)
+            {
+                $belonging_brand_ids[] = $r->brand_id;
+            }
+            $data['belonging_brand_ids'] = $belonging_brand_ids;
+            print_r($belonging_brand_ids);
+            
             $this->load->view('templates/header', $data);
             $this->load->view('user/edit', $data);
             $this->load->view('templates/footer', $data);

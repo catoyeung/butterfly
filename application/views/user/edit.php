@@ -1,7 +1,6 @@
 <div id="content">
     <div class="container">
         <div class="model-edit-div">
-            <?php print_r($user); ?>
             <form action="<?php echo base_url().'user/edit/'.$user_id; ?>" method="post">
                 <table>
                     <tr>
@@ -28,6 +27,19 @@
                         </td>
                     </tr>
                     <tr>
+                        <th>品牌：</th>
+                        <td>
+                            <select id="brand-chooser" data-placeholder="品牌" multiple style="width: 400px" name="brand_ids[]">
+                                <option></option>
+                                <?php
+                                foreach ($brands as $brand) {
+                                    echo '<option value="'.$brand->brand_id.'">'.$brand->brand_name.'</option>';
+                                }
+                                ?>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
                         <th>顯示名稱：</th>
                         <td><input type="text" style="width: 150px;" name="display_name" value="<?php echo $user->display_name; ?>"/></td>
                     </tr>
@@ -43,5 +55,6 @@
 <script>
 $(document).ready(function() {
     $("#post-chooser").chosen();
+    $("#brand-chooser").chosen();
 });
 </script>

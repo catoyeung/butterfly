@@ -1,65 +1,66 @@
 <div id="content">
     <div class="container">
         <div id="models-div">
-            <div class="create-btn-div"><button onclick="location.href='<?php echo base_url(); ?>post/create'">新增用戶身份</button></div>
+            <div class="create-btn-div"><button onclick="location.href='<?php echo base_url(); ?>brand/create'">新增品牌</button></div>
         </div>
     </div>
 </div>
 
 <script id="models-div-template" type="text/template">
-{{#posts.length}}
+{{#brands.length}}
 <table>
 <tr>
     <th style="width:30px;">Id</th>
-    <th style="width:150px;">用戶身份</th>
+    <th style="width:150px;">品牌名稱</th>
     <th style="width:780px; text-align:right;"></th>
 </tr>
-    {{#posts}}
+    {{#brands}}
     <tr>
-        <td>{{post_id}}</td>
+        <td>{{brand_id}}</td>
         <td {{#deleted}}
             style="text-decoration: line-through;" 
-            {{/deleted}}>{{post_name}}</td>
+            {{/deleted}}
+            >{{brand_name}}</td>
         <td style="text-align:right;">
-            <button onclick="location.href='<?php echo base_url(); ?>post/edit/{{post_id}}'">編輯</button>
+            <button onclick="location.href='<?php echo base_url(); ?>brand/edit/{{brand_id}}'">編輯</button>
             {{#deleted}}
-            <button onclick="resume({{post_id}})">還原</button>
+            <button onclick="resume({{brand_id}})">還原</button>
             {{/deleted}}
             {{^deleted}}
-            <button onclick="del({{post_id}})">刪除</button>
+            <button onclick="del({{brand_id}})">刪除</button>
             {{/deleted}}
         </td>
     </tr>
-    {{/posts}}
+    {{/brands}}
 </table>
-{{/posts.length}}
-{{^posts.length}}        
-暫時沒有職位。
-{{/posts.length}}
+{{/brands.length}}
+{{^brands.length}}        
+暫時沒有品牌。
+{{/brands.length}}
 </script>
 
 <script>
 $(document).ready(function() {
     var data = {};
-    data.posts = JSON.parse('<?php echo json_encode($posts) ?>');
+    data.brands = JSON.parse('<?php echo json_encode($brands) ?>');
     var template = $('#models-div-template').html();
     var html = Mustache.to_html(template, data);
     $('#models-div').prepend(html);
 });
 
-function resume(post_id) {
+function resume(brand_id) {
     var form = document.createElement('form');
     form.setAttribute('method', 'post');
-    form.setAttribute('action', '<?php echo base_url().'post/resume/'; ?>'+post_id);
+    form.setAttribute('action', '<?php echo base_url().'brand/resume/'; ?>'+brand_id);
     form.style.display = 'hidden';
     document.body.appendChild(form)
     form.submit();
 }
 
-function del(post_id) {
+function del(brand_id) {
     var form = document.createElement('form');
     form.setAttribute('method', 'post');
-    form.setAttribute('action', '<?php echo base_url().'post/delete/'; ?>'+post_id);
+    form.setAttribute('action', '<?php echo base_url().'brand/delete/'; ?>'+brand_id);
     form.style.display = 'hidden';
     document.body.appendChild(form)
     form.submit();

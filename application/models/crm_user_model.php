@@ -34,6 +34,10 @@ class Crm_User_model extends CI_Model {
     public function update($crm_user_id, $raw)
     {
         $this->db->where('crm_user_id', $crm_user_id);
+        foreach($raw as $key => $value)
+        {
+            $raw[$key] = $this->db->escape_str($value);
+        }
         $this->db->update('Crm_user', $raw); 
     }
     

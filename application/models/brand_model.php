@@ -1,5 +1,5 @@
 <?php
-class Post_model extends CI_Model {
+class Brand_model extends CI_Model {
 
     protected $post_id;
     protected $post_name;
@@ -13,30 +13,37 @@ class Post_model extends CI_Model {
     
     public function create($raw)
     {
-        $this->db->insert('Post', array('post_name' => $this->db->escape_str($raw['post_name']),
-                                        'created_at' => $this->db->escape_str($raw['created_at'])));
-    }
-    
-    public function update($post_id, $raw)
-    {
-        $this->db->where('post_id', $post_id);
         foreach($raw as $key => $value)
         {
             $raw[$key] = $this->db->escape_str($value);
         }
-        $this->db->update('Post', $raw); 
+        if (!isset($raw['deleted'])) {
+            $raw['deleted'] = False;
+        }
+        $this->db->insert('Brand', $raw);
+    }
+    
+    public function update($brand_id, $raw)
+    {
+        $this->db->where('brand_id', $brand_id);
+        foreach($raw as $key => $value)
+        {
+            $raw[$key] = $this->db->escape_str($value);
+        }
+        $this->db->update('Brand', $raw); 
     }
     
     public function get_by($pairs)
     {
-        $query = $this->db->get_where('Post', $pairs);
+        $query = $this->db->get_where('Brand', $pairs);
         return $query->result();
     }
     
     public function get_all()
     {
         $this->db->select('*');
-        $this->db->from('Post');
+        $this->db->from('Brand');
+        $this->db->where('deleted', False);
         $query = $this->db->get();
         return $query->result();
     }

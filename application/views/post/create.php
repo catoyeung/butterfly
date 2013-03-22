@@ -1,6 +1,6 @@
 <div id="content">
     <div class="container">
-        <div id="create-post-div">
+        <div class="model-create-div">
             <form action="<?php echo base_url(); ?>post/create" method="post">
                 <table>
                     <tr>
