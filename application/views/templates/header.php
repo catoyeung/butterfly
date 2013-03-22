@@ -45,27 +45,26 @@
             </ul>
         {{/info.length}}
         
-        {{#warning.length}}
+        {{#hasWarning}}
         <ul class="message-list warning">
         {{#warning}}
             <li>{{message}}</li>
         {{/warning}}        
         </ul>
-        {{/warning.length}}
+        {{/hasWarning}}
         
-        {{#alert.length}}
+        {{#hasAlert}}
         <ul class="message-list alert">
         {{#alert}}
             <li>{{message}}</li>
         {{/alert}}
         </ul>
-        {{/alert.length}}
+        {{/hasAlert}}
      </div>
 </div>
 </script>
 <html>
 <body>
-    <?php print_r($flash);echo 'hello'; ?>
     <div id="wrapper">
         <div id="header">
             <div id="account-div">

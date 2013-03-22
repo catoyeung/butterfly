@@ -25,10 +25,10 @@ class Authentication_model extends CI_Model {
     public function store_user_in_session()
     {
         $validated_user = $this->validated_user;
-        $logged_in_user = array('user_id'=>$validated_user->user_id,
+        $logged_in_user = array('crm_user_id'=>$validated_user->crm_user_id,
                                 'username'=>$validated_user->username,
                                 'display_name'=>$validated_user->display_name,
-                                'post'=>$validated_user->post);
+                                'post_id'=>$validated_user->post_id);
         $this->session->set_userdata(array('logged_in_user'=>$logged_in_user));
     }
     
