@@ -730,6 +730,55 @@ h2 {
     padding: 0 10px 10px 0;
 }
 
+#models-div table{
+    text-align: left;
+    width: 960px;
+    border: 1px solid #e7e7e7;
+    background: #fff;
+}
+
+#models-div th {
+    text-align: left;
+    color: #201F1F;
+    padding: 8px 15px;
+    background: #f9f9f9;
+    background: -webkit-linear-gradient(top, #f9f9f9 0%,#f5f5f5 100%);
+    background: -moz-linear-gradient(top, #f9f9f9 0%, #f5f5f5 100%);
+}
+
+#models-div td {
+    color: #4c4c4c;
+    padding: 3px 15px;
+    font-size: 13px;
+}
+
+#models-div tr {
+    border-bottom: 1px solid #e7e7e7;
+}
+
+#models-div .create-btn-div {
+    width: 960px; 
+    text-align: left;
+}
+
+.model-create-div th{
+    text-align: right;
+    padding: 8px 0;
+}
+
+.model-create-div td{
+    text-align: left;
+}
+
+.model-edit-div th{
+    text-align: right;
+    padding: 8px 0;
+}
+
+.model-edit-div td{
+    text-align: left;
+}
+
 #footer {
     background: url('../img/footer-topbg.png') repeat-x;
     padding-top: 60px;

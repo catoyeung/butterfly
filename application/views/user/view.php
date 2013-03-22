@@ -1,66 +1,73 @@
 <div id="content">
     <div class="container">
         <div id="models-div">
-            <div class="create-btn-div"><button onclick="location.href='<?php echo base_url(); ?>post/create'">新增用戶身份</button></div>
+            <div class="create-btn-div"><button onclick="location.href='<?php echo base_url(); ?>user/create'">新增用戶身份</button></div>
         </div>
     </div>
 </div>
 
 <script id="models-div-template" type="text/template">
-{{#posts.length}}
+{{#users.length}}
 <table>
 <tr>
     <th style="width:30px;">Id</th>
+    <th style="width:150px;">顯示名稱</th>
     <th style="width:150px;">用戶身份</th>
+    <th style="width:150px;">登入名稱</th>
+    <th style="width:150px;">密碼</th>
     <th style="width:780px; text-align:right;"></th>
 </tr>
-    {{#posts}}
+    {{#users}}
     <tr>
-        <td>{{post_id}}</td>
+        <td>{{crm_user_id}}</td>
         <td {{#deleted}}
             style="text-decoration: line-through;" 
-            {{/deleted}}>{{post_name}}</td>
+            {{/deleted}}
+            >{{display_name}}</td>
+        <td>{{post_name}}</td>
+        <td>{{username}}</td>
+        <td>{{password}}</td>
         <td style="text-align:right;">
-            <button onclick="location.href='<?php echo base_url(); ?>post/edit/{{post_id}}'">編輯</button>
+            <button onclick="location.href='<?php echo base_url(); ?>user/edit/{{crm_user_id}}'">編輯</button>
             {{#deleted}}
-            <button onclick="resume({{post_id}})">還原</button>
+            <button onclick="resume({{crm_user_id}})">還原</button>
             {{/deleted}}
             {{^deleted}}
-            <button onclick="del({{post_id}})">刪除</button>
+            <button onclick="del({{crm_user_id}})">刪除</button>
             {{/deleted}}
         </td>
     </tr>
-    {{/posts}}
+    {{/users}}
 </table>
-{{/posts.length}}
-{{^posts.length}}        
+{{/users.length}}
+{{^users.length}}        
 暫時沒有人張貼通告。
-{{/posts.length}}
+{{/users.length}}
 </script>
 
 <script>
 $(document).ready(function() {
     var data = {};
-    data.posts = JSON.parse('<?php echo json_encode($posts) ?>');
-    console.log(data.posts);
+    data.users = JSON.parse('<?php echo json_encode($users) ?>');
+    console.log(data.users);
     var template = $('#models-div-template').html();
     var html = Mustache.to_html(template, data);
     $('#models-div').prepend(html);
 });
 
-function resume(post_id) {
+function resume(crm_user_id) {
     var form = document.createElement('form');
     form.setAttribute('method', 'post');
-    form.setAttribute('action', '<?php echo base_url().'post/resume/'; ?>'+post_id);
+    form.setAttribute('action', '<?php echo base_url().'user/resume/'; ?>'+crm_user_id);
     form.style.display = 'hidden';
     document.body.appendChild(form)
     form.submit();
 }
 
-function del(post_id) {
+function del(crm_user_id) {
     var form = document.createElement('form');
     form.setAttribute('method', 'post');
-    form.setAttribute('action', '<?php echo base_url().'post/delete/'; ?>'+post_id);
+    form.setAttribute('action', '<?php echo base_url().'user/delete/'; ?>'+crm_user_id);
     form.style.display = 'hidden';
     document.body.appendChild(form)
     form.submit();

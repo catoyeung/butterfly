@@ -378,7 +378,6 @@
                 </div>
             </div>
         </div>
-        <script src="<?php echo js_url(); ?>chosen/chosen.jquery.min.js"></script>
         <script>$(".chosen").chosen();</script>
         <script>
             // showup button pop up window

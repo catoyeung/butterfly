@@ -43,7 +43,7 @@ $route['default_controller'] = 'pages/index';
 $route['account/(:any)'] = 'account/$1';
 $route['notice/(:any)'] = 'notice/$1';
 $route['post/(:any)'] = 'post/$1';
-
+$route['user/(:any)'] = 'user/$1';
 // this route need to be put at last because
 // routes are load from top to bottom
 $route['(:any)'] = 'pages/$1';

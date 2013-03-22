@@ -61,7 +61,6 @@ class Post extends MY_Controller {
     
     public function delete($post_id) {
         if ($this->input->server('REQUEST_METHOD')=='GET') {
-            $data['title'] = '刪除用戶';
             $data['post_id'] = $post_id;
             $result = $this->Post_model->get_by(array('post_id'=>$post_id));
             $data['post_name'] = $result[0]->post_name;

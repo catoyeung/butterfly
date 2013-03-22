@@ -19,6 +19,8 @@
 <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.2/jquery-ui.min.js"></script>
 <!-- jquery time picker -->
 <script src="<?php echo js_url()?>jqueryui-timepicker/jquery.ui.timepicker.js"></script>
+<!-- chosen select option library -->
+<script src="<?php echo js_url(); ?>chosen/chosen.jquery.min.js"></script>
 <!-- mustache javascript template -->
 <script src="<?php echo js_url()?>mustache/mustache.js"></script>
 <script>
@@ -86,7 +88,7 @@
                         <li><a href='#'>管理</a>
                             <ul>
                                 <li><a href="<?php echo base_url(); ?>post/view">用戶身份管理</a></li>
-                                <li><a href="<?php echo base_url(); ?>crm_user/view">用戶管理</a></li>
+                                <li><a href="<?php echo base_url(); ?>user/view">用戶管理</a></li>
                             </ul>
                         </li>
                         <li><a href='#'>通告</a>
