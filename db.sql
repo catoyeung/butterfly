@@ -77,3 +77,22 @@ created_at datetime NOT NULL,
 updated_at datetime,
 PRIMARY KEY (district_id),
 FOREIGN KEY ( brand_id ) REFERENCES Brand (brand_id))
+
+ALTER TABLE District
+ADD UNIQUE (district_name,brand_id)
+
+ALTER TABLE Brand
+ADD UNIQUE (brand_name)
+
+CREATE TABLE Ad_source
+(ad_source_id int NOT NULL IDENTITY(1,1),
+ad_source_name varchar(100) NOT NULL,
+brand_id int NOT NULL,
+deleted bit NOT NULL,
+created_at datetime NOT NULL,
+updated_at datetime,
+PRIMARY KEY (ad_source_id),
+FOREIGN KEY ( brand_id ) REFERENCES Brand (brand_id))
+
+ALTER TABLE Ad_source
+ADD UNIQUE (ad_source_name,brand_id)

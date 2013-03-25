@@ -32,6 +32,11 @@ class Authentication_model extends CI_Model {
         $this->session->set_userdata(array('logged_in_user'=>$logged_in_user));
     }
     
+    public function store_brand_id_in_session($brand_id)
+    {
+        $this->session->set_userdata('brand_id', $brand_id);
+    }
+    
     public function user_is_logged_in()
     {
         $logged_in_user = $this->session->userdata('logged_in_user');

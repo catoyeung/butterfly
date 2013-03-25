@@ -16,6 +16,10 @@
                     </tr>
                     <tr>
                         <td class="field-name"></td>
+                        <td class="field"><input type="password" name="password" style="width: 150px;"/></td>
+                    </tr>
+                    <tr>
+                        <td class="field-name"></td>
                         <td><input class="submit-btn" type="submit" value="登入"/></td>
                     </tr>
                 </table>

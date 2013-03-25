@@ -1,16 +1,5 @@
 <div id="content">
     <div class="container">
-        <div id="brand-chooser-div">
-            <p>請選擇品牌</p>
-            <ul>
-                <?php
-                foreach ($brands as $brand)
-                {
-                    echo '<li><a href="#" onclick=selectBrand('.$brand->brand_id.')>'.$brand->brand_name.'</a></li>';
-                }
-                ?>
-            </ul>
-        </div>
         <div id="enquiry-form-div">
             
         </div>
@@ -38,35 +27,25 @@
         <tr>
             <td class="section" colspan="2">查詢</td>
         </tr>
-        <tr>
+        <!--<tr>
             <th>查詢品牌：</th>
             <td>
-                <select class="chosen" placeholder="查詢內容" style="width: 300px">
+                <select id="brand-chooser" data-placeholder="查詢品牌" style="width: 300px">
+                    <option></option>
                     {{#brands}}
                     <option value="{{brand_id}}">{{brand_name}}</option>
                     {{/brands}}
                 </select>
             </td>
-        </tr>
+        </tr>-->
         <tr>
             <th>分區：</th>
             <td>
-                <select class="chosen" placeholder="分區" style="width: 300px">
-                    <option value="佐敦">佐敦</option>
-                    <option value="銅鑼灣">銅鑼灣</option>
-                    <option value="將軍澳">將軍澳</option>
-                    <option value="荃灣">荃灣</option>
-                    <option value="九龍灣">九龍灣</option>
-                    <option value="旺角">旺角</option>
-                    <option value="元朗">元朗</option>
-                    <option value="中環">中環</option>
-                    <option value="堅道">堅道</option>
-                    <option value="荔枝角">荔枝角</option>
-                    <option value="沙田">沙田</option>
-                    <option value="澳門">澳門</option>
-                    <option value="美孚">美孚</option>
-                    <option value="上水">上水</option>
-                    <option value="屯門">屯門</option>
+                <select id="district-chooser" data-placeholder="分區" style="width: 300px">
+                    <option></option>
+                    {{#districts}}
+                    <option value="{{district_id}}">{{district_name}}</option>
+                    {{/districts}}
                 </select>
             </td>
         </tr>
@@ -176,17 +155,13 @@
 
 <script>
 $(document).ready(function() {
-    
-});
-
-function selectBrand(brandId) {
-    $('#brand-chooser-div').hide();
     var data = {};
     data.brands = JSON.parse('<?php echo json_encode($brands) ?>');
-    data.brand_id = JSON.parse(brandId);
+    data.districts = JSON.parse('<?php echo json_encode($districts) ?>');
     var template = $('#enquiry-form-template').html();
     var html = Mustache.to_html(template, data);
     $('#enquiry-form-div').prepend(html);
-    $('.chosen').chosen();
-}
+    $('#brand-chooser').chosen();
+    $('#district-chooser').chosen();
+});
 </script>

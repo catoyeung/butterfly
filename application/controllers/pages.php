@@ -5,6 +5,7 @@ class Pages extends CI_Controller {
     public function __construct() {
         parent::__construct();
         $this->load->model('Authentication_model');
+        $this->load->model('Brand_model');
     }
     
     public function index()
@@ -15,6 +16,7 @@ class Pages extends CI_Controller {
             } else {
                 $data = array();
                 $data['title'] = '登入';
+                $data['brands'] = $this->Brand_model->get_by(array('deleted'=>False));
                 $this->load->view('templates/header', $data);
                 $this->load->view('pages/home', $data);
                 $this->load->view('templates/footer', $data);
@@ -22,19 +24,4 @@ class Pages extends CI_Controller {
         }
         
     }
-    
-    /*public function login()
-    {
-        $this->load->model('authentication');
-        if ($this->input->server('REQUEST_METHOD') === 'POST') {
-            
-        }
-    }
-    
-    public function logout()
-    {
-        $this->session->unset_userdata('logged_in_user');
-        add_flash_message('info', '你剛成功登出。');
-        redirect('');
-    }*/
 }

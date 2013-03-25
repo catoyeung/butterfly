@@ -19,6 +19,20 @@
                     </tr>
                     <tr>
                         <td class="field-name"></td>
+                        <td class="field">
+                            <select id="brand-chooser" data-placeholder="品牌" style="width: 150px" name="brand_id">
+                                <option></option>
+                                <?php
+                                foreach ($brands as $brand)
+                                {
+                                    echo '<option value="'.$brand->brand_id.'">'.$brand->brand_name.'</option>';
+                                }
+                                ?>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="field-name"></td>
                         <td><input class="submit-btn" type="submit" value="登入"/></td>
                     </tr>
                 </table>
@@ -33,3 +47,9 @@
         </div>
     </div>
 </div>
+
+<script>
+$(document).ready(function() {
+    $('#brand-chooser').chosen();
+});
+</script>

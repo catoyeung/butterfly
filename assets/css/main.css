@@ -2,7 +2,6 @@ body {
     position: relative;
     background: #8ec7d0 ;
     background-image: url(../img/body-bg.png);
-    overflow-x: hidden;
 }
 
 strong {
@@ -69,17 +68,16 @@ a {
 #header {
     background: url(../img/top-bg.png) repeat-x left bottom;
     width: 100%;
-    height: 180px;
+    height: 200px;
     margin: auto;
     padding-top: 100px;
     text-align: center;
 }
 
 #account-div {
-    position: absolute;
+    position: relative;
     width: 960px;
     margin: auto;
-    left: 50%;
     text-align: right;
     font: bold 12px  Arial, SimHei, Helvetica, Sans-serif;
     color: #fff;
@@ -89,7 +87,6 @@ a {
 
 #account-div ul {
     position: relative;
-    left: -50%;
     float: right;
     
 }
@@ -219,7 +216,7 @@ h1 {
 }
 
 #nav ul li li:hover > a:first-child {
-    border-top: none;
+    border-top: 1px solid #7BAED9;
 }
 
 #nav li:hover ul {

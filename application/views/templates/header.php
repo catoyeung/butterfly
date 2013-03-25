@@ -92,6 +92,7 @@
                                 <li><a href="<?php echo base_url(); ?>post/view">用戶身份管理</a></li>
                                 <li><a href="<?php echo base_url(); ?>user/view">用戶管理</a></li>
                                 <li><a href="<?php echo base_url(); ?>district/view">分區管理</a></li>
+                                <li><a href="<?php echo base_url(); ?>ad_source/view">廣告來源管理</a></li>
                             </ul>
                         </li>
                         <li><a href='#'>通告</a>
