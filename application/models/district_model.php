@@ -1,8 +1,9 @@
 <?php
-class Crm_User_model extends CI_Model {
+class District_model extends CI_Model {
 
     public function __construct()
     {
+        // Call the Model constructor
         parent::__construct();
         $this->load->database();
     }
@@ -16,36 +17,31 @@ class Crm_User_model extends CI_Model {
         if (!isset($raw['deleted'])) {
             $raw['deleted'] = False;
         }
-        if (!isset($raw['inactive'])) {
-            $raw['inactive'] = False;
-        }
-        $this->db->insert('Crm_user', $raw);
+        $this->db->insert('District', $raw);
     }
     
-    public function update($crm_user_id, $raw)
+    public function update($district_id, $raw)
     {
-        $this->db->where('crm_user_id', $crm_user_id);
+        $this->db->where('district_id', $district_id);
         foreach($raw as $key => $value)
         {
             $raw[$key] = $this->db->escape_str($value);
         }
         $raw['updated_at'] = microtime_to_mssql_time(microtime());
-        $this->db->update('Crm_user', $raw); 
+        return $this->db->update('District', $raw); 
     }
     
     public function get_by($pairs)
     {
-        $query = $this->db->get_where('Crm_user', $pairs);
+        $query = $this->db->get_where('District', $pairs);
         return $query->result();
     }
     
     public function get_all()
     {
-        $this->db->select('Crm_user.*, Post.post_name');
-        $this->db->from('Crm_user');
-        $this->db->join('Post', 'Crm_user.post_id = Post.post_id');
+        $this->db->select('*');
+        $this->db->from('District');
         $query = $this->db->get();
         return $query->result();
     }
 }
-?>

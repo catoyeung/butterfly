@@ -796,8 +796,9 @@ h2 {
     font-size: 13px;
 }
 
-#brand-chooser-div ul li a {
+#brand-chooser-div ul a {
     text-decoration: none;
+    width: 200px;
 }
 
 #footer {

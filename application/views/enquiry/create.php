@@ -3,9 +3,12 @@
         <div id="brand-chooser-div">
             <p>請選擇品牌</p>
             <ul>
-                <li><a href="#">Dr. Pro</a></li>
-                <li><a href="#">Be a lady</a></li>
-                <li><a href="#">Medic Beauty</a></li>
+                <?php
+                foreach ($brands as $brand)
+                {
+                    echo '<li><a href="#" onclick=selectBrand('.$brand->brand_id.')>'.$brand->brand_name.'</a></li>';
+                }
+                ?>
             </ul>
         </div>
         <div id="enquiry-form-div">
@@ -39,16 +42,16 @@
             <th>查詢品牌：</th>
             <td>
                 <select class="chosen" placeholder="查詢內容" style="width: 300px">
-                    <option value="drpro">Dr. Pro</option>
-                    <option value="bealady">Be a Lady</option>
-                    <option value="medicbeauty">Medic Beauty</option>
+                    {{#brands}}
+                    <option value="{{brand_id}}">{{brand_name}}</option>
+                    {{/brands}}
                 </select>
             </td>
         </tr>
         <tr>
-            <th>分店：</th>
+            <th>分區：</th>
             <td>
-                <select class="chosen" placeholder="分店" style="width: 300px">
+                <select class="chosen" placeholder="分區" style="width: 300px">
                     <option value="佐敦">佐敦</option>
                     <option value="銅鑼灣">銅鑼灣</option>
                     <option value="將軍澳">將軍澳</option>
@@ -167,6 +170,7 @@
             <td><input type="submit" value="確定"/><button>重新輸入</button></td>
         </tr>
     </table>
+    <input name="brand_id" value="{{brand_id}}" type="hidden"/>
 </form>
 </script>
 
@@ -175,9 +179,11 @@ $(document).ready(function() {
     
 });
 
-function selectBrand() {
+function selectBrand(brandId) {
+    $('#brand-chooser-div').hide();
     var data = {};
-    //data.posts = JSON.parse('<?php  ?>');
+    data.brands = JSON.parse('<?php echo json_encode($brands) ?>');
+    data.brand_id = JSON.parse(brandId);
     var template = $('#enquiry-form-template').html();
     var html = Mustache.to_html(template, data);
     $('#enquiry-form-div').prepend(html);

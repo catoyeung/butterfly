@@ -67,3 +67,13 @@ CREATE TABLE Crm_user_belongs_to_brand
 (crm_user_id int NOT NULL,
 brand_id int NOT NULL,
 FOREIGN KEY ( brand_id ) REFERENCES Brand (brand_id))
+
+CREATE TABLE District
+(district_id int NOT NULL IDENTITY(1,1),
+district_name varchar(100) NOT NULL,
+brand_id int NOT NULL,
+deleted bit NOT NULL,
+created_at datetime NOT NULL,
+updated_at datetime,
+PRIMARY KEY (district_id),
+FOREIGN KEY ( brand_id ) REFERENCES Brand (brand_id))

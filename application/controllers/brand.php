@@ -30,9 +30,9 @@ class Brand extends MY_Controller {
                                                        'created_at'=>microtime_to_mssql_time(microtime())
                                         ));
             if($result) {
-                add_flash_message('info', '用戶身份已新增。');
+                add_flash_message('info', '品牌已新增。');
             } else {
-                add_flash_message('alert', '用戶身份不能新增，請聯絡系統管理員。');
+                add_flash_message('alert', '品牌不能新增，請聯絡系統管理員。');
             }
             redirect('brand/view');
         }
@@ -52,9 +52,9 @@ class Brand extends MY_Controller {
             $result = $this->Brand_model->update($brand_id,
                                                 array('brand_name'=>$brand_name));
             if($result) {
-                add_flash_message('info', '用戶身份已更改。');
+                add_flash_message('info', '品牌已更改。');
             } else {
-                add_flash_message('alert', '用戶身份不能更改，請聯絡系統管理員。');
+                add_flash_message('alert', '品牌不能更改，請聯絡系統管理員。');
             }
             redirect('brand/view');
         }

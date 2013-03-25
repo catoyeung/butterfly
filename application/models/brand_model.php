@@ -1,9 +1,6 @@
 <?php
 class Brand_model extends CI_Model {
 
-    protected $post_id;
-    protected $post_name;
-
     public function __construct()
     {
         // Call the Model constructor
@@ -30,7 +27,8 @@ class Brand_model extends CI_Model {
         {
             $raw[$key] = $this->db->escape_str($value);
         }
-        $this->db->update('Brand', $raw); 
+        $raw['updated_at'] = microtime_to_mssql_time(microtime());
+        return $this->db->update('Brand', $raw); 
     }
     
     public function get_by($pairs)
@@ -43,7 +41,6 @@ class Brand_model extends CI_Model {
     {
         $this->db->select('*');
         $this->db->from('Brand');
-        $this->db->where('deleted', False);
         $query = $this->db->get();
         return $query->result();
     }
