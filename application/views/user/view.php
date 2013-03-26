@@ -19,7 +19,7 @@
 </tr>
     {{#users}}
     <tr>
-        <td>{{crm_user_id}}</td>
+        <td>{{staff_id}}</td>
         <td {{#deleted}}
             style="text-decoration: line-through;" 
             {{/deleted}}
@@ -28,12 +28,12 @@
         <td>{{username}}</td>
         <td>{{password}}</td>
         <td style="text-align:right;">
-            <button onclick="location.href='<?php echo base_url(); ?>user/edit/{{crm_user_id}}'">編輯</button>
+            <button onclick="location.href='<?php echo base_url(); ?>user/edit/{{staff_id}}'">編輯</button>
             {{#deleted}}
-            <button onclick="resume({{crm_user_id}})">還原</button>
+            <button onclick="resume({{staff_id}})">還原</button>
             {{/deleted}}
             {{^deleted}}
-            <button onclick="del({{crm_user_id}})">刪除</button>
+            <button onclick="del({{staff_id}})">刪除</button>
             {{/deleted}}
         </td>
     </tr>
@@ -54,19 +54,19 @@ $(document).ready(function() {
     $('#models-div').prepend(html);
 });
 
-function resume(crm_user_id) {
+function resume(staff_id) {
     var form = document.createElement('form');
     form.setAttribute('method', 'post');
-    form.setAttribute('action', '<?php echo base_url().'user/resume/'; ?>'+crm_user_id);
+    form.setAttribute('action', '<?php echo base_url().'user/resume/'; ?>'+staff_id);
     form.style.display = 'hidden';
     document.body.appendChild(form)
     form.submit();
 }
 
-function del(crm_user_id) {
+function del(staff_id) {
     var form = document.createElement('form');
     form.setAttribute('method', 'post');
-    form.setAttribute('action', '<?php echo base_url().'user/delete/'; ?>'+crm_user_id);
+    form.setAttribute('action', '<?php echo base_url().'user/delete/'; ?>'+staff_id);
     form.style.display = 'hidden';
     document.body.appendChild(form)
     form.submit();

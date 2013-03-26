@@ -8,7 +8,7 @@ class Authentication_model extends CI_Model {
     {
         parent::__construct();
         $this->load->database();
-        $this->load->model('Crm_user_model');
+        $this->load->model('Staff_model');
     }
     
     public function encrypt($password)
@@ -18,7 +18,7 @@ class Authentication_model extends CI_Model {
     
     public function validate($username, $password)
     {
-        $result = $this->Crm_user_model->get_by(array('username'=>$username,
+        $result = $this->Staff_model->get_by(array('username'=>$username,
                                                       'password'=>$this->encrypt($password)));
         if (count($result)>0) {
             $this->validated_user = $result[0];
@@ -30,7 +30,7 @@ class Authentication_model extends CI_Model {
     public function store_user_in_session()
     {
         $validated_user = $this->validated_user;
-        $logged_in_user = array('crm_user_id'=>$validated_user->crm_user_id,
+        $logged_in_user = array('staff_id'=>$validated_user->staff_id,
                                 'username'=>$validated_user->username,
                                 'display_name'=>$validated_user->display_name,
                                 'post_id'=>$validated_user->post_id);

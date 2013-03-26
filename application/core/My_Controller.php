@@ -15,8 +15,5 @@ class MY_Controller extends CI_Controller {
         parent::__construct();
         $klass = $this->router->fetch_class();
         $method = $this->router->fetch_method();
-        if ($klass == 'pages' && $method == 'index') {
-            return;
-        }
     }
 }

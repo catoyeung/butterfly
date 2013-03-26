@@ -4,15 +4,15 @@ class User extends MY_Controller {
     
     public function __construct() {
         parent::__construct();
-        $this->load->model('Crm_user_model');
+        $this->load->model('Staff_model');
         $this->load->model('Post_model');
         $this->load->model('Brand_model');
-        $this->load->model('Crm_user_belongs_to_brand_model');
+        $this->load->model('Staff_belongs_to_brand_model');
     }
     
 	public function view(){
         $data['title'] = '用戶管理';
-        $data['users'] = $this->Crm_user_model->get_all();
+        $data['users'] = $this->Staff_model->get_all();
         $this->load->view('templates/header', $data);
         $this->load->view('user/view', $data);
         $this->load->view('templates/footer', $data);
@@ -35,7 +35,7 @@ class User extends MY_Controller {
             $password = $this->input->post('password');
             $post_id = $this->input->post('post_id');
             $display_name = $this->input->post('display_name');
-            $this->Crm_user_model->create(array('username'=>$username,
+            $this->Staff_model->create(array('username'=>$username,
                                                           'password'=>md5($password),
                                                           'post_id'=>$post_id,
                                                           'display_name'=>$display_name,
@@ -45,7 +45,7 @@ class User extends MY_Controller {
             $logged_in_user = $this->session->userdata('logged_in_user');
             foreach ($brand_ids as $brand_id)
             {
-                $this->Crm_user_belongs_to_brand_model->create(array('crm_user_id'=>$logged_in_user['crm_user_id'],
+                $this->Staff_belongs_to_brand_model->create(array('staff_id'=>$logged_in_user['staff_id'],
                                                                'brand_id'=>$brand_id));
             }
             $this->db->trans_complete();
@@ -58,18 +58,18 @@ class User extends MY_Controller {
         }
     }
     
-    public function edit($crm_user_id) {
+    public function edit($staff_id) {
         if ($this->input->server('REQUEST_METHOD')=='GET') {
             $data['title'] = '編輯用戶';
             
-            $data['user_id'] = $crm_user_id;
+            $data['user_id'] = $staff_id;
             $this->load->model('Post_model');
             $data['posts'] = $this->Post_model->get_all();
-            $result = $this->Crm_user_model->get_by(array('Crm_user_id'=>$crm_user_id));
+            $result = $this->Staff_model->get_by(array('staff_id'=>$staff_id));
             $data['user'] = $result[0];
             
             $data['brands'] = $this->Brand_model->get_all();
-            $result = $this->Crm_user_belongs_to_brand_model->get_all();
+            $result = $this->Staff_belongs_to_brand_model->get_all();
             $belonging_brand_ids = array();
             foreach ($result as $r)
             {
@@ -84,7 +84,7 @@ class User extends MY_Controller {
             $username = $this->input->post('username');
             $post_id = $this->input->post('post_id');
             $display_name = $this->input->post('display_name');
-            $result = $this->Crm_user_model->update($crm_user_id,
+            $result = $this->Staff_model->update($staff_id,
                                                 array('username'=>$username,
                                                       'post_id'=>$post_id,
                                                       'display_name'=>$display_name));
@@ -99,7 +99,7 @@ class User extends MY_Controller {
     
     public function delete($user_id) {
         if ($this->input->server('REQUEST_METHOD')=='POST') {
-            $result = $this->Crm_user_model->update($user_id,
+            $result = $this->Staff_model->update($user_id,
                                                 array('deleted'=>true));
             if($result) {
                 add_flash_message('info', '用戶已刪除。');
@@ -112,7 +112,7 @@ class User extends MY_Controller {
     
     public function resume($user_id) {
         if ($this->input->server('REQUEST_METHOD')=='POST') {
-            $result = $this->Crm_user_model->update($user_id,
+            $result = $this->Staff_model->update($user_id,
                                                 array('deleted'=>false));
             if($result) {
                 add_flash_message('info', '用戶已還原。');
@@ -123,9 +123,9 @@ class User extends MY_Controller {
         }
     }
     
-    public function reset_password($crm_user_id) {
+    public function reset_password($staff_id) {
         $new_password = $this->random_password();
-        $result = $this->Crm_user_model->update($crm_user_id,
+        $result = $this->Staff_model->update($staff_id,
                                                 array('password'=>md5($new_password)));
         if($result) {
             $data['new_password'] = $new_password;

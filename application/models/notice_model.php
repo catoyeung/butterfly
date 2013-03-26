@@ -29,9 +29,9 @@ class Notice_model extends CI_Model {
     
     public function get_all()
     {
-        $this->db->select('Notice.*, Crm_user.display_name');
+        $this->db->select('Notice.*, Staff.display_name');
         $this->db->from('Notice');
-        $this->db->join('Crm_user', 'Crm_user.crm_user_id = Notice.created_by_user');
+        $this->db->join('Staff', 'Staff.staff_id = Notice.created_by_user');
         $query = $this->db->get();
         return $query->result();
     }
