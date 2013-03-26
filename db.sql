@@ -17,7 +17,7 @@ inactive bit NOT NULL,
 created_at datetime NOT NULL,
 updated_at datetime,
 PRIMARY KEY (staff_id),
-UNIQUE (username, display_name),
+CONSTRAINT username_is_unique UNIQUE (username),
 FOREIGN KEY ( post_id ) REFERENCES Post (post_id))
 
 CREATE TABLE Notice
