@@ -13,8 +13,14 @@ class Post_model extends CI_Model {
     
     public function create($raw)
     {
-        $this->db->insert('Post', array('post_name' => $this->db->escape_str($raw['post_name']),
-                                        'created_at' => $this->db->escape_str($raw['created_at'])));
+        foreach($raw as $key => $value)
+        {
+            $raw[$key] = $this->db->escape_str($value);
+        }
+        if (!isset($raw['deleted'])) {
+            $raw['deleted'] = False;
+        }
+        return $this->db->insert('Post', $raw);
     }
     
     public function update($post_id, $raw)
