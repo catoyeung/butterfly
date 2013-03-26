@@ -28,7 +28,7 @@ class District extends MY_Controller {
         } elseif ($this->input->server('REQUEST_METHOD')=='POST') {
             // user create form with district request
             $district_name = $this->input->post('district_name');
-            $brand_id = $this->input->post('brand_id');
+            $brand_id = $this->session->userdata('brand_id');
             
             // Check if district model is unique with its name and brand
             $result = $this->District_model->get_by(array('district_name'=>$district_name,

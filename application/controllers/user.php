@@ -31,11 +31,12 @@ class User extends MY_Controller {
             // user create form with post request
             $this->db->trans_start();
             $username = $this->input->post('username');
+            // encrypt the password with md5
             $password = $this->input->post('password');
             $post_id = $this->input->post('post_id');
             $display_name = $this->input->post('display_name');
             $this->Crm_user_model->create(array('username'=>$username,
-                                                          'password'=>$password,
+                                                          'password'=>md5($password),
                                                           'post_id'=>$post_id,
                                                           'display_name'=>$display_name,
                                                       'created_at'=>microtime_to_mssql_time(microtime())
@@ -48,7 +49,7 @@ class User extends MY_Controller {
                                                                'brand_id'=>$brand_id));
             }
             $this->db->trans_complete();
-            if($this->db->trans_status() === False) {
+            if($this->db->trans_status() === True) {
                 add_flash_message('info', '用戶已新增。');
             } else {
                 add_flash_message('alert', '用戶不能新增，請聯絡系統管理員。');
@@ -75,19 +76,16 @@ class User extends MY_Controller {
                 $belonging_brand_ids[] = $r->brand_id;
             }
             $data['belonging_brand_ids'] = $belonging_brand_ids;
-            print_r($belonging_brand_ids);
             
             $this->load->view('templates/header', $data);
             $this->load->view('user/edit', $data);
             $this->load->view('templates/footer', $data);
         } elseif ($this->input->server('REQUEST_METHOD')=='POST') {
             $username = $this->input->post('username');
-            $password = $this->input->post('password');
             $post_id = $this->input->post('post_id');
             $display_name = $this->input->post('display_name');
             $result = $this->Crm_user_model->update($crm_user_id,
                                                 array('username'=>$username,
-                                                      'password'=>$password,
                                                       'post_id'=>$post_id,
                                                       'display_name'=>$display_name));
             if($result) {
@@ -123,5 +121,33 @@ class User extends MY_Controller {
             }
             redirect('user/view');
         }
+    }
+    
+    public function reset_password($crm_user_id) {
+        $new_password = $this->random_password();
+        $result = $this->Crm_user_model->update($crm_user_id,
+                                                array('password'=>md5($new_password)));
+        if($result) {
+            $data['new_password'] = $new_password;
+            $this->load->view('templates/header', $data);
+            $this->load->view('user/reset_password', $data);
+            $this->load->view('templates/footer', $data);
+        } else {
+            add_flash_message('alert', '用戶密碼不能重設，請聯絡系統管理員。');
+            redirect('user/view');
+        }
+        
+    }
+    
+    private function random_password()
+    {
+        $alphabet = "abcdefghijklmnopqrstuwxyzABCDEFGHIJKLMNOPQRSTUWXYZ0123456789";
+        $password = array(); //remember to declare $pass as an array
+        $alphaLength = strlen($alphabet) - 1; //put the length -1 in cache
+        for ($i = 0; $i < 8; $i++) {
+            $n = rand(0, $alphaLength);
+            $password[] = $alphabet[$n];
+        }
+        return implode($password); //turn the array into a string
     }
 }

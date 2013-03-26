@@ -17,7 +17,7 @@ class Brand_model extends CI_Model {
         if (!isset($raw['deleted'])) {
             $raw['deleted'] = False;
         }
-        $this->db->insert('Brand', $raw);
+        return $this->db->insert('Brand', $raw);
     }
     
     public function update($brand_id, $raw)

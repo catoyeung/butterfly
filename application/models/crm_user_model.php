@@ -19,7 +19,7 @@ class Crm_User_model extends CI_Model {
         if (!isset($raw['inactive'])) {
             $raw['inactive'] = False;
         }
-        $this->db->insert('Crm_user', $raw);
+        return $this->db->insert('Crm_user', $raw);
     }
     
     public function update($crm_user_id, $raw)
@@ -30,7 +30,7 @@ class Crm_User_model extends CI_Model {
             $raw[$key] = $this->db->escape_str($value);
         }
         $raw['updated_at'] = microtime_to_mssql_time(microtime());
-        $this->db->update('Crm_user', $raw); 
+        return $this->db->update('Crm_user', $raw); 
     }
     
     public function get_by($pairs)

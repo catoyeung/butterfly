@@ -23,9 +23,9 @@ PRIMARY KEY (crm_user_id),
 UNIQUE (username, display_name))
 FOREIGN KEY ( post_id ) REFERENCES Post (post_id))
 
-INSERT INTO Crm_user (username, password, display_name, post, deleted, inactive, created_at)
+INSERT INTO Crm_user (username, password, display_name, post_id, deleted, inactive, created_at)
 values
-('admin','admin','Cato Yeung','admin',0,0,'2013-03-21 07:07:23.367')
+('admin','admin','Cato Yeung',1,0,0,'2013-03-21 07:07:23.367')
 
 CREATE TABLE Notice
 (notice_id int NOT NULL IDENTITY(1,1),

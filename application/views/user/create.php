@@ -9,7 +9,7 @@
                     </tr>
                     <tr>
                         <th>密碼：</th>
-                        <td><input type="text" style="width: 150px;" name="password"/></td>
+                        <td><input type="password" style="width: 150px;" name="password"/></td>
                     </tr>
                     <tr>
                         <th>用戶身份：</th>

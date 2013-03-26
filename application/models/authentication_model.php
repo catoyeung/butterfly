@@ -11,10 +11,15 @@ class Authentication_model extends CI_Model {
         $this->load->model('Crm_user_model');
     }
     
+    public function encrypt($password)
+    {
+        return md5($password);
+    }
+    
     public function validate($username, $password)
     {
         $result = $this->Crm_user_model->get_by(array('username'=>$username,
-                                                      'password'=>$password));
+                                                      'password'=>$this->encrypt($password)));
         if (count($result)>0) {
             $this->validated_user = $result[0];
             return True;

@@ -14,7 +14,7 @@ class Account extends CI_Controller {
         $brand_id = $this->input->post('brand_id');
         
         // check if brand is selected
-        if ($brand_id=='')
+        if ($brand_id=='' && $username !== 'admin')
         {
             add_flash_message('alert', '請選擇品牌。');
             redirect('');
