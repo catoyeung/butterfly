@@ -29,12 +29,19 @@ class User extends MY_Controller {
             $this->load->view('templates/footer', $data);
         } elseif ($this->input->server('REQUEST_METHOD')=='POST') {
             // user create form with post request
-            $this->db->trans_start();
             $username = $this->input->post('username');
             // encrypt the password with md5
             $password = $this->input->post('password');
             $post_id = $this->input->post('post_id');
             $display_name = $this->input->post('display_name');
+            // check if user already exists,
+            // if yes, redirect to user view page
+            $result = $this->Staff_model->get_by(array('username'=>$username));
+            if ($result) {
+                add_flash_message('alert', '用戶名稱已存在。');
+                redirect('user/view');
+            }
+            $this->db->trans_start();
             $this->Staff_model->create(array('username'=>$username,
                                                           'password'=>md5($password),
                                                           'post_id'=>$post_id,
