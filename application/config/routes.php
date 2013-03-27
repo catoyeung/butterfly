@@ -48,6 +48,7 @@ $route['enquiry/(:any)'] = 'enquiry/$1';
 $route['brand/(:any)'] = 'brand/$1';
 $route['district/(:any)'] = 'district/$1';
 $route['ad_source/(:any)'] = 'ad_source/$1';
+$route['treatment_type/(:any)'] = 'treatment_type/$1';
 // this route need to be put at last because
 // routes are load from top to bottom
 $route['(:any)'] = 'pages/$1';

@@ -21,15 +21,13 @@ class Authentication_model extends CI_Model {
         $result = $this->Staff_model->get_by(array('username'=>$username,
                                                       'password'=>$this->encrypt($password)));
         if (count($result)>0) {
-            $this->validated_user = $result[0];
-            return True;
+            return $result[0];
         }
         return False;
     }
     
-    public function store_user_in_session()
+    public function store_user_in_session($validated_user)
     {
-        $validated_user = $this->validated_user;
         $logged_in_user = array('staff_id'=>$validated_user->staff_id,
                                 'username'=>$validated_user->username,
                                 'display_name'=>$validated_user->display_name,

@@ -30,7 +30,6 @@ class User extends MY_Controller {
         } elseif ($this->input->server('REQUEST_METHOD')=='POST') {
             // user create form with post request
             $username = $this->input->post('username');
-            // encrypt the password with md5
             $password = $this->input->post('password');
             $post_id = $this->input->post('post_id');
             $display_name = $this->input->post('display_name');
@@ -42,6 +41,7 @@ class User extends MY_Controller {
                 redirect('user/view');
             }
             $this->db->trans_start();
+            // encrypt the password with md5
             $this->Staff_model->create(array('username'=>$username,
                                                           'password'=>md5($password),
                                                           'post_id'=>$post_id,

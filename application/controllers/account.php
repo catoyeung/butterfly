@@ -14,14 +14,16 @@ class Account extends CI_Controller {
         $brand_id = $this->input->post('brand_id');
         
         // check if brand is selected
-        if ($brand_id=='' && $username !== 'admin')
+        if ($brand_id=='')
         {
             add_flash_message('alert', '請選擇品牌。');
             redirect('');
         }
         
-        if ($this->Authentication_model->validate($username, $password)){
-            $this->Authentication_model->store_user_in_session();
+        $validated_user = $this->Authentication_model->validate($username, $password);
+
+        if ($validated_user){
+            $this->Authentication_model->store_user_in_session($validated_user);
             $this->Authentication_model->store_brand_id_in_session($brand_id);
             add_flash_message('info', '你已經登入系統。');
             redirect('notice/view');
