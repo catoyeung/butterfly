@@ -52,34 +52,14 @@
         <tr>
             <th>查詢內容：</th>
             <td>
-                <select class="chosen" placeholder="查詢內容" style="width: 300px">
-                    <option value="整容">整容</option>
-                    <option value="$500 MTS微針">$500 MTS微針</option>
-                    <option value="$388 激光脫毛">$388 激光脫毛</option>
-                    <option value="Facial">Facial</option>
-                    <option value="按摩護理">按摩護理</option>
-                    <option value="彩光去斑">彩光去斑</option>
-                    <option value="嫩膚">嫩膚</option>
-                    <option value="醫學換膚">醫學換膚</option>
-                    <option value="沒有醫生做的項目 - 其他">沒有醫生做的項目 - 其他</option>
-                    <option value="脫毛咨詢">脫毛咨詢</option>
-                    <option value="纖體咨詢">纖體咨詢</option>
-                    <option value="美白針咨詢">美白針咨詢</option>
-                    <option value="MTS-PRO微針嫩膚及去妊娠紋">MTS-PRO微針嫩膚及去妊娠紋</option>
-                    <option value="BOTOX咨詢">BOTOX咨詢</option>
-                    <option value="Tissue Filler咨詢">Tissue Filler咨詢</option>
-                    <option value="手持雜誌優惠信">手持雜誌優惠信</option>
-                    <option value="RF射頻收緊去皺">RF射頻收緊去皺</option>
-                    <option value="於fanspage內投票,送免費試做">於fanspage內投票,送免費試做</option>
-                    <option value="$1000 botox">$1000 botox</option>
-                    <option value="$1,000up 透明質酸">$1,000up 透明質酸</option>
-                    <option value="澳門查詢">澳門查詢</option>
-                    <option value="會計部問題紙">會計部問題紙</option>
-                    <option value="$1,000up肉毒桿菌止汗">$1,000up肉毒桿菌止汗</option>
-                    <option value="簽續期信延續已有療程">簽續期信延續已有療程</option>
-                    <option value="轉分店享用已有療程">轉分店享用已有療程</option>
-                    <option value="已完成療程之File">已完成療程之File</option>
-                    <option value="RVL(透明質酸嫩膚)">RVL(透明質酸嫩膚)</option>
+                <select id="enquiry-content-chooser" data-placeholder="查詢內容" style="width: 300px">
+                    <option></option>
+                    <?php
+                    foreach ($enquiry_contents as $enquiry_content)
+                    {
+                        echo '<option value="'.$enquiry_content->enquiry_content_id.'">'.$enquiry_content->enquiry_content_name.'</option>';
+                    }
+                    ?>
                 </select>
             </td>
         </tr>
@@ -89,24 +69,14 @@
         <tr>
             <th>廣告來源：</th>
             <td>
-                <select class="chosen" placeholder="廣告來源" style="width: 300px">
-                    <option value="東方新地(t111)">東方新地(t111)</option>
-                    <option value="便利(t222)">便利(t222)</option>
-                    <option value="3周(t333)">3周(t333)</option>
-                    <option value="忽周(t444)">忽周(t444)</option>
-                    <option value="已於Groupbuyer團購網購買coupon(t777)">已於Groupbuyer團購網購買coupon(t777)</option>
-                    <option value="上網(t555)">上網(t555)</option>
-                    <option value="澳門日報(t666)">澳門日報(t666)</option>
-                    <option value="Team 9-試做 (team 9)">Team 9-試做 (team 9)</option>
-                    <option value="網上咨詢(t119)">網上咨詢(t119)</option>
-                    <option value="雜誌[未能說出那本](t120)">雜誌[未能說出那本](t120)</option>
-                    <option value="公司Blog(t121)">公司Blog(t121)</option>
-                    <option value="Team 9-投票 (team 9)">Team 9-投票 (team 9)</option>
-                    <option value="網上免費試做(t122)">網上免費試做(t122)</option>
-                    <option value="Yahoo查詢(t125)">Yahoo查詢(t125)</option>
-                    <option value="東Touch(t126)">東Touch(t126)</option>
-                    <option value="Facebook免費試做(t127)">Facebook免費試做(t127)</option>
-                    <option value="朋友介紹(t128)">朋友介紹(t128)</option>
+                <select id="ad-source-chooser" data-placeholder="廣告來源" style="width: 300px">
+                    <option></option>
+                    <?php
+                    foreach ($ad_sources as $ad_source)
+                    {
+                        echo '<option value="'.$ad_source->ad_source_id.'">'.$ad_source->ad_source_name.'</option>';
+                    }
+                    ?>
                 </select>
             </td>
         </tr>
@@ -163,5 +133,7 @@ $(document).ready(function() {
     $('#enquiry-form-div').prepend(html);
     $('#brand-chooser').chosen();
     $('#district-chooser').chosen();
+    $('#enquiry-content-chooser').chosen();
+    $('#ad-source-chooser').chosen();
 });
 </script>
