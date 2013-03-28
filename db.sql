@@ -1,6 +1,6 @@
 CREATE TABLE Brand
 (brand_id int NOT NULL IDENTITY(1,1),
-brand_name varchar(100) NOT NULL,
+brand_name nvarchar(100) NOT NULL,
 deleted bit NOT NULL,
 created_at datetime NOT NULL,
 updated_at datetime,
@@ -9,7 +9,7 @@ UNIQUE (brand_name))
 
 CREATE TABLE Post
 (post_id int NOT NULL IDENTITY(1,1),
-post_name varchar(50) NOT NULL,
+post_name nvarchar(50) NOT NULL,
 brand_id int NOT NULL,
 deleted bit NOT NULL,
 created_at datetime NOT NULL,
@@ -22,7 +22,7 @@ CREATE TABLE Staff
 (staff_id int NOT NULL IDENTITY(1,1),
 username varchar(25) NOT NULL,
 password varchar(50) NOT NULL,
-display_name varchar(50) NOT NULL,
+display_name nvarchar(50) NOT NULL,
 post_id int NOT NULL,
 deleted bit NOT NULL,
 inactive bit NOT NULL,
@@ -39,8 +39,8 @@ FOREIGN KEY ( brand_id ) REFERENCES Brand (brand_id))
 
 CREATE TABLE Notice
 (notice_id int NOT NULL IDENTITY(1,1),
-title varchar(100) NOT NULL,
-content text NOT NULL,
+title nvarchar(100) NOT NULL,
+content ntext NOT NULL,
 created_by_user int NOT NULL,
 deleted bit NOT NULL,
 created_at datetime NOT NULL,
@@ -50,7 +50,7 @@ FOREIGN KEY ( created_by_user ) REFERENCES Staff (staff_id))
 
 CREATE TABLE District
 (district_id int NOT NULL IDENTITY(1,1),
-district_name varchar(100) NOT NULL,
+district_name nvarchar(100) NOT NULL,
 brand_id int NOT NULL,
 deleted bit NOT NULL,
 created_at datetime NOT NULL,
@@ -61,7 +61,7 @@ UNIQUE (district_name,brand_id))
 
 CREATE TABLE Ad_source
 (ad_source_id int NOT NULL IDENTITY(1,1),
-ad_source_name varchar(100) NOT NULL,
+ad_source_name nvarchar(100) NOT NULL,
 brand_id int NOT NULL,
 deleted bit NOT NULL,
 created_at datetime NOT NULL,
@@ -72,7 +72,7 @@ UNIQUE (ad_source_name,brand_id))
 
 CREATE TABLE Treatment_type
 (treatment_type_id int NOT NULL IDENTITY(1,1),
-treatment_type_name varchar(100) NOT NULL,
+treatment_type_name nvarchar(100) NOT NULL,
 brand_id int NOT NULL,
 deleted bit NOT NULL,
 created_at datetime NOT NULL,
@@ -80,3 +80,16 @@ updated_at datetime,
 PRIMARY KEY (treatment_type_id),
 FOREIGN KEY ( brand_id ) REFERENCES Brand (brand_id),
 UNIQUE (treatment_type_name,brand_id))
+
+CREATE TABLE Enquiry_content
+(enquiry_content_id int NOT NULL IDENTITY(1,1),
+enquiry_content_name nvarchar(100) NOT NULL,
+description text,
+brand_id int NOT NULL,
+treatment_type_id int,
+deleted bit NOT NULL,
+created_at datetime NOT NULL,
+updated_at datetime,
+PRIMARY KEY (enquiry_content_id),
+FOREIGN KEY ( brand_id ) REFERENCES Brand (brand_id),
+UNIQUE (enquiry_content_name,brand_id))
