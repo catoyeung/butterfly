@@ -25,7 +25,9 @@ class Post extends MY_Controller {
         } elseif ($this->input->server('REQUEST_METHOD')=='POST') {
             // user create form with post request
             $post_name = $this->input->post('post_name');
+            $brand_id = $this->session->userdata('brand_id');
             $result = $this->Post_model->create(array('post_name'=>$post_name,
+                                                      'brand_id'=>$brand_id,
                                                       'created_at'=>microtime_to_mssql_time(microtime())
                                         ));
             if($result) {

@@ -777,6 +777,8 @@ h2 {
 
 .model-edit-div td {
     text-align: left;
+    padding: 8px 0;
+    vertical-align: middle;
 }
 
 #brand-chooser-div p {

@@ -9,6 +9,7 @@ class Authentication_model extends CI_Model {
         parent::__construct();
         $this->load->database();
         $this->load->model('Staff_model');
+        $this->load->model('Post_model');
     }
     
     public function encrypt($password)
@@ -45,5 +46,11 @@ class Authentication_model extends CI_Model {
         $logged_in_user = $this->session->userdata('logged_in_user');
         if (!empty($logged_in_user)) return True;
         else return False;
+    }
+    
+    public function get_post_name($staff_id)
+    {
+        $result = $this->Post_model->get_by(array('post_id'=>$staff_id));
+        return $result[0]->post_name;
     }
 }
