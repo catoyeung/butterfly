@@ -12,6 +12,7 @@
 <tr>
     <th style="width:30px;">Id</th>
     <th style="width:150px;">查詢內容名稱</th>
+    <th style="width:150px;">美容分類</th>
     <th style="width:780px; text-align:right;"></th>
 </tr>
     {{#enquiry_contents}}
@@ -21,6 +22,12 @@
             style="text-decoration: line-through;" 
             {{/deleted}}
             >{{enquiry_content_name}}</td>
+        <td>{{#no_treatment_type}}
+            沒有美容分類
+            {{/no_treatment_type}}
+            {{^no_treatment_type}}
+            {{treatment_type_name}}
+            {{/no_treatment_type}}</td>
         <td style="text-align:right;">
             <button onclick="location.href='<?php echo base_url(); ?>enquiry_content/edit/{{enquiry_content_id}}'">編輯</button>
             {{#deleted}}

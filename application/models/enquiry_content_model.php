@@ -43,9 +43,12 @@ class Enquiry_content_model extends CI_Model {
                           Enquiry_content.enquiry_content_name,
                           Enquiry_content.deleted,
                           Brand.brand_id,
-                          Brand.brand_name');
+                          Brand.brand_name,
+                          Treatment_type.treatment_type_id,
+                          Treatment_type.treatment_type_name');
         $this->db->from('Enquiry_content');
         $this->db->join('Brand', 'Enquiry_content.brand_id = Brand.brand_id');
+        $this->db->join('Treatment_type', 'Treatment_type.treatment_type_id = Enquiry_content.treatment_type_id', 'left');
         $query = $this->db->get();
         return $query->result();
     }

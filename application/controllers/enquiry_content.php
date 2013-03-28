@@ -12,7 +12,14 @@ class Enquiry_content extends MY_Controller {
     public function view() {
         $data = array();
         $data['title'] = '查詢內容管理';
-        $data['enquiry_contents'] = $this->Enquiry_content_model->get_all('');
+        $enquiry_contents = $this->Enquiry_content_model->get_all('');
+        foreach ($enquiry_contents as $key=>$enquiry_content)
+        {
+            if ($enquiry_content->treatment_type_id == '')
+                $enquiry_contents[$key]->no_treatment_type = true;
+        }
+        $data['treatment_types'] = $this->Treatment_type_model->get_by(array('deleted'=>False));
+        $data['enquiry_contents'] = $enquiry_contents;
         $this->load->view('templates/header', $data);
         $this->load->view('enquiry_content/view', $data);
         $this->load->view('templates/footer', $data);
@@ -59,7 +66,10 @@ class Enquiry_content extends MY_Controller {
             $data['title'] = '編輯查詢內容';
             $data['enquiry_content_id'] = $enquiry_content_id;
             $result = $this->Enquiry_content_model->get_by(array('enquiry_content_id'=>$enquiry_content_id));
-            $data['enquiry_content_name'] = $result[0]->enquiry_content_name;
+            $data['enquiry_content'] = $result[0];
+            $treatment_types = $this->Treatment_type_model->get_by(array('deleted'=>False));
+            array_unshift($treatment_types, (object) array('treatment_type_id' => '', 'treatment_type_name' => '沒有美容分類'));
+            $data['treatment_types'] = $treatment_types;
             $this->load->view('templates/header', $data);
             $this->load->view('enquiry_content/edit', $data);
             $this->load->view('templates/footer', $data);
