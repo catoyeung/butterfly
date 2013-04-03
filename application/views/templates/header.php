@@ -88,9 +88,9 @@
                     <ul>
                         <li><a href='#'>管理</a>
                             <ul>
-                                <li><a href="<?php echo base_url(); ?>authorization_by_post/view">用戶身份權限管理</a></li>
                                 <li><a href="<?php echo base_url(); ?>brand/view">品牌管理</a></li>
                                 <li><a href="<?php echo base_url(); ?>post/view">用戶身份管理</a></li>
+                                <li><a href="<?php echo base_url(); ?>authentication_by_post/view">用戶身份權限管理</a></li>
                                 <li><a href="<?php echo base_url(); ?>user/view">用戶管理</a></li>
                                 <li><a href="<?php echo base_url(); ?>district/view">分區管理</a></li>
                                 <li><a href="<?php echo base_url(); ?>ad_source/view">廣告來源管理</a></li>
