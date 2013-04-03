@@ -93,3 +93,15 @@ updated_at datetime,
 PRIMARY KEY (enquiry_content_id),
 FOREIGN KEY ( brand_id ) REFERENCES Brand (brand_id),
 UNIQUE (enquiry_content_name,brand_id))
+
+CREATE TABLE Authentication_by_post
+(authentication_by_post_id int NOT NULL IDENTITY(1,1),
+post_id int NOT NULL,
+controller varchar(50) NOT NULL,
+controller_method varchar(50) NOT NULL,
+http_method varchar(50) NOT NULL,
+deleted bit NOT NULL,
+created_at datetime NOT NULL,
+updated_at datetime,
+PRIMARY KEY (authentication_by_post_id),
+FOREIGN KEY ( post_id ) REFERENCES Post (post_id))

@@ -20,7 +20,7 @@
             style="text-decoration: line-through;" 
             {{/deleted}}>{{post_name}}</td>
         <td style="text-align:right;">
-            <button onclick="location.href='<?php echo base_url(); ?>authorization_by_post/edit/{{post_id}}'">修改權限</button>
+            <button onclick="location.href='<?php echo base_url(); ?>authentication_by_post/view/{{post_id}}'">詳細</button>
         </td>
     </tr>
     {{/posts}}
