@@ -35,8 +35,8 @@ abstract class MY_Controller extends CI_Controller {
             if (!$result)
             {
                 if (!($controller == 'notice' && $controller_method == 'view')) {
-                    add_flash_message('alert', '你沒有權限登入此頁面。');
-                    redirect('notice/view');
+                    //add_flash_message('alert', '你沒有權限登入此頁面。');
+                    //redirect('notice/view');
                 }
             }
             return call_user_func_array(array($this, $method), $params);

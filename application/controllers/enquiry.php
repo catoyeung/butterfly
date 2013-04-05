@@ -17,6 +17,8 @@ class Enquiry extends MY_Controller {
         $data['districts'] = $this->District_model->get_by(array('deleted'=>False));
         $data['enquiry_contents'] = $this->Enquiry_content_model->get_by(array('deleted'=>False));
         $data['ad_sources'] = $this->Ad_source_model->get_by(array('deleted'=>False));
+        $data['customer_services'] = $this->Staff_model->get_all_cs();
+        $data['consultants'] = $this->Staff_model->get_all_consultants();
         $this->load->view('templates/header', $data);
         $this->load->view('enquiry/create', $data);
         $this->load->view('templates/footer', $data);

@@ -47,5 +47,31 @@ class Staff_model extends CI_Model {
         $query = $this->db->get();
         return $query->result();
     }
+    
+    public function get_all_cs()
+    {
+        $this->db->select('Staff.staff_id,
+                          Staff.display_name,
+                          Staff.post_id,
+                          Post.post_name');
+        $this->db->from('Staff');
+        $this->db->join('Post', 'Staff.post_id = Post.post_id');
+        $this->db->where('Post.post_name', 'Customer Service');
+        $query = $this->db->get();
+        return $query->result();
+    }
+    
+    public function get_all_consultants()
+    {
+        $this->db->select('Staff.staff_id,
+                          Staff.display_name,
+                          Staff.post_id,
+                          Post.post_name');
+        $this->db->from('Staff');
+        $this->db->join('Post', 'Staff.post_id = Post.post_id');
+        $this->db->where('Post.post_name', 'Consultant');
+        $query = $this->db->get();
+        return $query->result();
+    }
 }
 ?>

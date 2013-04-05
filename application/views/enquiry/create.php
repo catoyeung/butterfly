@@ -86,31 +86,28 @@
         <tr>
             <th>客戶服務：</th>
             <td>
-                <select class="chosen" placeholder="廣告來源" style="width: 300px">
-                    <option value="Coey">Coey</option>
-                    <option value="Mei">Mei</option>
-                    <option value="Rebecca">Rebecca</option>
+                <select id="cs-chooser" data-placeholder="客戶服務" style="width: 300px">
+                    <option></option>
+                    <?php
+                    foreach ($customer_services as $customer_service)
+                    {
+                        echo '<option value="'.$customer_service->staff_id.'">'.$customer_service->display_name.'</option>';
+                    }
+                    ?>
                 </select>
             </td>
         </tr>
         <tr>
             <th>顧問：</th>
             <td>
-                <select class="chosen" placeholder="顧問" style="width: 300px">
-                    <option value="Man">Man</option>
-                    <option value="Co Co">Co Co</option>
-                    <option value="Kayee">Kayee</option>
-                    <option value="Beedel">Beedel</option>
-                    <option value="Wing">Wing</option>
-                    <option value="Yuki">Yuki</option>
-                    <option value="Yuko">Yuko</option>
-                    <option value="Joey">Joey</option>
-                    <option value="Sze">Sze</option>
-                    <option value="Elle">Elle</option>
-                    <option value="Cora Leung">Cora Leung</option>
-                    <option value="Cat">Cat</option>
-                    <option value="Con2">Con2</option>
-                    <option value="Royce">Royce</option>
+                <select id="consultant-chooser" data-placeholder="顧問" style="width: 300px">
+                    <option></option>
+                    <?php
+                    foreach ($consultants as $consultant)
+                    {
+                        echo '<option value="'.$consultant->staff_id.'">'.$consultant->display_name.'</option>';
+                    }
+                    ?>
                 </select>
             </td>
         </tr>
@@ -135,5 +132,7 @@ $(document).ready(function() {
     $('#district-chooser').chosen();
     $('#enquiry-content-chooser').chosen();
     $('#ad-source-chooser').chosen();
+    $('#cs-chooser').chosen();
+    $('#consultant-chooser').chosen();
 });
 </script>
