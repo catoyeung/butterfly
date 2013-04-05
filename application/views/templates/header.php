@@ -74,10 +74,14 @@
                 <ul>
                     <?php 
                     $logged_in_user = $this->session->userdata('logged_in_user');
+                    echo '<li>'.anchor($this->lang->switch_uri('hk'),'繁體').'</li>';
+                    echo '<li>'.anchor($this->lang->switch_uri('cn'),'简体').'</li>';
                     if (!empty($logged_in_user)) {
                         echo '<li>您好! '.$logged_in_user['display_name'].'</li>';
                         echo '<li><a href="'.base_url().'account/logout">登出</a></li>';
-                    } 
+                    }
+                    //echo '<li><a href="'.base_url().$controller.'/'.$controller_method.'"></a></li>';
+                    //echo '<li><a href="'.base_url().'account/logout"></a></li>';
                     ?>
                 </ul>
             </div>
