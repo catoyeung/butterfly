@@ -7,6 +7,8 @@ abstract class MY_Controller extends CI_Controller {
         parent::__construct();
         $this->load->model('Authentication_model');
         $this->load->model('Authentication_by_post_model');
+        $this->lang->load('header');
+        $this->lang->load('footer');
     }
     
     public function _remap($method, $params = array())
