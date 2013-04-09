@@ -17,24 +17,60 @@
 </head>
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.2/jquery-ui.min.js"></script>
+<!-- jquery cookie -->
+<script src="<?php echo js_url()?>jquery-cookie/jquery.cookie.js"></script>
 <!-- jquery time picker -->
 <script src="<?php echo js_url()?>jqueryui-timepicker/jquery.ui.timepicker.js"></script>
 <!-- chosen select option library -->
 <script src="<?php echo js_url(); ?>chosen/chosen.jquery.min.js"></script>
 <!-- mustache javascript template -->
 <script src="<?php echo js_url()?>mustache/mustache.js"></script>
+<script src="<?php echo js_url()?>spin/spin.min.js"></script>
 <script>
     // flash message effect
     <?php 
         $flash = $this->session->flashdata('flash');
     ?>
     $(document).ready(function() {
+        // If cookie is set, scroll to the position saved in the cookie.
+        if ( $.cookie("scroll") !== null ) {
+            $(document).scrollTop( $.cookie("scroll") );
+        }
+
+        // When a button is clicked...
+        //$('button').on("click", function() {
+            // Set a cookie that holds the scroll position.
+            //$.cookie("scroll", $(document).scrollTop() );
+        //});
+        
+        // flash message
         var flash = JSON.parse('<?php echo json_encode($flash) ?>');
-        console.log(flash);
         var template = $('#flash-message-template').html();
         var html = Mustache.to_html(template, flash);
         $('body').prepend(html);
         $('#flash-message').fadeIn(1000).delay(5000).fadeOut(1000);
+        
+        // loading spin library
+        var opts = {
+            lines: 10, // The number of lines to draw
+            length: 10, // The length of each line
+            width: 5, // The line thickness
+            radius: 10, // The radius of the inner circle
+            corners: 1, // Corner roundness (0..1)
+            rotate: 0, // The rotation offset
+            direction: 1, // 1: clockwise, -1: counterclockwise
+            color: '#666', // #rgb or #rrggbb
+            speed: 1, // Rounds per second
+            trail: 60, // Afterglow percentage
+            shadow: true, // Whether to render a shadow
+            hwaccel: false, // Whether to use hardware acceleration
+            className: 'spinner', // The CSS class to assign to the spinner
+            zIndex: 2e9, // The z-index (defaults to 2000000000)
+            top: 'auto', // Top position relative to parent in px
+            left: 'auto' // Left position relative to parent in px
+        };
+        var target = document.getElementById('loading-img');
+        var spinner = new Spinner(opts).spin(target);
     });
 </script>
 <script id="flash-message-template" type="text/template">
@@ -68,6 +104,9 @@
 </script>
 <html>
 <body>
+    <div id="loading-div" style="display: none;">
+        <div id="loading-img"></div>
+    </div>
     <div id="wrapper">
         <div id="header">
             <div id="account-div">
@@ -112,6 +151,7 @@
                             <ul>
                                 <li><a href="<?php echo base_url(); ?>customer?identity=cs">所有客戶</a></li>
                                 <li><a href="<?php echo base_url(); ?>enquiry/create">輸入查詢</a></li>
+                                <li><a href="<?php echo base_url(); ?>web_enquiry_form/view">網頁查詢</a></li>
                             </ul>
                         </li>
                         <li><a href='#'>電話傳銷</a>
