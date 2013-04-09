@@ -105,3 +105,20 @@ created_at datetime NOT NULL,
 updated_at datetime,
 PRIMARY KEY (authentication_by_post_id),
 FOREIGN KEY ( post_id ) REFERENCES Post (post_id))
+
+CREATE TABLE Web_enquiry_form
+(web_enquiry_form_id int NOT NULL IDENTITY(1,1),
+customer_name nvarchar(50) NOT NULL,
+customer_phone_no varchar(50) NOT NULL,
+customer_age nvarchar(50),
+customer_email varchar(50),
+district_id int NOT NULL,
+details nvarchar(200),
+questions nvarchar(200),
+brand_id int NOT NULL,
+deleted bit NOT NULL,
+created_at datetime NOT NULL,
+updated_at datetime,
+PRIMARY KEY (web_enquiry_form_id),
+FOREIGN KEY (brand_id) REFERENCES Brand (brand_id),
+FOREIGN KEY (district_id) REFERENCES District (district_id))

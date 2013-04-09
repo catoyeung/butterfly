@@ -40,22 +40,22 @@
 
 $route['default_controller'] = 'pages/index';
 
+$route['^(api)/(.+)/(.+)$'] = "api/$2/$3";
 $route['^(hk|cn)$'] = 'default_controller';
 $route['^(hk|cn)/(.+)/(.+)$'] = "$2/$3";
 
-/*$route['manage/(:any)'] = 'manage/$1';
-
-$route['account/(:any)'] = 'account/$1';
-$route['notice/(:any)'] = 'notice/$1';
-$route['post/(:any)'] = 'post/$1';
-$route['user/(:any)'] = 'user/$1';
-$route['enquiry/(:any)'] = 'enquiry/$1';
-$route['brand/(:any)'] = 'brand/$1';
-$route['district/(:any)'] = 'district/$1';
-$route['ad_source/(:any)'] = 'ad_source/$1';
-$route['treatment_type/(:any)'] = 'treatment_type/$1';
-$route['enquiry_content/(:any)'] = 'enquiry_content/$1';
-$route['authentication_by_post/(:any)'] = 'authentication_by_post/$1';*/
+/*$route['^(hk|cn)/manage/(:any)$'] = 'manage/$1';
+$route['^(hk|cn)/account/(:any)$'] = 'account/$1';
+$route['^(hk|cn)/notice/(:any)$'] = 'notice/$1';
+$route['^(hk|cn)/post/(:any)$'] = 'post/$1';
+$route['^(hk|cn)/user/(:any)$'] = 'user/$1';
+$route['^(hk|cn)/enquiry/(:any)$'] = 'enquiry/$1';
+$route['^(hk|cn)/brand/(:any)$'] = 'brand/$1';
+$route['^(hk|cn)/district/(:any)$'] = 'district/$1';
+$route['^(hk|cn)/ad_source/(:any)$'] = 'ad_source/$1';
+$route['^(hk|cn)/treatment_type/(:any)$'] = 'treatment_type/$1';
+$route['^(hk|cn)/enquiry_content/(:any)$'] = 'enquiry_content/$1';
+$route['^(hk|cn)/authentication_by_post/(:any)$'] = 'authentication_by_post/$1';*/
 // this route need to be put at last because
 // routes are load from top to bottom
 

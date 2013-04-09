@@ -102,6 +102,7 @@
             <td>
                 <select id="consultant-chooser" data-placeholder="顧問" style="width: 300px">
                     <option></option>
+                    <option value="auto">自動分配顧問</option>
                     <?php
                     foreach ($consultants as $consultant)
                     {

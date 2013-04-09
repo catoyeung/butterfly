@@ -10,7 +10,6 @@ class Account extends CI_Controller {
     public function login()
     {
         if ($_SERVER['REQUEST_METHOD'] === 'GET') {
-            echo 'get';
         } elseif ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $username = $this->input->post('username');
             $password = $this->input->post('password');
