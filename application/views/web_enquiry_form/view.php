@@ -55,14 +55,19 @@
             {{/deleted}}
             >{{created_at}}</td>
         <td style="text-align:right;">
-            <button class="approve-btn" web_enquiry_form_id="{{web_enquiry_form_id}}">審批</button>
-            <button class="modify-btn" web_enquiry_form_id="{{web_enquiry_form_id}}">編輯</button>
-            {{#deleted}}
-            <button class="resume-btn" onclick="resume({{web_enquiry_form_id}})">還原</button>
-            {{/deleted}}
-            {{^deleted}}
-            <button class="del-btn" onclick="del({{web_enquiry_form_id}})">刪除</button>
-            {{/deleted}}
+            {{#approved}}
+                {{approved_at}}已審批
+            {{/approved}}
+            {{^approved}}
+                <button class="approve-btn" onclick="approve({{web_enquiry_form_id}})">審批</button>
+                <button class="modify-btn" web_enquiry_form_id="{{web_enquiry_form_id}}">編輯</button>
+                {{#deleted}}
+                <button class="resume-btn" onclick="resume({{web_enquiry_form_id}})">還原</button>
+                {{/deleted}}
+                {{^deleted}}
+                <button class="del-btn" onclick="del({{web_enquiry_form_id}})">刪除</button>
+                {{/deleted}}
+            {{/approved}}
         </td>
     </tr>
     {{/web_enquiry_forms}}
@@ -124,6 +129,58 @@
         <button class="modify-cancel-btn" web_enquiry_form_id="{{web_enquiry_form.web_enquiry_form_id}}">取消</button>
     </td>
 </tr>
+</script>
+
+<script id="approval-template">
+<div id="popup-action">
+    <div class="outer">
+        <div class="middle">
+            <div class="inner">
+                <div id="popup-action-div">
+                    <div class="title">審批網頁查詢</div>
+                    <form id="approval-form">
+                        <table>
+                            <tr>
+                                <th>客戶服務</th>
+                                <td>
+                                    <select class="chosen" data-placeholder="客戶服務" style="width: 200px" name="customer_service_id">
+                                        <option></option>
+                                        <?php
+                                        foreach ($customer_services as $customer_service)
+                                        {
+                                            echo '<option value="'.$customer_service->staff_id.'">'.$customer_service->display_name.'</option>';
+                                        }
+                                        ?>
+                                    </select>
+                                </td> 
+                            </tr>
+                            <tr>
+                                <th>顧問</th>
+                                <td>
+                                    <select class="chosen" data-placeholder="顧問" style="width: 200px" name="consultant_id">
+                                        <option></option>
+                                        <?php
+                                        foreach ($consultants as $consultant)
+                                        {
+                                            echo '<option value="'.$customer_service->staff_id.'">'.$consultant->display_name.'</option>';
+                                        }
+                                        ?>
+                                    </select>
+                                </td> 
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td>
+                                    <button web_enquiry_form_id="{{web_enquiry_form_id}}" class="approval-confirm-btn">審批</button><button class="approval-cancel-btn">取消</button>
+                                </td> 
+                            </tr>
+                        </table>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 </script>
 
 <script>
@@ -206,13 +263,20 @@ $("body").on("click", ".modify-confirm-btn", function(event){
     var adSourceId = modifyTr.find("select[name='ad_source_id']").val();
     var enquiryContentId = modifyTr.find("select[name='enquiry_content_id']").val();
     var details = modifyTr.find("input[name='details']").val();
-    var form = document.createElement('form');
-    form.setAttribute('method', 'post');
-    form.setAttribute('action', '<?php echo base_url().'web_enquiry_form/edit/'; ?>'+$(this).attr('web_enquiry_form_id'));
-    form.style.display = 'hidden';
-    document.body.appendChild(form);
+    var form = $('<form style="display: hidden;"></form>');
+    form.attr('method', 'post');
+    form.attr('action', '<?php echo base_url().'web_enquiry_form/edit/'; ?>'+$(this).attr('web_enquiry_form_id'));
+    form.append('<input name="customer_name" value="'+customerName+'"/>');
+    form.append('<input name="customer_age" value="'+customerAge+'"/>');
+    form.append('<input name="customer_phone_no" value="'+customerPhoneNo+'"/>');
+    form.append('<input name="district_id" value="'+districtId+'"/>');
+    form.append('<input name="ad_source_id" value="'+adSourceId+'"/>');
+    form.append('<input name="enquiry_content_id" value="'+enquiryContentId+'"/>');
+    form.append('<input name="details" value="'+details+'"/>');
+    form.append('<input name="scroll_top" value="'+$(document).scrollTop()+'"/>');
+    form.append('<input name="page" value="'+<?php echo $page ?>+'"/>');
+    form.appendTo('body');
     // record current position before submit the form
-    $.cookie("scroll", $(document).scrollTop());
     form.submit();
     
     // Enable all resume and delete button
@@ -220,6 +284,36 @@ $("body").on("click", ".modify-confirm-btn", function(event){
     //$('.modify-btn').removeAttr('disabled');
     //$('.resume-btn').removeAttr('disabled');
     //$('.del-btn').removeAttr('disabled');
+});
+
+function approve(web_enquiry_form_id) {
+    // add overlay
+    var overlay = $('<div id="overlay"></div>');
+    overlay.append('<div class="block"></div>');
+    overlay.appendTo('body');
+    
+    var data = {};
+    data.web_enquiry_form_id = web_enquiry_form_id;
+    var template = $('#approval-template').html();
+    var html = Mustache.to_html(template, data);
+    $('#overlay').append(html);
+    $('.chosen').chosen();
+}
+
+$("body").on("click", ".approval-confirm-btn", function(event){
+    event.preventDefault();
+    var web_enquiry_form_id = $(this).attr('web_enquiry_form_id');
+    var form = $('<form style="display: hidden;"></form>');
+    form.attr('method', 'post');
+    form.attr('action', '<?php echo base_url().'web_enquiry_form/approve/'; ?>'+web_enquiry_form_id);
+    form.append('<input name="scroll_top" value="'+$(document).scrollTop()+'"/>');
+    form.append('<input name="page" value="'+<?php echo $page ?>+'"/>');
+    form.appendTo('body').submit();
+});
+
+$("body").on("click", ".approval-cancel-btn", function(event){
+    event.preventDefault();
+    $('#overlay').empty().remove();
 });
 
 function resume(web_enquiry_form_id) {

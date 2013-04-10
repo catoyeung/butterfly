@@ -20,4 +20,10 @@ function add_flash_message($type='info', $message='default message') {
     $ci->session->set_flashdata('flash', $flash);
 }
 
+function remove_microsec($datetime) {
+    $pattern = '/(.*):(\d{2}):(\d{2}).(\d{3})/';
+    $replacement = '$1:$2';
+    return preg_replace($pattern, $replacement, $datetime);
+}
+
 ?>

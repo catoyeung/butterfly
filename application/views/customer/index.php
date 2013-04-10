@@ -1,10 +1,8 @@
 <div id="content">
     <div class="container">
         <div id="customers-filter">
+            <div class="filter-title">篩選</div>
             <table>
-                <tr>
-                    <td class="filter-title" colspan="2">篩選</td>
-                </tr>
                 <tr>
                     <th>客戶名稱</th>
                     <td><input type="text" name="customer_name" style="width: 100px;"/></td>
@@ -76,6 +74,21 @@
                         </select>
                     </td>
                 </tr>
+                <tr>
+                    <th>排序</th>
+                    <td>
+                        <select class="chosen" data-placeholder="排序" style="width: 200px">
+                            <option></option>
+                            <option value="佐敦">來電時間</option>
+                            <option value="銅鑼灣">上一次紀錄時間</option>
+                        </select>
+                        <select class="chosen" data-placeholder="排序順序" style="width: 96px">
+                            <option></option>
+                            <option value="佐敦">由上至下</option>
+                            <option value="銅鑼灣">由下至上</option>
+                        </select>
+                    </td>
+                </tr>
                 <!--
                 <tr>
                     <th style="line-height: 20px;">
@@ -116,41 +129,49 @@
             </table>
         </div>
         
-        <div id="customers-sorting">
-            <table>
-                <tr>
-                    <td class="sorting-title" colspan="4">排序</td>
-                </tr>
-                <tr>
-                    <td width="25%">來電時間</td>
-                    <td width="25%">上一次紀錄時間</td>
-                    <td width="25%"></td>
-                    <td width="25%"></td>
-                </tr>
-            </table>
-        </div>
-        
         <div class="applied-filter">以下為所有元朗分店的資料，以來電時間排序。</div>
         <div id="customers-div">
             <div class="customer">
                 <div class="customer-info-div">
+                    <div class="section-title">客戶個人資料</div>
                     <table class="customer-info-table">
                         <tr>
-                            <td>客戶姓名:楊沛昆</td>
-                            <td>電話:12345678</td>
-                            <td>電郵:cato.yeung@gmail.com</td>
-                            <td>分店:元朗</td>
+                            <th width="100">客戶姓名</th>
+                            <td width="*">楊沛昆</td>
                         </tr>
                         <tr>
-                            <td>來電日期:31/03/2013</td>
-                            <td>廣告來源:東方新地</td>
+                            <th width="100">電話</th>
+                            <td width="*">12345678</td>
                         </tr>
                         <tr>
-                            <td>顧問:Ming</td>
-                            <td>客戶服務:Coey</td>
+                            <th width="100">電郵</th>
+                            <td width="*">cato.yeung@gmail.com</td>
                         </tr>
                         <tr>
-                            <td>查詢內容:V面、纖腿</td>
+                            <th width="100">分店</th>
+                            <td width="*">元朗</td>
+                        </tr>
+                    </table>
+                    <div class="section-title">查詢詳情</div>
+                    <table class="customer-info-table">
+                        <tr>
+                            <th width="100">來電日期</th>
+                            <td width="*">31/03/2013</td>
+                        </tr>
+                        <tr>
+                            <th width="100">廣告來源</th>
+                            <td width="*">東方新地</td>
+                        </tr>
+                    </table>
+                    <div class="section-title">人手分配</div>
+                    <table class="customer-info-table">
+                        <tr>
+                            <th width="100">顧問</th>
+                            <td width="*">Ming</td>
+                        </tr>
+                        <tr>
+                            <th width="100">客戶服務</th>
+                            <td width="*">Coey</td>
                         </tr>
                     </table>
                 </div>
@@ -159,16 +180,16 @@
                     <div class="stage-journal">
                         <table>
                             <tr>
-                                <td width="100">紀錄</td>
-                                <td width="860">1.想知價錢 --- Coey 08/03/2013 12:00noon</td>
+                                <th width="100">紀錄</th>
+                                <td width="*">1. 想知價錢 --- Coey 08/03/2013 12:00noon</td>
                             </tr>
                             <tr>
-                                <td></td>
-                                <td>2.轉分店 --- Coey 08/03/2013 4:00pm</td>
+                                <th></th>
+                                <td>2. 轉分店 --- Coey 08/03/2013 4:00pm</td>
                             </tr>
                             <tr>
-                                <td></td>
-                                <td>3.問整容 --- Coey 08/03/2013 5:00pm</td>
+                                <th></th>
+                                <td>3. 問整容 --- Coey 08/03/2013 5:00pm</td>
                             </tr>
                         </table>
                     </div>

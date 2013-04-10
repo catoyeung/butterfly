@@ -16,6 +16,25 @@
     <link rel="stylesheet" href="<?php echo css_url()?>jqueryui-timepicker/jquery.ui.timepicker.css" />
 </head>
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script>
+// Add jquery animate auto function
+jQuery.fn.animateAuto = function(prop, speed, callback){
+    var elem, height, width;
+    return this.each(function(i, el){
+        el = jQuery(el), elem = el.clone().css({"height":"auto","width":"auto"}).appendTo("body");
+        height = elem.css("height"),
+        width = elem.css("width"),
+        elem.remove();
+        
+        if(prop === "height")
+            el.animate({"height":height}, speed, callback);
+        else if(prop === "width")
+            el.animate({"width":width}, speed, callback);  
+        else if(prop === "both")
+            el.animate({"width":width,"height":height}, speed, callback);
+    });  
+}
+</script>
 <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.2/jquery-ui.min.js"></script>
 <!-- jquery cookie -->
 <script src="<?php echo js_url()?>jquery-cookie/jquery.cookie.js"></script>
@@ -32,17 +51,6 @@
         $flash = $this->session->flashdata('flash');
     ?>
     $(document).ready(function() {
-        // If cookie is set, scroll to the position saved in the cookie.
-        if ( $.cookie("scroll") !== null ) {
-            $(document).scrollTop( $.cookie("scroll") );
-        }
-
-        // When a button is clicked...
-        //$('button').on("click", function() {
-            // Set a cookie that holds the scroll position.
-            //$.cookie("scroll", $(document).scrollTop() );
-        //});
-        
         // flash message
         var flash = JSON.parse('<?php echo json_encode($flash) ?>');
         var template = $('#flash-message-template').html();
@@ -149,8 +157,8 @@
                         </li>
                         <li><a href='#'>客戶服務</a>
                             <ul>
-                                <li><a href="<?php echo base_url(); ?>customer?identity=cs">所有客戶</a></li>
-                                <li><a href="<?php echo base_url(); ?>enquiry/create">輸入查詢</a></li>
+                                <li><a href="<?php echo base_url(); ?>customer/view">所有客戶</a></li>
+                                <li><a href="<?php echo base_url(); ?>enquiry/create">人手輸入客戶</a></li>
                                 <li><a href="<?php echo base_url(); ?>web_enquiry_form/view">網頁查詢</a></li>
                             </ul>
                         </li>

@@ -63,6 +63,9 @@ class Web_enquiry_form_model extends CI_Model {
                            Web_enquiry_form.enquiry_content_id,
                            Web_enquiry_form.details,
                            Web_enquiry_form.created_at,
+                           Web_enquiry_form.deleted,
+                           Web_enquiry_form.approved,
+                           Web_enquiry_form.approved_at,
                            District.district_name,
                            Brand.brand_name,
                            Ad_source.ad_source_name,
@@ -79,9 +82,8 @@ class Web_enquiry_form_model extends CI_Model {
         // remove microseconds
         foreach($result as $key=>$row)
         {
-            $pattern = '/(.*):(\d{2}):(\d{2}).(\d{3})/';
-            $replacement = '$1:$2';
-            $result[$key]->created_at = preg_replace($pattern, $replacement, $row->created_at);;
+            $result[$key]->created_at = remove_microsec($row->created_at);
+            $result[$key]->approved_at = remove_microsec($row->approved_at);
         }
         return $result;
     }
