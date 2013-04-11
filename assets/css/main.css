@@ -16,11 +16,11 @@ textarea {
     margin: 0;
 }
 
-input {
+/*input {
   -webkit-box-sizing: border-box;
      -moz-box-sizing: border-box;
           box-sizing: border-box;
-}
+}*/
 
 #ui-datepicker-div { font-size: 12px; }
 
@@ -64,6 +64,10 @@ input {
     position: relative;
     top: 1px;
     left: 1px;
+}
+
+.clear {
+    clear: both;
 }
 
 .container {
@@ -480,7 +484,8 @@ h2 {
 }
 
 #enquiry-form td.section {
-    text-align: center;
+    text-align: left;
+    padding-left: 10px;
 }
 
 #enquiry-form input[type="text"] {
@@ -510,8 +515,8 @@ h2 {
 
 #customers-filter .filter-title {
     background: #e3e3e3;
-    text-align: center;
-    padding: 5px 0;
+    text-align: left;
+    padding: 5px 10px;
 }
 
 #customers-filter th {
@@ -520,6 +525,7 @@ h2 {
     padding-right: 10px;
     text-align: right;
     border: 1px solid #e3e3e3;
+    font-weight: bold;
 }
 
 #customers-filter .ui-datepicker {
@@ -529,6 +535,7 @@ h2 {
 #customers-filter td {
     border: 1px solid #e3e3e3;
     vertical-align: middle;
+    padding-left: 10px;
 }
 
 #customers-sorting {
@@ -558,31 +565,48 @@ h2 {
 
 .applied-filter {
     background: #e3e3e3;
-    text-align: center;
-    padding: 5px 0;
-    width: 960px;
+    text-align: left;
+    padding: 5px 10px;
+    width: 100%;
     color: #414141;
     text-shadow: 1px 1px 1px #ffffff;
+    box-sizing:border-box;
+    -moz-box-sizing:border-box; /* Firefox */
+    -webkit-box-sizing:border-box; /* Safari */
 }
 
 #customers-div {
     width: 960px;
     text-align: left;
-    margin-top: 50px;
+    margin: 20px auto 0 auto;
 }
 
 .customer {
     border: 1px solid #333;
     margin-bottom: 50px;
+    padding: 10px;
+}
+
+.customer .customer-info-div {
+    float: left;
+    width: 38%;
+    box-sizing:border-box;
+    -moz-box-sizing:border-box; /* Firefox */
+    -webkit-box-sizing:border-box; /* Safari */
+    margin-right: 2%;
 }
 
 .customer .section-title {
     background: #e3e3e3;
-    text-align: center;
-    padding: 5px 0;
+    text-align: left;
+    padding: 5px 10px;
     width: 100%;
     color: #414141;
     text-shadow: 1px 1px 1px #ffffff;
+    box-sizing:border-box;
+    -moz-box-sizing:border-box; /* Firefox */
+    -webkit-box-sizing:border-box; /* Safari */
+    font-weight: bold;
 }
 
 .customer-info-table {
@@ -590,12 +614,18 @@ h2 {
     background: #efefef;
     color: #414141;
     text-shadow: 1px 1px 1px #ffffff;
+    margin-bottom: 20px;
+}
+
+.customer-info-table:last-of-type {
+    margin-bottom: 0;
 }
 
 .customer-info-table th {
     padding: 10px 10px 10px 0;
     border: 1px solid #e3e3e3;
     text-align: right;
+    font-weight: bold;
 }
 
 .customer-info-table td {
@@ -604,43 +634,45 @@ h2 {
     vertical-align: middle;
 }
 
-.customer .stage {
+.customer .journal-div {
+    float: right;
     background: #efefef;
     color: #414141;
     text-shadow: 1px 1px 1px #ffffff;
-    width: 100%;
+    width: 60%;
+    box-sizing:border-box;
+    -moz-box-sizing:border-box; /* Firefox */
+    -webkit-box-sizing:border-box; /* Safari */
 }
 
-.customer .stage .stage-description {
+.customer .journal-div .stage-description {
     background: #333;
-    text-align: center;
     padding: 5px 0;
-    width: 100%;
     color: #fff;
     text-shadow: 1px 1px 1px #414141;
 }
 
-.customer .stage .stage-journal {
+.customer .journal-div .journal {
     width: 100%;
 }
 
-.customer .stage .stage-journal table{
+.customer .journal-div .journal table{
     width: 100%;
 }
 
-.customer .stage .stage-journal th {
+.customer .journal-div .journal th {
     padding: 10px 10px 10px 0;
     text-align: right;
     border: 1px solid #e3e3e3;
 }
 
-.customer .stage .stage-journal td{
+.customer .journal-div .journal td{
     padding: 10px 10px;
     border: 1px solid #e3e3e3;
 }
 
 .customer .action {
-    padding: 10px 10px;
+    padding: 10px 10px 10px 0;
     background: #efefef;
 }
 
@@ -649,7 +681,7 @@ h2 {
     color: #fff;
     border: 1px solid #3079ed;
     padding: 5px;
-    margin: 0;
+    margin: 0 5px 0 0;
 }
 
 .customer .action button:active {
@@ -710,6 +742,20 @@ h2 {
 
 #popup-action #popup-action-div table td {
     padding: 3px 5px;
+}
+
+#popup-action button {
+    background: #4d90fe;
+    color: #fff;
+    border: 1px solid #3079ed;
+    padding: 5px;
+    margin: 0 5px 0 0;
+}
+
+#popup-action button:active {
+    position: relative;
+    top: 1px;
+    left: 1px;
 }
 
 #models-div table{
@@ -833,9 +879,10 @@ h2 {
     text-align: left;
 }
 
-#approval-form {
-    background: #fff;
-    opacity: 1.0;
+.web-enquiry-form-table input{
+    box-sizing:border-box;
+    -moz-box-sizing:border-box; /* Firefox */
+    -webkit-box-sizing:border-box; /* Safari */
 }
 
 #footer {

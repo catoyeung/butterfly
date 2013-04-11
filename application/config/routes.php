@@ -40,7 +40,6 @@
 
 $route['default_controller'] = 'pages/index';
 
-$route['^(api)/(.+)/(.+)$'] = "api/$2/$3";
 $route['^(hk|cn)$'] = 'default_controller';
 $route['^(hk|cn)/(.+)/(.+)$'] = "$2/$3";
 

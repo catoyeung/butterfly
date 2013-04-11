@@ -1,7 +1,7 @@
 <div id="content">
     <div class="container">
         <div class='model-create-div'>
-            <form action="<?php echo base_url(); ?>user/create" method="post">
+            <form action="<?php echo base_url(); ?>staff/create" method="post">
                 <table>
                     <tr>
                         <th>登入名稱：</th>
@@ -14,7 +14,7 @@
                     <tr>
                         <th>用戶身份：</th>
                         <td>
-                            <select id="post-chooser" data-placeholder="用戶身份" style="width: 300px" name="post_id">
+                            <select id="post-chooser" data-placeholder="用戶身份" style="width: 300px; height: 24px;" name="post_id">
                                 <option></option>
                                 <?php
                                 foreach ($posts as $post) {

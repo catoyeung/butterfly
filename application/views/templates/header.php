@@ -81,6 +81,18 @@ jQuery.fn.animateAuto = function(prop, speed, callback){
         var spinner = new Spinner(opts).spin(target);
     });
 </script>
+<script>
+function overlay(html) {
+    var overlay = $('<div id="overlay"></div>');
+    overlay.append('<div class="block"></div>');
+    overlay.appendTo('body');
+    $('#overlay').append(html);
+}
+
+function removeOverlay() {
+    $('#overlay').empty().remove();
+}
+</script>
 <script id="flash-message-template" type="text/template">
 <div id="flash-message" style="display: none;">
     <div class="container">
@@ -142,7 +154,7 @@ jQuery.fn.animateAuto = function(prop, speed, callback){
                                 <li><a href="<?php echo base_url(); ?>brand/view">品牌管理</a></li>
                                 <li><a href="<?php echo base_url(); ?>post/view">用戶身份管理</a></li>
                                 <li><a href="<?php echo base_url(); ?>authentication_by_post/view">用戶身份權限管理</a></li>
-                                <li><a href="<?php echo base_url(); ?>user/view">用戶管理</a></li>
+                                <li><a href="<?php echo base_url(); ?>staff/view">用戶管理</a></li>
                                 <li><a href="<?php echo base_url(); ?>district/view">分區管理</a></li>
                                 <li><a href="<?php echo base_url(); ?>ad_source/view">廣告來源管理</a></li>
                                 <li><a href="<?php echo base_url(); ?>treatment_type/view">美容分類管理</a></li>
@@ -158,7 +170,7 @@ jQuery.fn.animateAuto = function(prop, speed, callback){
                         <li><a href='#'>客戶服務</a>
                             <ul>
                                 <li><a href="<?php echo base_url(); ?>customer/view">所有客戶</a></li>
-                                <li><a href="<?php echo base_url(); ?>enquiry/create">人手輸入客戶</a></li>
+                                <li><a href="<?php echo base_url(); ?>enquiry/create">人手輸入查詢</a></li>
                                 <li><a href="<?php echo base_url(); ?>web_enquiry_form/view">網頁查詢</a></li>
                             </ul>
                         </li>

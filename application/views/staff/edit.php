@@ -1,11 +1,11 @@
 <div id="content">
     <div class="container">
         <div class="model-edit-div">
-            <form action="<?php echo base_url().'user/edit/'.$user_id; ?>" method="post">
+            <form action="<?php echo base_url().'staff/edit/'.$staff_id; ?>" method="post">
                 <table>
                     <tr>
                         <th>登入名稱：</th>
-                        <td><input type="text" style="width: 150px;" name="username" value="<?php echo $user->username; ?>"/></td>
+                        <td><input type="text" style="width: 150px;" name="username" value="<?php echo $staff->username; ?>"/></td>
                     </tr>
                     <tr>
                         <th>用戶身份：</th>
@@ -14,7 +14,7 @@
                                 <option></option>
                                 <?php
                                 foreach ($posts as $post) {
-                                    if ($user->post_id == $post->post_id) 
+                                    if ($staff->post_id == $post->post_id) 
                                         echo '<option selected="true" value="'.$post->post_id.'">'.$post->post_name.'</option>';
                                     else
                                         echo '<option value="'.$post->post_id.'">'.$post->post_name.'</option>';
@@ -41,7 +41,7 @@
                     </tr>
                     <tr>
                         <th>顯示名稱：</th>
-                        <td><input type="text" style="width: 150px;" name="display_name" value="<?php echo $user->display_name; ?>"/></td>
+                        <td><input type="text" style="width: 150px;" name="display_name" value="<?php echo $staff->display_name; ?>"/></td>
                     </tr>
                     <tr>
                         <th></th>
@@ -64,7 +64,7 @@ $(document).ready(function() {
         event.preventDefault();
         var result = confirm('重設密碼?');
         if (result === true) {
-            $('<form id="password-reset-form" method="post" action="<?php echo base_url().'user/reset_password/'.$user_id; ?>"></form>').appendTo('body').submit();
+            $('<form id="password-reset-form" method="post" action="<?php echo base_url().'staff/reset_password/'.$staff_id; ?>"></form>').appendTo('body').submit();
             return false;
         } else {
             return false;

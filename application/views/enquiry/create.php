@@ -13,35 +13,28 @@
             <td class="section" colspan="2">個人資料</td>
         </tr>
         <tr>
+            <th>電話：</th>
+            <td><input type="text-field" name="phone_no"/></td>
+        </tr>
+        <tr>
             <th>姓名：</th>
-            <td><input type="text-field"/></td>
+            <td><input type="text-field" name="name"/></td>
+        </tr>
+        <tr>
+            <th>年齡：</th>
+            <td><input type="text-field" name="age"/></td>
         </tr>
         <tr>
             <th>電郵：</th>
-            <td><input type="text-field"/></td>
-        </tr>
-        <tr>
-            <th>電話：</th>
-            <td><input type="text-field"/></td>
+            <td><input type="text-field" name="email"/></td>
         </tr>
         <tr>
             <td class="section" colspan="2">查詢</td>
         </tr>
-        <!--<tr>
-            <th>查詢品牌：</th>
-            <td>
-                <select id="brand-chooser" data-placeholder="查詢品牌" style="width: 300px">
-                    <option></option>
-                    {{#brands}}
-                    <option value="{{brand_id}}">{{brand_name}}</option>
-                    {{/brands}}
-                </select>
-            </td>
-        </tr>-->
         <tr>
             <th>分區：</th>
             <td>
-                <select id="district-chooser" data-placeholder="分區" style="width: 300px">
+                <select id="district-chooser" data-placeholder="分區" style="width: 300px" name="district_id">
                     <option></option>
                     {{#districts}}
                     <option value="{{district_id}}">{{district_name}}</option>
@@ -52,7 +45,7 @@
         <tr>
             <th>查詢內容：</th>
             <td>
-                <select id="enquiry-content-chooser" data-placeholder="查詢內容" style="width: 300px">
+                <select id="enquiry-content-chooser" data-placeholder="查詢內容" style="width: 300px" name="enquiry_content_id">
                     <option></option>
                     <?php
                     foreach ($enquiry_contents as $enquiry_content)
@@ -69,7 +62,7 @@
         <tr>
             <th>廣告來源：</th>
             <td>
-                <select id="ad-source-chooser" data-placeholder="廣告來源" style="width: 300px">
+                <select id="ad-source-chooser" data-placeholder="廣告來源" style="width: 300px" name="ad_source_id">
                     <option></option>
                     <?php
                     foreach ($ad_sources as $ad_source)
@@ -86,7 +79,7 @@
         <tr>
             <th>客戶服務：</th>
             <td>
-                <select id="cs-chooser" data-placeholder="客戶服務" style="width: 300px">
+                <select id="cs-chooser" data-placeholder="客戶服務" style="width: 300px" name="customer_service_id">
                     <option></option>
                     <?php
                     foreach ($customer_services as $customer_service)
@@ -100,7 +93,7 @@
         <tr>
             <th>顧問：</th>
             <td>
-                <select id="consultant-chooser" data-placeholder="顧問" style="width: 300px">
+                <select id="consultant-chooser" data-placeholder="顧問" style="width: 300px" name="consultant_id">
                     <option></option>
                     <option value="auto">自動分配顧問</option>
                     <?php

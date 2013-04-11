@@ -122,3 +122,71 @@ updated_at datetime,
 PRIMARY KEY (web_enquiry_form_id),
 FOREIGN KEY (brand_id) REFERENCES Brand (brand_id),
 FOREIGN KEY (district_id) REFERENCES District (district_id))
+
+CREATE TABLE Customer
+(customer_id int NOT NULL IDENTITY(1,1),
+name nvarchar(100) NOT NULL,
+phone_no nvarchar(100) NOT NULL,
+age nvarchar(100),
+email nvarchar(100),
+district_id int,
+brand_id int NOT NULL,
+deleted bit NOT NULL,
+created_at datetime NOT NULL,
+updated_at datetime,
+PRIMARY KEY (customer_id),
+FOREIGN KEY ( brand_id ) REFERENCES Brand (brand_id),
+UNIQUE (phone_no))
+
+CREATE TABLE Customer_life
+(customer_life_id int NOT NULL IDENTITY(1,1),
+customer_id int NOT NULL,
+enquiry_content_id int,
+ad_source_id int,
+responsible_cs_id int,
+responsible_consultant_id int,
+deleted bit NOT NULL,
+created_at datetime NOT NULL,
+updated_at datetime,
+PRIMARY KEY (customer_life_id),
+FOREIGN KEY ( customer_id ) REFERENCES Customer (customer_id))
+
+CREATE TABLE Customer_life_belongs_to_customer
+(customer_id int NOT NULL,
+customer_life_id int NOT NULL,
+FOREIGN KEY ( customer_id ) REFERENCES Customer (customer_id),
+FOREIGN KEY ( customer_life_id ) REFERENCES Customer_life (customer_life_id))
+
+CREATE TABLE No_booking_reason
+(no_booking_reason_id int NOT NULL IDENTITY(1,1),
+details nvarchar(100),
+FOREIGN KEY ( journal_id ) REFERENCES Journal (journal_id)
+);
+
+CREATE TABLE Stage
+(stage_id int NOT NULL IDENTITY(1,1),
+stage_type varchar(50) NOT NULL,
+customer_life_id int NOT NULL,
+deleted bit NOT NULL,
+created_at datetime NOT NULL,
+updated_at datetime,
+PRIMARY KEY (stage_id),
+FOREIGN KEY ( customer_life_id ) REFERENCES Customer_life (customer_life_id))
+
+CREATE TABLE Journal
+(journal_id int NOT NULL IDENTITY(1,1),
+stage_id int NOT NULL,
+journal_type varchar(50),
+details nvarchar(200),
+deleted bit NOT NULL,
+created_at datetime NOT NULL,
+updated_at datetime,
+FOREIGN KEY ( stage_id ) REFERENCES Stage (stage_id)
+);
+
+CREATE TABLE Journal_no_booking
+(journal_id int NOT NULL IDENTITY(1,1),
+no_booking_reason_id int NOT NULL
+FOREIGN KEY ( journal_id ) REFERENCES Journal (journal_id),
+FOREIGN KEY ( no_booking_reason_id ) REFERENCES No_booking_reason (no_booking_reason_id)
+);

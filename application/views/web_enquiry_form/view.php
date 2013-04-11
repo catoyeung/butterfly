@@ -8,7 +8,7 @@
 </div>
 <script id="models-div-template" type="text/template">
 {{#web_enquiry_forms.length}}
-<table>
+<table class="web-enquiry-form-table">
 <tr>
     <th width="70">姓名</th>
     <th width="60">年齡</th>
@@ -131,7 +131,7 @@
 </tr>
 </script>
 
-<script id="approval-template">
+<script id="approval-template" type="text/template">
 <div id="popup-action">
     <div class="outer">
         <div class="middle">
@@ -288,15 +288,16 @@ $("body").on("click", ".modify-confirm-btn", function(event){
 
 function approve(web_enquiry_form_id) {
     // add overlay
-    var overlay = $('<div id="overlay"></div>');
-    overlay.append('<div class="block"></div>');
-    overlay.appendTo('body');
+    //var overlay = $('<div id="overlay"></div>');
+    //overlay.append('<div class="block"></div>');
+    //overlay.appendTo('body');
     
     var data = {};
     data.web_enquiry_form_id = web_enquiry_form_id;
     var template = $('#approval-template').html();
     var html = Mustache.to_html(template, data);
-    $('#overlay').append(html);
+    //$('#overlay').append(html);
+    overlay(html);
     $('.chosen').chosen();
 }
 
@@ -313,7 +314,7 @@ $("body").on("click", ".approval-confirm-btn", function(event){
 
 $("body").on("click", ".approval-cancel-btn", function(event){
     event.preventDefault();
-    $('#overlay').empty().remove();
+    removeOverlay();
 });
 
 function resume(web_enquiry_form_id) {

@@ -1,6 +1,6 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-class User extends MY_Controller {
+class Staff extends MY_Controller {
     
     public function __construct() {
         parent::__construct();
@@ -12,33 +12,33 @@ class User extends MY_Controller {
     
 	public function view(){
         $data['title'] = '用戶管理';
-        $data['users'] = $this->Staff_model->get_all();
+        $data['staffs'] = $this->Staff_model->get_all();
         $this->load->view('templates/header', $data);
-        $this->load->view('user/view', $data);
+        $this->load->view('staff/view', $data);
         $this->load->view('templates/footer', $data);
     }
     
     public function create() {
         if ($this->input->server('REQUEST_METHOD')=='GET') {
-            // user access notice create form
+            // staff access notice create form
             $data['title'] = '新增用戶';
             $data['posts'] = $this->Post_model->get_all();
             $data['brands'] = $this->Brand_model->get_all();
             $this->load->view('templates/header', $data);
-            $this->load->view('user/create', $data);
+            $this->load->view('staff/create', $data);
             $this->load->view('templates/footer', $data);
         } elseif ($this->input->server('REQUEST_METHOD')=='POST') {
-            // user create form with post request
+            // staff create form with post request
             $username = $this->input->post('username');
             $password = $this->input->post('password');
             $post_id = $this->input->post('post_id');
             $display_name = $this->input->post('display_name');
-            // check if user already exists,
-            // if yes, redirect to user view page
+            // check if staff already exists,
+            // if yes, redirect to staff view page
             $result = $this->Staff_model->get_by(array('username'=>$username));
             if ($result) {
                 add_flash_message('alert', '用戶名稱已存在。');
-                redirect('user/view');
+                redirect('staff/view');
             }
             $this->db->trans_start();
             // encrypt the password with md5
@@ -61,7 +61,7 @@ class User extends MY_Controller {
             } else {
                 add_flash_message('alert', '用戶不能新增，請聯絡系統管理員。');
             }
-            redirect('user/view');
+            redirect('staff/view');
         }
     }
     
@@ -69,11 +69,11 @@ class User extends MY_Controller {
         if ($this->input->server('REQUEST_METHOD')=='GET') {
             $data['title'] = '編輯用戶';
             
-            $data['user_id'] = $staff_id;
+            $data['staff_id'] = $staff_id;
             $this->load->model('Post_model');
             $data['posts'] = $this->Post_model->get_all();
             $result = $this->Staff_model->get_by(array('staff_id'=>$staff_id));
-            $data['user'] = $result[0];
+            $data['staff'] = $result[0];
             
             $data['brands'] = $this->Brand_model->get_all();
             $result = $this->Staff_belongs_to_brand_model->get_all();
@@ -85,7 +85,7 @@ class User extends MY_Controller {
             $data['belonging_brand_ids'] = $belonging_brand_ids;
             
             $this->load->view('templates/header', $data);
-            $this->load->view('user/edit', $data);
+            $this->load->view('staff/edit', $data);
             $this->load->view('templates/footer', $data);
         } elseif ($this->input->server('REQUEST_METHOD')=='POST') {
             $username = $this->input->post('username');
@@ -100,33 +100,33 @@ class User extends MY_Controller {
             } else {
                 add_flash_message('alert', '用戶不能更改，請聯絡系統管理員。');
             }
-            redirect('user/view');
+            redirect('staff/view');
         }
     }
     
-    public function delete($user_id) {
+    public function delete($staff_id) {
         if ($this->input->server('REQUEST_METHOD')=='POST') {
-            $result = $this->Staff_model->update($user_id,
+            $result = $this->Staff_model->update($staff_id,
                                                 array('deleted'=>true));
             if($result) {
                 add_flash_message('info', '用戶已刪除。');
             } else {
                 add_flash_message('alert', '用戶不能刪除，請聯絡系統管理員。');
             }
-            redirect('user/view');
+            redirect('staff/view');
         }
     }
     
-    public function resume($user_id) {
+    public function resume($staff_id) {
         if ($this->input->server('REQUEST_METHOD')=='POST') {
-            $result = $this->Staff_model->update($user_id,
+            $result = $this->Staff_model->update($staff_id,
                                                 array('deleted'=>false));
             if($result) {
                 add_flash_message('info', '用戶已還原。');
             } else {
                 add_flash_message('alert', '用戶不能還原，請聯絡系統管理員。');
             }
-            redirect('user/view');
+            redirect('staff/view');
         }
     }
     
@@ -137,11 +137,11 @@ class User extends MY_Controller {
         if($result) {
             $data['new_password'] = $new_password;
             $this->load->view('templates/header', $data);
-            $this->load->view('user/reset_password', $data);
+            $this->load->view('staff/reset_password', $data);
             $this->load->view('templates/footer', $data);
         } else {
             add_flash_message('alert', '用戶密碼不能重設，請聯絡系統管理員。');
-            redirect('user/view');
+            redirect('staff/view');
         }
         
     }
