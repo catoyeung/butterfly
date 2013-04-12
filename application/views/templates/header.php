@@ -16,25 +16,6 @@
     <link rel="stylesheet" href="<?php echo css_url()?>jqueryui-timepicker/jquery.ui.timepicker.css" />
 </head>
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-<script>
-// Add jquery animate auto function
-jQuery.fn.animateAuto = function(prop, speed, callback){
-    var elem, height, width;
-    return this.each(function(i, el){
-        el = jQuery(el), elem = el.clone().css({"height":"auto","width":"auto"}).appendTo("body");
-        height = elem.css("height"),
-        width = elem.css("width"),
-        elem.remove();
-        
-        if(prop === "height")
-            el.animate({"height":height}, speed, callback);
-        else if(prop === "width")
-            el.animate({"width":width}, speed, callback);  
-        else if(prop === "both")
-            el.animate({"width":width,"height":height}, speed, callback);
-    });  
-}
-</script>
 <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.2/jquery-ui.min.js"></script>
 <!-- jquery cookie -->
 <script src="<?php echo js_url()?>jquery-cookie/jquery.cookie.js"></script>
@@ -44,7 +25,7 @@ jQuery.fn.animateAuto = function(prop, speed, callback){
 <script src="<?php echo js_url(); ?>chosen/chosen.jquery.min.js"></script>
 <!-- mustache javascript template -->
 <script src="<?php echo js_url()?>mustache/mustache.js"></script>
-<script src="<?php echo js_url()?>spin/spin.min.js"></script>
+<script src="<?php echo js_url()?>hogan/hogan.js"></script>
 <script>
     // flash message effect
     <?php 
@@ -57,28 +38,6 @@ jQuery.fn.animateAuto = function(prop, speed, callback){
         var html = Mustache.to_html(template, flash);
         $('body').prepend(html);
         $('#flash-message').fadeIn(1000).delay(5000).fadeOut(1000);
-        
-        // loading spin library
-        var opts = {
-            lines: 10, // The number of lines to draw
-            length: 10, // The length of each line
-            width: 5, // The line thickness
-            radius: 10, // The radius of the inner circle
-            corners: 1, // Corner roundness (0..1)
-            rotate: 0, // The rotation offset
-            direction: 1, // 1: clockwise, -1: counterclockwise
-            color: '#666', // #rgb or #rrggbb
-            speed: 1, // Rounds per second
-            trail: 60, // Afterglow percentage
-            shadow: true, // Whether to render a shadow
-            hwaccel: false, // Whether to use hardware acceleration
-            className: 'spinner', // The CSS class to assign to the spinner
-            zIndex: 2e9, // The z-index (defaults to 2000000000)
-            top: 'auto', // Top position relative to parent in px
-            left: 'auto' // Left position relative to parent in px
-        };
-        var target = document.getElementById('loading-img');
-        var spinner = new Spinner(opts).spin(target);
     });
 </script>
 <script>
@@ -124,9 +83,6 @@ function removeOverlay() {
 </script>
 <html>
 <body>
-    <div id="loading-div" style="display: none;">
-        <div id="loading-img"></div>
-    </div>
     <div id="wrapper">
         <div id="header">
             <div id="account-div">
@@ -139,14 +95,11 @@ function removeOverlay() {
                         echo '<li>您好! '.$logged_in_user['display_name'].'</li>';
                         echo '<li><a href="'.base_url().'account/logout">登出</a></li>';
                     }
-                    //echo '<li><a href="'.base_url().$controller.'/'.$controller_method.'"></a></li>';
-                    //echo '<li><a href="'.base_url().'account/logout"></a></li>';
                     ?>
                 </ul>
             </div>
             <h1>Butterfly Portal</h1>
             <div id="nav-container">
-                <?php if ($this->session->userdata('logged_in_user')) { ?>
                 <div id="nav"> 
                     <ul>
                         <li><a href='#'>管理</a>
@@ -159,6 +112,7 @@ function removeOverlay() {
                                 <li><a href="<?php echo base_url(); ?>ad_source/view">廣告來源管理</a></li>
                                 <li><a href="<?php echo base_url(); ?>treatment_type/view">美容分類管理</a></li>
                                 <li><a href="<?php echo base_url(); ?>enquiry_content/view">查詢內容管理</a></li>
+                                <li><a href="<?php echo base_url(); ?>no_booking_reason/view">不預約原因管理</a></li>
                             </ul>
                         </li>
                         <li><a href='#'>通告</a>
@@ -193,31 +147,9 @@ function removeOverlay() {
                                 <li><a href="<?php echo base_url(); ?>consultant/showup">客戶出席預約</a></li>
                                 <li><a href="<?php echo base_url(); ?>consultant/showup">反捐獻清單</a></li>
                             </ul>
-                        </li> 
-                    <!--<li><a href="#">Three Levels</a> 
-                            <ul> 
-                            <li><a href="#">Level 2.1</a></li> 
-                            <li><a href="#">Level 2.2</a></li> 
-                            <li><a href="#">Level 2.3</a> 
-                                    <ul> 
-                                    <li><a href="#">Level 2.3.1</a></li> 
-                                    <li><a href="#">Level 2.3.2</a></li> 
-                                    <li><a href="#">Level 2.3.3</a></li> 
-                                    <li><a href="#">Level 2.3.4</a></li> 
-                                    <li><a href="#">Level 2.3.5</a></li> 
-                                    <li><a href="#">Level 2.3.6</a></li> 
-                                    <li><a href="#">Level 2.3.7</a></li> 
-                                    </ul> 
-                            </li> 
-                            <li><a href="#">Level 2.4</a></li> 
-                            <li><a href="#">Level 2.5</a></li> 
-                            </ul> 
-                    </li> 
-                    <li><a href="#">Services</a></li> 
-                    <li><a href="#">Contact Us</a></li> -->
+                        </li>
                     </ul> 
                 </div>
-                <?php } ?>
             </div>
             <?php 
             if (isset($title)) {

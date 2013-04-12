@@ -10,7 +10,7 @@ class Enquiry extends MY_Controller {
         $this->load->model('Ad_source_model');
         $this->load->model('Customer_model');
         $this->load->model('Customer_life_model');
-        $this->load->model('Customer_life_belongs_to_customer_model');
+        $this->load->model('Stage_model');
     }
     
     public function create() {
@@ -54,8 +54,12 @@ class Enquiry extends MY_Controller {
                                                           'responsible_consultant_id'=>$consultant_id
                                                           ));
             $customer_life_id = $this->db->insert_id();
-            $this->Customer_life_belongs_to_customer_model->create(array('customer_id'=>$customer_id,
-                                                                         'customer_life_id'=>$customer_life_id));
+            $logged_in_user = $this->session->userdata('logged_in_user');
+            $user_display_name = $logged_in_user['display_name'];
+            $start_message = $user_display_name.'在'.remove_microsec(microtime_to_mssql_time(microtime())).'人手輸入客戶查詢。';
+            $this->Stage_model->create(array('stage_type'=>'no_booking',
+                                             'customer_life_id'=>$customer_life_id,
+                                             'start_message'=>$start_message));
             $this->db->trans_complete();
             if($this->db->trans_status() === True) {
                 add_flash_message('info', '用戶查詢已新增。');

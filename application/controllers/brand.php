@@ -40,7 +40,7 @@ class Brand extends MY_Controller {
     
     public function edit($brand_id) {
         if ($this->input->server('REQUEST_METHOD')=='GET') {
-            $data['title'] = '編輯用戶身份';
+            $data['title'] = '編輯品牌';
             $data['brand_id'] = $brand_id;
             $result = $this->Brand_model->get_by(array('brand_id'=>$brand_id));
             $data['brand_name'] = $result[0]->brand_name;

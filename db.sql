@@ -151,22 +151,21 @@ updated_at datetime,
 PRIMARY KEY (customer_life_id),
 FOREIGN KEY ( customer_id ) REFERENCES Customer (customer_id))
 
-CREATE TABLE Customer_life_belongs_to_customer
-(customer_id int NOT NULL,
-customer_life_id int NOT NULL,
-FOREIGN KEY ( customer_id ) REFERENCES Customer (customer_id),
-FOREIGN KEY ( customer_life_id ) REFERENCES Customer_life (customer_life_id))
-
 CREATE TABLE No_booking_reason
 (no_booking_reason_id int NOT NULL IDENTITY(1,1),
+brand_id int NOT NULL,
 details nvarchar(100),
-FOREIGN KEY ( journal_id ) REFERENCES Journal (journal_id)
+deleted bit NOT NULL,
+created_at datetime NOT NULL,
+updated_at datetime,
+FOREIGN KEY ( brand_id ) REFERENCES Brand (brand_id)
 );
 
 CREATE TABLE Stage
 (stage_id int NOT NULL IDENTITY(1,1),
 stage_type varchar(50) NOT NULL,
 customer_life_id int NOT NULL,
+start_message varchar(200),
 deleted bit NOT NULL,
 created_at datetime NOT NULL,
 updated_at datetime,
@@ -176,7 +175,6 @@ FOREIGN KEY ( customer_life_id ) REFERENCES Customer_life (customer_life_id))
 CREATE TABLE Journal
 (journal_id int NOT NULL IDENTITY(1,1),
 stage_id int NOT NULL,
-journal_type varchar(50),
 details nvarchar(200),
 deleted bit NOT NULL,
 created_at datetime NOT NULL,

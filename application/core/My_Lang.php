@@ -108,9 +108,10 @@ class MY_Lang extends CI_Lang {
    
   function switch_uri($lang)
   {
+    return 'hk/brand/view';
     if ((!empty($this->uri)) && (array_key_exists($lang, $this->languages)))
     {
-
+      //return 'hello';
       if ($uri_segment = $this->get_uri_lang($this->uri))
       {
         $uri_segment['parts'][0] = $lang;
@@ -121,7 +122,7 @@ class MY_Lang extends CI_Lang {
         $uri = $lang.'/'.$this->uri;
       }
     }
-
+    
     return $uri;
   }
     
@@ -133,7 +134,7 @@ class MY_Lang extends CI_Lang {
     {
       $uri = ($uri[0] == '/') ? substr($uri, 1): $uri;
       
-      $uri_expl = explode('/', $uri, 2);
+      $uri_expl = explode('/', $uri, 3);
       $uri_segment['lang'] = NULL;
       $uri_segment['parts'] = $uri_expl;  
       

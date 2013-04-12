@@ -70,8 +70,7 @@ class Customer_life_model extends CI_Model {
                            Customer_life.customer_life_id,');
         $this->db->from('Customer');
         $this->db->join('District', 'Customer.district_id = District.district_id');
-        $this->db->join('Customer_life_belongs_to_customer', 'Customer_life_belongs_to_customer.customer_id = Customer.customer_id');
-        $this->db->join('Customer_life', 'Customer_life.customer_life_id = Customer_life_belongs_to_customer.customer_life_id');
+        $this->db->join('Customer_life', 'Customer_life.customer_id = Customer.customer_id');
         $this->db->join('Enquiry_content', 'Enquiry_content.enquiry_content_id = Customer_life.enquiry_content_id');
         $this->db->join('Ad_source', 'Ad_source.ad_source_id = Customer_life.ad_source_id');
         $this->db->join('Staff as Customer_service', 'Customer_service.staff_id = Customer_life.responsible_cs_id', 'left');
