@@ -188,3 +188,24 @@ no_booking_reason_id int NOT NULL
 FOREIGN KEY ( journal_id ) REFERENCES Journal (journal_id),
 FOREIGN KEY ( no_booking_reason_id ) REFERENCES No_booking_reason (no_booking_reason_id)
 );
+
+CREATE TABLE Stage_booking
+(stage_id int NOT NULL,
+booking_date datetime NOT NULL,
+booking_start_time varchar(50) NOT NULL,
+booking_end_time varchar(50),
+FOREIGN KEY ( stage_id ) REFERENCES Stage (stage_id)
+);
+
+CREATE TABLE Branch
+(branch_id int NOT NULL IDENTITY(1,1),
+district_id int NOT NULL,
+branch_name varchar(50), 
+brand_id int NOT NULL, 
+deleted bit NOT NULL,
+created_at datetime NOT NULL,
+updated_at datetime,
+PRIMARY KEY (branch_id),
+FOREIGN KEY ( district_id ) REFERENCES District (district_id),
+FOREIGN KEY ( brand_id ) REFERENCES Brand (brand_id),
+UNIQUE (branch_name, brand_id))

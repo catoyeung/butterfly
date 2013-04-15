@@ -222,21 +222,40 @@
                     <form id="no-booking-journal-form">
                         <table>
                             <tr>
+                                <th>分店</th>
                                 <td>
-                                    <select class="chosen" data-placeholder="不預約原因" style="width: 150px" name="no_booking_reason_id">
-                                        {{#no_booking_reasons}}
-                                        <option value="{{no_booking_reason_id}}">{{details}}</option>
-                                        {{/no_booking_reasons}}
+                                    <select id="branch-chooser" class="chosen" data-placeholder="分區" style="width: 150px" name="branch_id">
+                                        <option></option>
+                                        <?php
+                                        foreach ($branches as $branch) {
+                                            echo '<option value="'.$branch->branch_id.'">'.$branch->branch_name.'</option>';
+                                        }
+                                        ?>
                                     </select>
-                                </td>
-                                <td>
-                                    <input style="width: 200px" type="text" name="no_booking_reason_details"/>
                                 </td>
                             </tr>
                             <tr>
-                                <td></td>
+                                <th>日期</th>
                                 <td>
-                                    <button class="no-booking-journal-confirm-btn" stage_id="{{latest_stage.stage_id}}">新增</button><button class="journal-cancel-btn">取消</button>
+                                    <input id="booking_datepicker" style="width: 100px" type="text" name="bookingdate"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>由</th>
+                                <td>
+                                    <input id="booking_timepicker_start" style="width: 100px" type="text" name="bookingtime_start"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>至</th>
+                                <td>
+                                    <input id="booking_timepicker_end" style="width: 100px" type="text" name="bookingtime_end"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th></th>
+                                <td>
+                                    <button class="booking-confirm-btn" customer_life_id="{{customer_life_id}}">預約</button><button class="booking-cancel-btn">取消</button>
                                 </td> 
                             </tr>
                         </table>
@@ -269,14 +288,95 @@ for (var i=0;i<customer_lives.length;i++)
     customer_div.append(customer_info_html).append(journals_html).append(clear_html).append(hr).appendTo('#customers-div');
 }
 
+
+function tpStartOnHourShowCallback(hour) {
+    var tpEndHour = $('#booking_timepicker_end').timepicker('getHour');
+    // all valid if no end time selected
+    if ($('#booking_timepicker_end').val() == '') { return true; }
+    // Check if proposed hour is prior or equal to selected end time hour
+    if (hour <= tpEndHour) { return true; }
+    // if hour did not match, it can not be selected
+    return false;
+}
+function tpStartOnMinuteShowCallback(hour, minute) {
+    var tpEndHour = $('#booking_timepicker_end').timepicker('getHour');
+    var tpEndMinute = $('#booking_timepicker_end').timepicker('getMinute');
+    // all valid if no end time selected
+    if ($('#booking_timepicker_end').val() == '') { return true; }
+    // Check if proposed hour is prior to selected end time hour
+    if (hour < tpEndHour) { return true; }
+    // Check if proposed hour is equal to selected end time hour and minutes is prior
+    if ( (hour == tpEndHour) && (minute < tpEndMinute) ) { return true; }
+    // if minute did not match, it can not be selected
+    return false;
+}
+
+function tpEndOnHourShowCallback(hour) {
+    var tpStartHour = $('#booking_timepicker_start').timepicker('getHour');
+    // all valid if no start time selected
+    if ($('#booking_timepicker_start').val() == '') { return true; }
+    // Check if proposed hour is after or equal to selected start time hour
+    if (hour >= tpStartHour) { return true; }
+    // if hour did not match, it can not be selected
+    return false;
+}
+function tpEndOnMinuteShowCallback(hour, minute) {
+    var tpStartHour = $('#booking_timepicker_start').timepicker('getHour');
+    var tpStartMinute = $('#booking_timepicker_start').timepicker('getMinute');
+    // all valid if no start time selected
+    if ($('#booking_timepicker_start').val() == '') { return true; }
+    // Check if proposed hour is after selected start time hour
+    if (hour > tpStartHour) { return true; }
+    // Check if proposed hour is equal to selected start time hour and minutes is after
+    if ( (hour == tpStartHour) && (minute > tpStartMinute) ) { return true; }
+    // if minute did not match, it can not be selected
+    return false;
+}
+
 $("body").on("click", ".booking-btn", function(event){
     event.preventDefault();
     var data = {};
+    data.customer_life_id = $(this).attr('customer_life_id');
     var template = $('#booking-div-template').html();
     var html = Mustache.to_html(template, data);
     overlay(html);
     $('.chosen').chosen();
+    $('#booking_datepicker').datepicker({'minDate': 0});
+    $('#booking_timepicker_start').timepicker({
+        showLeadingZero: false,
+        onHourShow: tpStartOnHourShowCallback,
+        onMinuteShow: tpStartOnMinuteShowCallback
+    });
+    $('#booking_timepicker_end').timepicker({
+        showLeadingZero: false,
+        onHourShow: tpEndOnHourShowCallback,
+        onMinuteShow: tpEndOnMinuteShowCallback
+    });
 });
+
+$("body").on("click", ".booking-cancel-btn", function(event){
+    event.preventDefault();
+    removeOverlay();
+});
+
+$("body").on("click", ".booking-confirm-btn", function(event){
+    event.preventDefault();
+    var branchId = $("#branch-chooser").val();
+    var bookingDate = $("#booking_datepicker").val();
+    var bookingStartTime = $("#booking_timepicker_start").val();
+    var bookingEndTime = $("#booking_timepicker_end").val();
+    var form = $('<form style="display: hidden;"></form>');
+    form.attr('method', 'post');
+    form.attr('action', '<?php echo base_url().'customer_life/book/'; ?>'+$(this).attr('customer_life_id'));
+    form.append('<input name="branch_id" value="'+branchId+'"/>');
+    form.append('<input name="date" value="'+bookingDate+'"/>');
+    form.append('<input name="start_time" value="'+bookingStartTime+'"/>');
+    form.append('<input name="end_time" value="'+bookingEndTime+'"/>');
+    form.append('<input name="redirect" value="<?php echo current_url() ?>"/>');
+    form.appendTo('body');
+    form.submit();
+});
+
 
 $("body").on("click", ".journal-create-btn", function(event){
     event.preventDefault();
@@ -292,9 +392,6 @@ $("body").on("click", ".journal-create-btn", function(event){
 
 $("body").on("click", ".no-booking-journal-confirm-btn", function(event){
     event.preventDefault();
-    //$('tr[web_enquiry_form_id="'+$(this).attr('web_enquiry_form_id')+'"]').show();
-    //$(this).parent().parent().remove();
-    
     var noBookingReasonId = $("#no-booking-journal-form select[name='no_booking_reason_id']").val();
     var details = $("#no-booking-journal-form input[name='no_booking_reason_details']").val();
     var form = $('<form style="display: hidden;"></form>');
@@ -306,7 +403,6 @@ $("body").on("click", ".no-booking-journal-confirm-btn", function(event){
     form.append('<input name="details" value="'+details+'"/>');
     form.append('<input name="redirect" value="customer/view"/>');
     form.appendTo('body');
-    // record current position before submit the form
     form.submit();
 });
 

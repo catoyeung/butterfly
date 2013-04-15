@@ -9,6 +9,7 @@ class Customer extends MY_Controller {
         $this->load->model('Journal_model');
         $this->load->model('No_booking_reason_model');
         $this->load->model('Stage_model');
+        $this->load->model('Branch_model');
     }
     
 	public function view($page = 1){
@@ -17,6 +18,7 @@ class Customer extends MY_Controller {
         $data['page'] = $page;
         
         $data['no_booking_reasons'] = $this->No_booking_reason_model->get_all();
+        $data['branches'] = $this->Branch_model->get_all();
         
         $config = array();
         $config['brand_id'] = $this->session->userdata('brand_id');

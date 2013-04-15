@@ -586,7 +586,7 @@ h2 {
     width: 960px;
     text-align: left;
     margin: 100px auto 0 auto;
-    padding: 20px 10px;
+    padding: 20px 0;
 }
 
 .customer {
@@ -736,6 +736,7 @@ h2 {
 #popup-action #popup-action-div {
     border: 1px solid #e7e7e7;
     font: Lobster, SimHei, Arial, Helvetica, Sans-serif;
+    font-size: 14px;
 }
 
 #popup-action #popup-action-div form {
@@ -762,6 +763,11 @@ h2 {
     position: relative;
     top: 1px;
     left: 1px;
+}
+
+#no-booking-journal-form th{
+    text-align: right;
+    font-weight: bold;
 }
 
 #models-div table{

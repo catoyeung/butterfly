@@ -12,7 +12,7 @@
     <link href="<?php echo css_url()?>main.css" rel="stylesheet" type="text/css">
     <link href='http://fonts.googleapis.com/css?family=Droid+Sans|Lobster' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" href="<?php echo css_url()?>chosen/chosen.css" />
-    <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.9.0/themes/smoothness/jquery-ui.css" />
+    <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.9.0/themes/ui-lightness/jquery-ui.css" />
     <link rel="stylesheet" href="<?php echo css_url()?>jqueryui-timepicker/jquery.ui.timepicker.css" />
 </head>
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
@@ -106,6 +106,7 @@ function removeOverlay() {
                                 <li><a href="<?php echo site_url('authentication_by_post/view'); ?>">用戶身份權限管理</a></li>
                                 <li><a href="<?php echo site_url('staff/view'); ?>">用戶管理</a></li>
                                 <li><a href="<?php echo site_url('district/view'); ?>">分區管理</a></li>
+                                <li><a href="<?php echo site_url('branch/view'); ?>">分店管理</a></li>
                                 <li><a href="<?php echo site_url('ad_source/view'); ?>">廣告來源管理</a></li>
                                 <li><a href="<?php echo site_url('treatment_type/view'); ?>">美容分類管理</a></li>
                                 <li><a href="<?php echo site_url('enquiry_content/view'); ?>">查詢內容管理</a></li>
