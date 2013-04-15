@@ -47,13 +47,11 @@
 </script>
 
 <script>
-$(document).ready(function() {
-    var data = {};
-    data.enquiry_contents = JSON.parse('<?php echo json_encode($enquiry_contents) ?>');
-    var template = $('#models-div-template').html();
-    var html = Mustache.to_html(template, data);
-    $('#models-div').prepend(html);
-});
+var data = {};
+data.enquiry_contents = JSON.parse('<?php echo json_encode($enquiry_contents) ?>');
+var template = $('#models-div-template').html();
+var html = Mustache.to_html(template, data);
+$('#models-div').prepend(html);
 
 function resume(enquiry_content_id) {
     var form = document.createElement('form');

@@ -40,13 +40,11 @@
 </script>
 
 <script>
-$(document).ready(function() {
-    var data = {};
-    data.treatment_types = JSON.parse('<?php echo json_encode($treatment_types) ?>');
-    var template = $('#models-div-template').html();
-    var html = Mustache.to_html(template, data);
-    $('#models-div').prepend(html);
-});
+var data = {};
+data.treatment_types = JSON.parse('<?php echo json_encode($treatment_types) ?>');
+var template = $('#models-div-template').html();
+var html = Mustache.to_html(template, data);
+$('#models-div').prepend(html);
 
 function resume(treatment_type_id) {
     var form = document.createElement('form');

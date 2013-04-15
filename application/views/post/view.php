@@ -39,13 +39,11 @@
 </script>
 
 <script>
-$(document).ready(function() {
-    var data = {};
-    data.posts = JSON.parse('<?php echo json_encode($posts) ?>');
-    var template = $('#models-div-template').html();
-    var html = Mustache.to_html(template, data);
-    $('#models-div').prepend(html);
-});
+var data = {};
+data.posts = JSON.parse('<?php echo json_encode($posts) ?>');
+var template = $('#models-div-template').html();
+var html = Mustache.to_html(template, data);
+$('#models-div').prepend(html);
 
 function resume(post_id) {
     var form = document.createElement('form');

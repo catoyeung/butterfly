@@ -39,7 +39,8 @@
 */
 
 $route['default_controller'] = 'pages/index';
-
+//$route['^$'] = 'default_controller';
+//$route['^(.+)/(.+)$'] = "$1/$2";
 $route['^(hk|cn)$'] = 'default_controller';
 $route['^(hk|cn)/(.+)/(.+)$'] = "$2/$3";
 

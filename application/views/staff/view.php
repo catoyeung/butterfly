@@ -46,13 +46,11 @@
 </script>
 
 <script>
-$(document).ready(function() {
-    var data = {};
-    data.staffs = JSON.parse('<?php echo json_encode($staffs) ?>');
-    var template = $('#models-div-template').html();
-    var html = Mustache.to_html(template, data);
-    $('#models-div').prepend(html);
-});
+var data = {};
+data.staffs = JSON.parse('<?php echo json_encode($staffs) ?>');
+var template = $('#models-div-template').html();
+var html = Mustache.to_html(template, data);
+$('#models-div').prepend(html);
 
 function resume(staff_id) {
     var form = document.createElement('form');

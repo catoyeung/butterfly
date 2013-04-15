@@ -25,33 +25,6 @@
 <script src="<?php echo js_url(); ?>chosen/chosen.jquery.min.js"></script>
 <!-- mustache javascript template -->
 <script src="<?php echo js_url()?>mustache/mustache.js"></script>
-<script src="<?php echo js_url()?>hogan/hogan.js"></script>
-<script>
-    // flash message effect
-    <?php 
-        $flash = $this->session->flashdata('flash');
-    ?>
-    $(document).ready(function() {
-        // flash message
-        var flash = JSON.parse('<?php echo json_encode($flash) ?>');
-        var template = $('#flash-message-template').html();
-        var html = Mustache.to_html(template, flash);
-        $('body').prepend(html);
-        $('#flash-message').fadeIn(1000).delay(5000).fadeOut(1000);
-    });
-</script>
-<script>
-function overlay(html) {
-    var overlay = $('<div id="overlay"></div>');
-    overlay.append('<div class="block"></div>');
-    overlay.appendTo('body');
-    $('#overlay').append(html);
-}
-
-function removeOverlay() {
-    $('#overlay').empty().remove();
-}
-</script>
 <script id="flash-message-template" type="text/template">
 <div id="flash-message" style="display: none;">
     <div class="container">
@@ -81,8 +54,32 @@ function removeOverlay() {
      </div>
 </div>
 </script>
+<script>
+function overlay(html) {
+    var overlay = $('<div id="overlay"></div>');
+    overlay.append('<div class="block"></div>');
+    overlay.appendTo('body');
+    $('#overlay').append(html);
+}
+
+function removeOverlay() {
+    $('#overlay').empty().remove();
+}
+</script>
 <html>
 <body>
+    <script>
+        // flash message effect
+        <?php 
+            $flash = $this->session->flashdata('flash');
+        ?>
+        // flash message
+        var flash = JSON.parse('<?php echo json_encode($flash) ?>');
+        var template = $('#flash-message-template').html();
+        var html = Mustache.to_html(template, flash);
+        $('body').prepend(html);
+        $('#flash-message').fadeIn(1000).delay(5000).fadeOut(1000);
+    </script>
     <div id="wrapper">
         <div id="header">
             <div id="account-div">
@@ -104,28 +101,28 @@ function removeOverlay() {
                     <ul>
                         <li><a href='#'>管理</a>
                             <ul>
-                                <li><a href="<?php echo base_url(); ?>brand/view">品牌管理</a></li>
-                                <li><a href="<?php echo base_url(); ?>post/view">用戶身份管理</a></li>
-                                <li><a href="<?php echo base_url(); ?>authentication_by_post/view">用戶身份權限管理</a></li>
-                                <li><a href="<?php echo base_url(); ?>staff/view">用戶管理</a></li>
-                                <li><a href="<?php echo base_url(); ?>district/view">分區管理</a></li>
-                                <li><a href="<?php echo base_url(); ?>ad_source/view">廣告來源管理</a></li>
-                                <li><a href="<?php echo base_url(); ?>treatment_type/view">美容分類管理</a></li>
-                                <li><a href="<?php echo base_url(); ?>enquiry_content/view">查詢內容管理</a></li>
-                                <li><a href="<?php echo base_url(); ?>no_booking_reason/view">不預約原因管理</a></li>
+                                <li><a href="<?php echo site_url('brand/view'); ?>">品牌管理</a></li>
+                                <li><a href="<?php echo site_url('post/view'); ?>">用戶身份管理</a></li>
+                                <li><a href="<?php echo site_url('authentication_by_post/view'); ?>">用戶身份權限管理</a></li>
+                                <li><a href="<?php echo site_url('staff/view'); ?>">用戶管理</a></li>
+                                <li><a href="<?php echo site_url('district/view'); ?>">分區管理</a></li>
+                                <li><a href="<?php echo site_url('ad_source/view'); ?>">廣告來源管理</a></li>
+                                <li><a href="<?php echo site_url('treatment_type/view'); ?>">美容分類管理</a></li>
+                                <li><a href="<?php echo site_url('enquiry_content/view'); ?>">查詢內容管理</a></li>
+                                <li><a href="<?php echo site_url('no_booking_reason/view'); ?>">不預約原因管理</a></li>
                             </ul>
                         </li>
                         <li><a href='#'>通告</a>
                             <ul>
-                                <li><a href="<?php echo base_url(); ?>notice/view">所有通告</a></li>
-                                <li><a href="<?php echo base_url(); ?>notice/create">張貼通告</a></li>
+                                <li><a href="<?php echo site_url('notice/view'); ?>">所有通告</a></li>
+                                <li><a href="<?php echo site_url('notice/create'); ?>">張貼通告</a></li>
                             </ul>
                         </li>
                         <li><a href='#'>客戶服務</a>
                             <ul>
-                                <li><a href="<?php echo base_url(); ?>customer/view">所有客戶</a></li>
-                                <li><a href="<?php echo base_url(); ?>enquiry/create">人手輸入查詢</a></li>
-                                <li><a href="<?php echo base_url(); ?>web_enquiry_form/view">網頁查詢</a></li>
+                                <li><a href="<?php echo site_url('customer/view'); ?>">所有客戶</a></li>
+                                <li><a href="<?php echo site_url('enquiry/create'); ?>">人手輸入查詢</a></li>
+                                <li><a href="<?php echo site_url('web_enquiry_form/view'); ?>">網頁查詢</a></li>
                             </ul>
                         </li>
                         <li><a href='#'>電話傳銷</a>

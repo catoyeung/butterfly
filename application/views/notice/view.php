@@ -21,11 +21,9 @@
 </script>
 
 <script>
-$(document).ready(function() {
-    var data = {};
-    data.notices = JSON.parse('<?php echo json_encode($notices) ?>');
-    var template = $('#notices-div-template').html();
-    var html = Mustache.to_html(template, data);
-    $('#notices-div').append(html);
-});
+var data = {};
+data.notices = JSON.parse('<?php echo json_encode($notices) ?>');
+var template = $('#notices-div-template').html();
+var html = Mustache.to_html(template, data);
+$('#notices-div').append(html);
 </script>

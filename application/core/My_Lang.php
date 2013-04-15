@@ -108,7 +108,6 @@ class MY_Lang extends CI_Lang {
    
   function switch_uri($lang)
   {
-    return 'hk/brand/view';
     if ((!empty($this->uri)) && (array_key_exists($lang, $this->languages)))
     {
       //return 'hello';

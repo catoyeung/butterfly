@@ -116,7 +116,8 @@ class Web_enquiry_form extends MY_Controller {
             
         } elseif ($this->input->server('REQUEST_METHOD')=='POST') {
             $result = $this->Web_enquiry_form_model->update($web_enquiry_form_id, array(
-                                                       'approved'=>True));
+                                                       'approved'=>True,
+                                                       'approved_at'=>microtime_to_mssql_time(microtime())));
             if($result) {
                 add_flash_message('info', '網頁查詢已審批。');
                 $scroll_top = $this->input->post('scroll_top');

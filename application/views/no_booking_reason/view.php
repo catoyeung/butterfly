@@ -42,13 +42,11 @@
 </script>
 
 <script>
-$(document).ready(function() {
-    var data = {};
-    data.no_booking_reasons = JSON.parse('<?php echo json_encode($no_booking_reasons) ?>');
-    var template = $('#models-div-template').html();
-    var html = Mustache.to_html(template, data);
-    $('#models-div').prepend(html);
-});
+var data = {};
+data.no_booking_reasons = JSON.parse('<?php echo json_encode($no_booking_reasons) ?>');
+var template = $('#models-div-template').html();
+var html = Mustache.to_html(template, data);
+$('#models-div').prepend(html);
 
 function resume(no_booking_reason_id) {
     var form = document.createElement('form');

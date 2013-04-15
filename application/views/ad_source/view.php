@@ -40,13 +40,11 @@
 </script>
 
 <script>
-$(document).ready(function() {
-    var data = {};
-    data.ad_sources = JSON.parse('<?php echo json_encode($ad_sources) ?>');
-    var template = $('#models-div-template').html();
-    var html = Mustache.to_html(template, data);
-    $('#models-div').prepend(html);
-});
+var data = {};
+data.ad_sources = JSON.parse('<?php echo json_encode($ad_sources) ?>');
+var template = $('#models-div-template').html();
+var html = Mustache.to_html(template, data);
+$('#models-div').prepend(html);
 
 function resume(ad_source_id) {
     var form = document.createElement('form');

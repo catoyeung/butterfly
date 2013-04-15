@@ -115,18 +115,16 @@
 </script>
 
 <script>
-$(document).ready(function() {
-    var data = {};
-    data.brands = JSON.parse('<?php echo json_encode($brands) ?>');
-    data.districts = JSON.parse('<?php echo json_encode($districts) ?>');
-    var template = $('#enquiry-form-template').html();
-    var html = Mustache.to_html(template, data);
-    $('#enquiry-form-div').prepend(html);
-    $('#brand-chooser').chosen();
-    $('#district-chooser').chosen();
-    $('#enquiry-content-chooser').chosen();
-    $('#ad-source-chooser').chosen();
-    $('#cs-chooser').chosen();
-    $('#consultant-chooser').chosen();
-});
+var data = {};
+data.brands = JSON.parse('<?php echo json_encode($brands) ?>');
+data.districts = JSON.parse('<?php echo json_encode($districts) ?>');
+var template = $('#enquiry-form-template').html();
+var html = Mustache.to_html(template, data);
+$('#enquiry-form-div').prepend(html);
+$('#brand-chooser').chosen();
+$('#district-chooser').chosen();
+$('#enquiry-content-chooser').chosen();
+$('#ad-source-chooser').chosen();
+$('#cs-chooser').chosen();
+$('#consultant-chooser').chosen();
 </script>
