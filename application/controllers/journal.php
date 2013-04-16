@@ -6,6 +6,7 @@ class Journal extends MY_Controller {
         parent::__construct();
         $this->load->model('Journal_model');
         $this->load->model('Journal_no_booking_model');
+        $this->load->model('Journal_no_showup_model');
     }
     
     public function create() {
@@ -15,22 +16,27 @@ class Journal extends MY_Controller {
             $this->db->trans_start();
             $brand_id = $this->session->userdata('brand_id');
             $journal_type = $this->input->post('journal_type');
+            $stage_id = $this->input->post('stage_id');
+            $reason_id = $this->input->post('reason_id');
+            $details = $this->input->post('details');
+            
+            $result = $this->Journal_model->create(array('stage_id'=>$stage_id,
+                                                      'details'=>$details,
+                                        ));
+            $journal_id = $this->db->insert_id();
             if ($journal_type == 'no_booking')
             {
-                $stage_id = $this->input->post('stage_id');
-                $reason_id = $this->input->post('reason_id');
-                $details = $this->input->post('details');
-            
-                $result = $this->Journal_model->create(array('stage_id'=>$stage_id,
-                                                          'details'=>$details,
-                                            ));
-                $journal_id = $this->db->insert_id();
                 $result = $this->Journal_no_booking_model->create(array('journal_id'=>$journal_id,
                                                           'no_booking_reason_id'=>$reason_id,
                                             ));
+            } elseif ($journal_type == 'booking')
+            {
+                $result = $this->Journal_no_showup_model->create(array('journal_id'=>$journal_id,
+                                                          'no_showup_reason_id'=>$reason_id,
+                                            ));
             }
             $this->db->trans_complete();
-            if($result) {
+            if($this->db->trans_status() === True) {
                 add_flash_message('info', '紀錄已新增。');
             } else {
                 add_flash_message('alert', '紀錄不能新增，請聯絡系統管理員。');

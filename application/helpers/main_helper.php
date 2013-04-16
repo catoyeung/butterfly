@@ -26,4 +26,10 @@ function remove_microsec($datetime) {
     return preg_replace($pattern, $replacement, $datetime);
 }
 
+function combine_date_time($date, $time) {
+    list ($m,$d,$y) = explode('/', $date ) ; 
+    list ($h, $M) = explode(':', $time ) ; 
+    return "{$y}-{$m}-{$d} {$h}:{$M}:00";
+}
+
 ?>

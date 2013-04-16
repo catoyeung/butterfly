@@ -169,10 +169,21 @@
         {{/journals.length}}
     </table>
 </div>
-<div class="action">
-    <button class="booking-btn" customer_life_id="{{customer_life_id}}">預約</button><!--
-    --><button class="journal-create-btn" customer_life_id="{{customer_life_id}}">新增紀錄</button>
 </div>
+</script>
+
+<script id="journal-action-template" type="text/template">
+<div class="action">
+    {{#showup}}
+    <button class="invoice-btn" customer_life_id="{{customer_life_id}}">開單</button><!--
+    -->{{/showup}}<!--
+    -->{{#booking}}
+    <button class="showup-btn" customer_life_id="{{customer_life_id}}">出席</button><!--
+    -->{{/booking}}<!--
+    -->{{#no_booking}}<!--
+    --><button class="booking-btn" customer_life_id="{{customer_life_id}}">預約</button><!--
+    -->{{/no_booking}}<!--
+    --><button class="journal-create-btn" customer_life_id="{{customer_life_id}}">新增紀錄</button>
 </div>
 </script>
 
@@ -266,6 +277,82 @@
     </div>
 </div>
 </script>
+
+<script id="booking-journal-div-template" type="text/template">
+<div id="popup-action">
+    <div class="outer">
+        <div class="middle">
+            <div class="inner">
+                <div id="popup-action-div">
+                    <div class="title">新增紀錄</div>
+                    <form id="no-booking-journal-form">
+                        <table>
+                            <tr>
+                                <td>
+                                    <select class="chosen" data-placeholder="不出席原因" style="width: 150px" name="no_showup_reason_id">
+                                        {{#no_showup_reasons}}
+                                        <option value="{{no_showup_reason_id}}">{{details}}</option>
+                                        {{/no_showup_reasons}}
+                                    </select>
+                                </td>
+                                <td>
+                                    <input style="width: 200px" type="text" name="no_showup_reason_details"/>
+                                </td> 
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td>
+                                    <button class="booking-journal-confirm-btn" stage_id="{{latest_stage.stage_id}}">新增</button><button class="journal-cancel-btn">取消</button>
+                                </td> 
+                            </tr>
+                        </table>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</script>
+
+<script id="showup-div-template" type="text/template">
+<div id="popup-action">
+    <div class="outer">
+        <div class="middle">
+            <div class="inner">
+                <div id="popup-action-div">
+                    <div class="title">出席</div>
+                    <table>
+                    <tr>
+                        <th>
+                            出席日期
+                        </th>
+                        <td>
+                            <input id="showup_datepicker" style="width: 100px" type="text" name="showupdate"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            出席時間
+                        </th>
+                        <td>
+                            <input id="showup_timepicker" style="width: 100px" type="text" name="showuptime"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th></th>
+                        <td>
+                            <button class="showup-confirm-btn" customer_life_id="{{customer_life_id}}">出席</button><button class="showup-cancel-btn">取消</button>
+                        </td>
+                    </tr>
+                    
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</script>
+
 <script>
 $('.chosen').chosen();
 var customer_lives = JSON.parse('<?php echo json_encode($customer_lives) ?>');
@@ -283,9 +370,22 @@ for (var i=0;i<customer_lives.length;i++)
     data.customer_life_id = customer_lives[i].customer_life_id;
     var journals_html = Mustache.to_html(template, data);
     
+    var template = $('#journal-action-template').html();
+    var data = {};
+    data.customer_life_id = customer_lives[i].customer_life_id;
+    lastest_stage = latest_stages[customer_lives[i].customer_life_id];
+    if (lastest_stage.stage_type == 'no_booking') {
+        data.no_booking = true;
+    } else if (lastest_stage.stage_type == 'booking') {
+        data.booking = true;
+    } else if (lastest_stage.stage_type == 'showup') {
+        data.showup = true;
+    }
+    var action_html = Mustache.to_html(template, data);
+    
     var clear_html = '<div class="clear"></div>';
-    var hr = '<div class="hr"></div>'
-    customer_div.append(customer_info_html).append(journals_html).append(clear_html).append(hr).appendTo('#customers-div');
+    var hr = '<div class="hr"></div>';
+    customer_div.append(customer_info_html).append(journals_html).append(action_html).append(clear_html).append(hr).appendTo('#customers-div');
 }
 
 
@@ -332,6 +432,36 @@ function tpEndOnMinuteShowCallback(hour, minute) {
     // if minute did not match, it can not be selected
     return false;
 }
+
+$("body").on("click", ".showup-btn", function(event){
+    event.preventDefault();
+    var data = {};
+    data.customer_life_id = $(this).attr('customer_life_id');
+    var template = $('#showup-div-template').html();
+    var html = Mustache.to_html(template, data);
+    overlay(html);
+    $('#showup_datepicker').datepicker({'minDate': -2});
+    $('#showup_timepicker').timepicker();
+});
+
+$("body").on("click", ".showup-cancel-btn", function(event){
+    event.preventDefault();
+    removeOverlay();
+});
+
+$("body").on("click", ".showup-confirm-btn", function(event){
+    event.preventDefault();
+    var showupDate = $("#showup_datepicker").val();
+    var showupTime = $("#showup_timepicker").val();
+    var form = $('<form style="display: hidden;"></form>');
+    form.attr('method', 'post');
+    form.attr('action', '<?php echo base_url().'customer_life/showup/'; ?>'+$(this).attr('customer_life_id'));
+    form.append('<input name="date" value="'+showupDate+'"/>');
+    form.append('<input name="time" value="'+showupTime+'"/>');
+    form.append('<input name="redirect" value="<?php echo current_url() ?>"/>');
+    form.appendTo('body');
+    form.submit();
+});
 
 $("body").on("click", ".booking-btn", function(event){
     event.preventDefault();
@@ -382,10 +512,19 @@ $("body").on("click", ".journal-create-btn", function(event){
     event.preventDefault();
     latest_stage = latest_stages[$(this).attr('customer_life_id')]
     var data = {};
-    data.no_booking_reasons = JSON.parse('<?php echo json_encode($no_booking_reasons) ?>');
+    
     data.latest_stage = latest_stage;
-    var template = $('#no-booking-journal-div-template').html();
+    if (latest_stage.stage_type == 'no_booking')
+    {
+        data.no_booking_reasons = JSON.parse('<?php echo json_encode($no_booking_reasons) ?>');
+        var template = $('#no-booking-journal-div-template').html();
+    } else if (latest_stage.stage_type == 'booking')
+    {
+        data.no_showup_reasons = JSON.parse('<?php echo json_encode($no_showup_reasons) ?>');
+        var template = $('#booking-journal-div-template').html();
+    }
     var html = Mustache.to_html(template, data);
+    
     overlay(html);
     $('.chosen').chosen();
 });
@@ -400,6 +539,22 @@ $("body").on("click", ".no-booking-journal-confirm-btn", function(event){
     form.append('<input name="journal_type" value="no_booking"/>');
     form.append('<input name="stage_id" value="'+$(this).attr('stage_id')+'"/>');
     form.append('<input name="reason_id" value="'+noBookingReasonId+'"/>');
+    form.append('<input name="details" value="'+details+'"/>');
+    form.append('<input name="redirect" value="customer/view"/>');
+    form.appendTo('body');
+    form.submit();
+});
+
+$("body").on("click", ".booking-journal-confirm-btn", function(event){
+    event.preventDefault();
+    var noShowupReasonId = $("select[name='no_showup_reason_id']").val();
+    var details = $("input[name='no_showup_reason_details']").val();
+    var form = $('<form style="display: hidden;"></form>');
+    form.attr('method', 'post');
+    form.attr('action', '<?php echo base_url().'journal/create'; ?>');
+    form.append('<input name="journal_type" value="booking"/>');
+    form.append('<input name="stage_id" value="'+$(this).attr('stage_id')+'"/>');
+    form.append('<input name="reason_id" value="'+noShowupReasonId+'"/>');
     form.append('<input name="details" value="'+details+'"/>');
     form.append('<input name="redirect" value="customer/view"/>');
     form.appendTo('body');

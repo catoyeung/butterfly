@@ -111,6 +111,7 @@ function removeOverlay() {
                                 <li><a href="<?php echo site_url('treatment_type/view'); ?>">美容分類管理</a></li>
                                 <li><a href="<?php echo site_url('enquiry_content/view'); ?>">查詢內容管理</a></li>
                                 <li><a href="<?php echo site_url('no_booking_reason/view'); ?>">不預約原因管理</a></li>
+                                <li><a href="<?php echo site_url('no_showup_reason/view'); ?>">不出席原因管理</a></li>
                             </ul>
                         </li>
                         <li><a href='#'>通告</a>

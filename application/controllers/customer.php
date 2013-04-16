@@ -8,6 +8,7 @@ class Customer extends MY_Controller {
         $this->load->model('Customer_life_model');
         $this->load->model('Journal_model');
         $this->load->model('No_booking_reason_model');
+        $this->load->model('No_showup_reason_model');
         $this->load->model('Stage_model');
         $this->load->model('Branch_model');
     }
@@ -18,6 +19,7 @@ class Customer extends MY_Controller {
         $data['page'] = $page;
         
         $data['no_booking_reasons'] = $this->No_booking_reason_model->get_all();
+        $data['no_showup_reasons'] = $this->No_showup_reason_model->get_all();
         $data['branches'] = $this->Branch_model->get_all();
         
         $config = array();
@@ -36,7 +38,7 @@ class Customer extends MY_Controller {
         $stages = $this->Stage_model->get_by_customer_life_ids($customer_life_ids);
         $journals = $this->Journal_model->get_by_customer_life_ids($customer_life_ids);
         //print_r($stages);
-        print_r($journals);
+        //print_r($journals);
         foreach  ($customer_lives as $key=>$customer_life) {
             $latest_stages[$customer_life->customer_life_id] = $this->Stage_model->latest_stage_by_customer_life_id($customer_life->customer_life_id);
             $customer_lives[$key]->journals = $this->journals_with_start_message($customer_life->customer_life_id,
@@ -70,7 +72,7 @@ class Customer extends MY_Controller {
                 {
                     $new_journal = array('is_stage_description'=>False,
                                 'count'=>$count,
-                                 'text'=>$journal->no_booking_reason_category.'，'.$journal->details);
+                                 'text'=>$this->journal_reason_category($journal).'，'.$journal->details);
                     $count++;
                     $new_journals[] = $new_journal;
                 } else {
@@ -80,5 +82,14 @@ class Customer extends MY_Controller {
             
         }
         return $new_journals;
+    }
+    
+    private function journal_reason_category($journal)
+    {
+        if ($journal->no_booking_reason_category != '')
+            return $journal->no_booking_reason_category;
+        if ($journal->no_showup_reason_category != '')
+            return $journal->no_showup_reason_category;
+        return '';
     }
 }

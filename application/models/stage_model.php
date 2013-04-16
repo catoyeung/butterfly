@@ -59,7 +59,7 @@ class Stage_model extends CI_Model {
                           start_message,');
         $this->db->from('Stage');
         $this->db->where('customer_life_id', $customer_life_id);
-        $this->db->order_by('created_at','ASC');
+        $this->db->order_by('created_at','DESC');
         $this->db->limit(1, 0);
         $query = $this->db->get();
         $result = $query->result();

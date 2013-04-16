@@ -209,3 +209,36 @@ PRIMARY KEY (branch_id),
 FOREIGN KEY ( district_id ) REFERENCES District (district_id),
 FOREIGN KEY ( brand_id ) REFERENCES Brand (brand_id),
 UNIQUE (branch_name, brand_id))
+
+CREATE TABLE No_showup_reason
+(no_showup_reason_id int NOT NULL IDENTITY(1,1),
+brand_id int NOT NULL,
+details nvarchar(100),
+sequence int NOT NULL,
+deleted bit NOT NULL,
+created_at datetime NOT NULL,
+updated_at datetime,
+PRIMARY KEY (no_showup_reason_id),
+FOREIGN KEY ( brand_id ) REFERENCES Brand (brand_id)
+);
+
+CREATE TABLE Journal_booking
+(journal_id int NOT NULL,
+no_showup_reason_id int NOT NULL
+FOREIGN KEY ( journal_id ) REFERENCES Journal (journal_id),
+FOREIGN KEY ( no_showup_reason_id ) REFERENCES No_showup_reason (no_showup_reason_id)
+);
+
+CREATE TABLE Journal_no_showup
+(journal_id int NOT NULL,
+no_showup_reason_id int NOT NULL
+FOREIGN KEY ( journal_id ) REFERENCES Journal (journal_id),
+FOREIGN KEY ( no_showup_reason_id ) REFERENCES No_showup_reason (no_showup_reason_id)
+);
+
+CREATE TABLE Stage_showup
+(stage_id int NOT NULL,
+showup_date datetime NOT NULL,
+showup_time varchar(50) NOT NULL,
+FOREIGN KEY ( stage_id ) REFERENCES Stage (stage_id)
+);

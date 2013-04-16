@@ -6,6 +6,7 @@ class Customer_life extends MY_Controller {
         parent::__construct();
         $this->load->model('Stage_model');
         $this->load->model('Stage_booking_model');
+        $this->load->model('Stage_showup_model');
     }
     
     public function book($customer_life_id) {
@@ -29,6 +30,33 @@ class Customer_life extends MY_Controller {
                 add_flash_message('info', '顧客已預約。');
             } else {
                 add_flash_message('alert', '顧客不能預約，請聯絡系統管理員。');
+            }
+            $redirect = $this->input->post('redirect');
+            redirect($redirect);
+        }
+    }
+    
+    public function showup($customer_life_id) {
+        if ($this->input->server('REQUEST_METHOD')=='GET') {
+        } elseif ($this->input->server('REQUEST_METHOD')=='POST') {
+            $date = $this->input->post('date');
+            $time = $this->input->post('time');
+            $showup_date = combine_date_time($date, '00:00');
+            $showup_time = combine_date_time($date, $time);
+            $this->db->trans_start();
+            $start_message = '顧客已出席，時間'.$showup_time.'，分店朗豪坊。';
+            $this->Stage_model->create(array('stage_type'=>'showup',
+                                             'customer_life_id'=>$customer_life_id,
+                                             'start_message'=>$start_message));
+            $stage_id = $this->db->insert_id();
+            $this->Stage_showup_model->create(array('stage_id'=>$stage_id,
+                                             'showup_date'=>$showup_date,
+                                             'showup_time'=>$showup_time));
+            $this->db->trans_complete();
+            if($this->db->trans_status() === True) {
+                add_flash_message('info', '顧客已出席。');
+            } else {
+                add_flash_message('alert', '顧客不能出席，請聯絡系統管理員。');
             }
             $redirect = $this->input->post('redirect');
             redirect($redirect);

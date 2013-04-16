@@ -36,24 +36,19 @@ class Journal_model extends CI_Model {
     
     public function get_by_customer_life_ids($customer_life_ids)
     {
-        //$journals = array();
-        //$count = 1;
-        /*$this->db->select('Journal.details');
-        $this->db->from('Journal');
-        $this->db->join('Stage','Stage.stage_id = Journal.stage_id');
-        $this->db->join('Customer_life', 'Customer_life.customer_life_id = Stage.customer_life_id');
-        $this->db->join('Journal_no_booking', 'Journal.journal_id = Journal_no_booking.journal_id', 'left');
-        $this->db->join('No_booking_reason', 'No_booking_reason.no_booking_reason_id = Journal_no_booking.no_booking_reason_id', 'left');
-        $this->db->where('Customer_life.customer_life_id', $customer_life_id);*/
         $this->db->select('Stage.stage_type,
                            Stage.stage_id,
+                           Customer_life.customer_life_id,
                            Journal.details,
-                           No_booking_reason.details as no_booking_reason_category');
-        $this->db->from('Stage');
+                           No_booking_reason.details as no_booking_reason_category,
+                           No_showup_reason.details as no_showup_reason_category');
+        $this->db->from('Journal');
+        $this->db->join('Stage', 'Journal.stage_id = Stage.stage_id');
         $this->db->join('Customer_life', 'Customer_life.customer_life_id = Stage.customer_life_id');
-        $this->db->join('Journal', 'Journal.stage_id = Stage.stage_id');
         $this->db->join('Journal_no_booking', 'Journal.journal_id = Journal_no_booking.journal_id', 'left');
         $this->db->join('No_booking_reason', 'No_booking_reason.no_booking_reason_id = Journal_no_booking.no_booking_reason_id', 'left');
+        $this->db->join('Journal_no_showup', 'Journal.journal_id = Journal_no_showup.journal_id', 'left');
+        $this->db->join('No_showup_reason', 'No_showup_reason.no_showup_reason_id = Journal_no_showup.no_showup_reason_id', 'left');
         foreach ($customer_life_ids as $customer_life_id)
         {
             $this->db->or_where('Customer_life.customer_life_id', $customer_life_id);
@@ -64,29 +59,5 @@ class Journal_model extends CI_Model {
         $query = $this->db->get();
         $result = $query->result();
         return $result;
-        /*foreach ($result as $row)
-        {
-            $journal = array('is_stage_description'=>True,
-                             'count'=>'',
-                             'text'=>$row->start_message);
-            $journals[] = $journal;
-            $this->db->select('Journal.details,
-                               No_booking_reason.details as no_booking_reason_category');
-            $this->db->from('Journal');
-            $this->db->join('Journal_no_booking', 'Journal.journal_id = Journal_no_booking.journal_id', 'left');
-            $this->db->join('No_booking_reason', 'No_booking_reason.no_booking_reason_id = Journal_no_booking.no_booking_reason_id', 'left');
-            $this->db->where('Journal.stage_id', $row->stage_id);
-            $query = $this->db->get();
-            $r = $query->result();
-            foreach ($r as $p)
-            {
-                $journal = array('is_stage_description'=>False,
-                            'count'=>$count,
-                             'text'=>$p->no_booking_reason_category.'，'.$p->details);
-                $count++;
-                $journals[] = $journal;
-            }
-        }
-        return $journals;*/
     }
 }
