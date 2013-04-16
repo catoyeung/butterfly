@@ -323,6 +323,19 @@
                     <div class="title">出席</div>
                     <table>
                     <tr>
+                        <th>分店</th>
+                        <td>
+                            <select id="branch-chooser" class="chosen" data-placeholder="分區" style="width: 150px" name="branch_id">
+                                <option></option>
+                                <?php
+                                foreach ($branches as $branch) {
+                                    echo '<option value="'.$branch->branch_id.'">'.$branch->branch_name.'</option>';
+                                }
+                                ?>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
                         <th>
                             出席日期
                         </th>
@@ -440,6 +453,7 @@ $("body").on("click", ".showup-btn", function(event){
     var template = $('#showup-div-template').html();
     var html = Mustache.to_html(template, data);
     overlay(html);
+    $('.chosen').chosen();
     $('#showup_datepicker').datepicker({'minDate': -2});
     $('#showup_timepicker').timepicker();
 });
@@ -451,11 +465,13 @@ $("body").on("click", ".showup-cancel-btn", function(event){
 
 $("body").on("click", ".showup-confirm-btn", function(event){
     event.preventDefault();
+    var branchId = $("#branch-chooser").val();
     var showupDate = $("#showup_datepicker").val();
     var showupTime = $("#showup_timepicker").val();
     var form = $('<form style="display: hidden;"></form>');
     form.attr('method', 'post');
     form.attr('action', '<?php echo base_url().'customer_life/showup/'; ?>'+$(this).attr('customer_life_id'));
+    form.append('<input name="branch_id" value="'+branchId+'"/>');
     form.append('<input name="date" value="'+showupDate+'"/>');
     form.append('<input name="time" value="'+showupTime+'"/>');
     form.append('<input name="redirect" value="<?php echo current_url() ?>"/>');
