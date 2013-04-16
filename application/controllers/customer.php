@@ -24,16 +24,61 @@ class Customer extends MY_Controller {
         $config['brand_id'] = $this->session->userdata('brand_id');
         $customer_lives = $this->Customer_life_model->get_customer_lives($config, $page, 40);
         $latest_stages = array();
-        foreach ($customer_lives as $key=>$customer_life)
+        $customer_life_ids = array();
+        foreach ($customer_lives as $customer_life)
         {
             $customer_life_id = $customer_life->customer_life_id;
-            $latest_stages[$customer_life_id] = $this->Stage_model->latest_stage_by_customer_life_id($customer_life_id);
-            $customer_lives[$key]->journals = $this->Journal_model->get_by_customer_life_id($customer_life_id);
+            $customer_life_ids[] = $customer_life_id;
+            //$stages = $this->Stage_model->get_by_customer_life_id();
+            //$latest_stages[$customer_life_id] = $this->Stage_model->latest_stage_by_customer_life_id($customer_life_id);
+            //$customer_lives[$key]->journals = $this->Journal_model->get_by_customer_life_id($customer_life_id);
+        }
+        $stages = $this->Stage_model->get_by_customer_life_ids($customer_life_ids);
+        $journals = $this->Journal_model->get_by_customer_life_ids($customer_life_ids);
+        //print_r($stages);
+        print_r($journals);
+        foreach  ($customer_lives as $key=>$customer_life) {
+            $latest_stages[$customer_life->customer_life_id] = $this->Stage_model->latest_stage_by_customer_life_id($customer_life->customer_life_id);
+            $customer_lives[$key]->journals = $this->journals_with_start_message($customer_life->customer_life_id,
+                                                                                 $stages,
+                                                                                 $journals);
         }
         $data['customer_lives'] = $customer_lives;
         $data['latest_stages'] = $latest_stages;
         $this->load->view('templates/header', $data);
         $this->load->view('customer/view', $data);
         $this->load->view('templates/footer', $data);
+    }
+    
+    private function journals_with_start_message($customer_life_id, $stages, $journals)
+    {
+        $count = 1;
+        $new_journals = array();
+        foreach ($stages as $stage)
+        {
+            if ($customer_life_id != $stage->customer_life_id)
+            {
+                continue;
+            }
+            $new_journal = array('is_stage_description'=>True,
+                         'count'=>'',
+                         'text'=>$stage->start_message);
+            $new_journals[] = $new_journal;
+            foreach ($journals as $journal)
+            {
+                if ($journal->stage_id == $stage->stage_id)
+                {
+                    $new_journal = array('is_stage_description'=>False,
+                                'count'=>$count,
+                                 'text'=>$journal->no_booking_reason_category.'，'.$journal->details);
+                    $count++;
+                    $new_journals[] = $new_journal;
+                } else {
+                    continue;
+                }
+            }
+            
+        }
+        return $new_journals;
     }
 }
