@@ -20,7 +20,7 @@
                     <tr>
                         <td class="field-name"></td>
                         <td class="field">
-                            <select id="brand-chooser" style="width: 150px" name="brand_id">
+                            <select id="brand-chooser" style="width: 163px" name="brand_id">
                                 <?php
                                 foreach ($brands as $brand)
                                 {

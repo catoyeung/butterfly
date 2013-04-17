@@ -89,6 +89,9 @@
                         </select>
                     </td>
                 </tr>
+                <script>
+$('.chosen').chosen();
+</script>
             </table>
         </div>
         <div class="applied-filter">以下為所有元朗分店的資料，以來電時間排序。</div>
@@ -314,6 +317,42 @@
 </div>
 </script>
 
+<script id="showup-journal-div-template" type="text/template">
+<div id="popup-action">
+    <div class="outer">
+        <div class="middle">
+            <div class="inner">
+                <div id="popup-action-div">
+                    <div class="title">新增紀錄</div>
+                    <form>
+                        <table>
+                            <tr>
+                                <td>
+                                    <select class="chosen" data-placeholder="不開單原因" style="width: 150px" name="no_invoice_reason_id">
+                                        {{#no_invoice_reasons}}
+                                        <option value="{{no_invoice_reason_id}}">{{details}}</option>
+                                        {{/no_invoice_reasons}}
+                                    </select>
+                                </td>
+                                <td>
+                                    <input style="width: 200px" type="text" name="no_invoice_reason_details"/>
+                                </td> 
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td>
+                                    <button class="booking-journal-confirm-btn" stage_id="{{latest_stage.stage_id}}">新增</button><button class="journal-cancel-btn">取消</button>
+                                </td> 
+                            </tr>
+                        </table>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</script>
+
 <script id="showup-div-template" type="text/template">
 <div id="popup-action">
     <div class="outer">
@@ -322,19 +361,6 @@
                 <div id="popup-action-div">
                     <div class="title">出席</div>
                     <table>
-                    <tr>
-                        <th>分店</th>
-                        <td>
-                            <select id="branch-chooser" class="chosen" data-placeholder="分區" style="width: 150px" name="branch_id">
-                                <option></option>
-                                <?php
-                                foreach ($branches as $branch) {
-                                    echo '<option value="'.$branch->branch_id.'">'.$branch->branch_name.'</option>';
-                                }
-                                ?>
-                            </select>
-                        </td>
-                    </tr>
                     <tr>
                         <th>
                             出席日期
@@ -366,10 +392,99 @@
 </div>
 </script>
 
+<script id="invoice-div-template" type="text/template">
+<div id="popup-action">
+    <div class="outer">
+        <div class="middle">
+            <div class="inner">
+                <div id="popup-action-div">
+                    <div class="title">開單</div>
+                    <table>
+                    <tr>
+                        <th>分店</th>
+                        <td>
+                            <select id="branch-chooser" class="chosen" data-placeholder="分區" style="width: 150px" name="branch_id">
+                                <option></option>
+                                <?php
+                                foreach ($branches as $branch) {
+                                    echo '<option value="'.$branch->branch_id.'">'.$branch->branch_name.'</option>';
+                                }
+                                ?>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            開單日期
+                        </th>
+                        <td>
+                            <input id="invoice_datepicker" style="width: 100px" type="text" name="invoicedate"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            開單時間
+                        </th>
+                        <td>
+                            <input id="invoice_timepicker" style="width: 100px" type="text" name="invoicetime"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            療程
+                        </th>
+                        <td>
+                            <select id="therapy_id" class="chosen" data-placeholder="療程" style="width: 150px" name="therapy_id">
+                                <option></option>
+                                {{#therapies}}
+                                <option value="{{therapy_id}}">{{therapy_name}}</option>
+                                {{/therapies}}
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            療程詳情
+                        </th>
+                        <td>
+                            <input id="therapy_details" style="width: 200px" type="text" name="therapy_details"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            金額
+                        </th>
+                        <td>
+                            <input id="amount" style="width: 100px" type="text" name="amount"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            已付金額
+                        </th>
+                        <td>
+                            <input id="paid_amount" style="width: 100px" type="text" name="paid_amount"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th></th>
+                        <td>
+                            <button class="invoice-confirm-btn" customer_life_id="{{customer_life_id}}">開單</button><button class="invoice-cancel-btn">取消</button>
+                        </td>
+                    </tr>
+                    
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</script>
+
 <script>
-$('.chosen').chosen();
 var customer_lives = JSON.parse('<?php echo json_encode($customer_lives) ?>');
 var latest_stages = JSON.parse('<?php echo json_encode($latest_stages) ?>');
+var therapies = JSON.parse('<?php echo json_encode($therapies) ?>');
 for (var i=0;i<customer_lives.length;i++)
 {
     var customer_div = $('<div class="customer"></div>');
@@ -445,6 +560,45 @@ function tpEndOnMinuteShowCallback(hour, minute) {
     // if minute did not match, it can not be selected
     return false;
 }
+
+
+$("body").on("click", ".invoice-btn", function(event){
+    event.preventDefault();
+    var data = {};
+    data.customer_life_id = $(this).attr('customer_life_id');
+    data.therapies = therapies;
+    var template = $('#invoice-div-template').html();
+    var html = Mustache.to_html(template, data);
+    overlay(html);
+    $('.chosen').chosen();
+    $('#invoice_datepicker').datepicker({'minDate': -2});
+    $('#invoice_timepicker').timepicker();
+});
+
+$("body").on("click", ".invoice-cancel-btn", function(event){
+    event.preventDefault();
+    removeOverlay();
+});
+
+$("body").on("click", ".invoice-confirm-btn", function(event){
+    event.preventDefault();
+    var branchId = $("#branch-chooser").val();
+    var invoiceDate = $("#invoice_datepicker").val();
+    var invoiceTime = $("#invoice_timepicker").val();
+    var therapyId = $("#therapy_id").val();
+    var therapyDetails = $("#therapy_details").val();
+    var form = $('<form style="display: hidden;"></form>');
+    form.attr('method', 'post');
+    form.attr('action', '<?php echo base_url().'customer_life/invoice/'; ?>'+$(this).attr('customer_life_id'));
+    form.append('<input name="branch_id" value="'+branchId+'"/>');
+    form.append('<input name="date" value="'+invoiceDate+'"/>');
+    form.append('<input name="time" value="'+invoiceTime+'"/>');
+    form.append('<input name="therapy_id" value="'+therapyId+'"/>');
+    form.append('<input name="therapy_details" value="'+therapyDetails+'"/>');
+    form.append('<input name="redirect" value="<?php echo current_url() ?>"/>');
+    form.appendTo('body');
+    form.submit();
+});
 
 $("body").on("click", ".showup-btn", function(event){
     event.preventDefault();
@@ -538,6 +692,10 @@ $("body").on("click", ".journal-create-btn", function(event){
     {
         data.no_showup_reasons = JSON.parse('<?php echo json_encode($no_showup_reasons) ?>');
         var template = $('#booking-journal-div-template').html();
+    } else if (latest_stage.stage_type == 'showup')
+    {
+        data.no_invoice_reasons = JSON.parse('<?php echo json_encode($no_invoice_reasons) ?>');
+        var template = $('#showup-journal-div-template').html();
     }
     var html = Mustache.to_html(template, data);
     

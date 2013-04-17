@@ -239,6 +239,42 @@ FOREIGN KEY ( no_showup_reason_id ) REFERENCES No_showup_reason (no_showup_reaso
 CREATE TABLE Stage_showup
 (stage_id int NOT NULL,
 showup_date datetime NOT NULL,
-showup_time varchar(50) NOT NULL,
+showup_time datetime NOT NULL,
 FOREIGN KEY ( stage_id ) REFERENCES Stage (stage_id)
+);
+
+CREATE TABLE No_invoice_reason
+(no_invoice_reason_id int NOT NULL IDENTITY(1,1),
+brand_id int NOT NULL,
+details nvarchar(100),
+sequence int NOT NULL,
+deleted bit NOT NULL,
+created_at datetime NOT NULL,
+updated_at datetime,
+PRIMARY KEY (no_invoice_reason_id),
+FOREIGN KEY ( brand_id ) REFERENCES Brand (brand_id)
+);
+
+CREATE TABLE Therapy
+(therapy_id int NOT NULL IDENTITY(1,1),
+therapy_name nvarchar(100) NOT NULL,
+brand_id int NOT NULL,
+deleted bit NOT NULL,
+created_at datetime NOT NULL,
+updated_at datetime,
+PRIMARY KEY (therapy_id),
+FOREIGN KEY ( brand_id ) REFERENCES Brand (brand_id),
+UNIQUE (therapy_name,brand_id))
+
+CREATE TABLE Stage_invoice
+(stage_id int NOT NULL,
+invoice_date datetime NOT NULL,
+invoice_time datetime NOT NULL,
+invoice_branch_id int NOT NULL,
+therapy_id int NOT NULL,
+therapy_details varchar(200),
+amount decimal[10,2],
+paid_amount decimal[10,2],
+FOREIGN KEY ( stage_id ) REFERENCES Stage (stage_id),
+FOREIGN KEY ( invoice_branch_id ) REFERENCES Branch (branch_id)
 );

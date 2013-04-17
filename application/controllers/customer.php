@@ -9,6 +9,8 @@ class Customer extends MY_Controller {
         $this->load->model('Journal_model');
         $this->load->model('No_booking_reason_model');
         $this->load->model('No_showup_reason_model');
+        $this->load->model('No_invoice_reason_model');
+        $this->load->model('Therapy_model');
         $this->load->model('Stage_model');
         $this->load->model('Branch_model');
     }
@@ -20,6 +22,8 @@ class Customer extends MY_Controller {
         
         $data['no_booking_reasons'] = $this->No_booking_reason_model->get_all();
         $data['no_showup_reasons'] = $this->No_showup_reason_model->get_all();
+        $data['no_invoice_reasons'] = $this->No_invoice_reason_model->get_all();
+        $data['therapies'] = $this->Therapy_model->get_all();
         $data['branches'] = $this->Branch_model->get_all();
         
         $config = array();

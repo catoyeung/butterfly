@@ -16,6 +16,10 @@ textarea {
     margin: 0;
 }
 
+input {
+    padding: 3px 5px;
+    border: 1px solid #aaa;
+}
 /*input {
   -webkit-box-sizing: border-box;
      -moz-box-sizing: border-box;
@@ -78,6 +82,7 @@ textarea {
 #overlay .block{
    background-color: #000;
    opacity: .5;
+   filter: alpha(opacity = 50);
    position: absolute; top: 0; left: 0;
    width: 100%; height: 100%;
    z-index: 10;
@@ -533,6 +538,7 @@ h2 {
     text-align: right;
     border: 1px solid #e3e3e3;
     font-weight: bold;
+    font-size: 13px;
 }
 
 #customers-filter .ui-datepicker {
@@ -543,6 +549,7 @@ h2 {
     border: 1px solid #e3e3e3;
     vertical-align: middle;
     padding-left: 10px;
+    font-size: 13px;
 }
 
 #customers-sorting {
@@ -595,7 +602,7 @@ h2 {
 
 .customer .customer-info-div {
     float: left;
-    width: 38%;
+    width: 32%;
     box-sizing:border-box;
     -moz-box-sizing:border-box; /* Firefox */
     -webkit-box-sizing:border-box; /* Safari */
@@ -632,12 +639,14 @@ h2 {
     border: 1px solid #aaa;
     text-align: right;
     font-weight: bold;
+    font-size: 13px;
 }
 
 .customer-info-table td {
     padding: 10px 0 10px 10px;
     border: 1px solid #aaa;
     vertical-align: middle;
+    font-size: 13px;
 }
 
 .customer .journal-div {
@@ -645,7 +654,7 @@ h2 {
     background: #efefef;
     color: #414141;
     text-shadow: 1px 1px 1px #ffffff;
-    width: 60%;
+    width: 66%;
     box-sizing:border-box;
     -moz-box-sizing:border-box; /* Firefox */
     -webkit-box-sizing:border-box; /* Safari */
@@ -676,6 +685,7 @@ h2 {
 .customer .journal-div .journal td{
     padding: 10px 10px;
     border: 1px solid #e3e3e3;
+    font-size: 13px;
 }
 
 .customer .action {
@@ -689,6 +699,7 @@ h2 {
     border: 1px solid #3079ed;
     padding: 5px;
     margin: 0 5px 0 0;
+    font-size: 13px;
 }
 
 .customer .action button:active {
@@ -746,6 +757,7 @@ h2 {
 
 #popup-action #popup-action-div table th {
     padding: 3px 5px;
+    text-align: right;
 }
 
 #popup-action #popup-action-div table td {
