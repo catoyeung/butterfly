@@ -86,6 +86,8 @@ class Customer_life extends MY_Controller {
             $result = $this->Therapy_model->get_by(array('therapy_id'=>$therapy_id));
             $therapy = $result[0];
             $therapy_details = $this->input->post('therapy_details');
+            $amount = $this->input->post('amount');
+            $paid_amount = $this->input->post('paid_amount');
             $invoice_date = combine_date_time($date, '00:00');
             $invoice_time = combine_date_time($date, $time);
             $this->db->trans_start();
@@ -93,8 +95,10 @@ class Customer_life extends MY_Controller {
                     '，分店'.$branch->branch_name.
                     '，療程'.$therapy->therapy_name.
                     '，詳情'.$therapy_details.
+                    '，價錢'.$amount.
+                    '，已付'.$paid_amount.
                     '。';
-            $this->Stage_model->create(array('stage_type'=>'showup',
+            $this->Stage_model->create(array('stage_type'=>'invoice',
                                              'customer_life_id'=>$customer_life_id,
                                              'start_message'=>$start_message));
             $stage_id = $this->db->insert_id();
@@ -103,12 +107,35 @@ class Customer_life extends MY_Controller {
                                              'invoice_time'=>$invoice_time,
                                              'therapy_id'=>$therapy_id,
                                              'therapy_details'=>$therapy_details,
+                                             'amount'=>$amount,
+                                             'paid_amount'=>$paid_amount,
                                              'invoice_branch_id'=>$branch_id));
             $this->db->trans_complete();
             if($this->db->trans_status() === True) {
                 add_flash_message('info', '顧客已出席。');
             } else {
                 add_flash_message('alert', '顧客不能出席，請聯絡系統管理員。');
+            }
+            $redirect = $this->input->post('redirect');
+            redirect($redirect);
+        }
+    }
+    
+    public function pay($customer_life_id) {
+        if ($this->input->server('REQUEST_METHOD')=='GET') {
+        } elseif ($this->input->server('REQUEST_METHOD')=='POST') {
+            $paid_amount = $this->input->post('paid_amount');
+            $stage_id = $this->input->post('stage_id');
+            $result = $this->Stage_invoice_model->get_by(array('stage_id'=>$stage_id));
+            $stage = $result[0];
+            $total_paid_amount = $stage->paid_amount + $paid_amount;
+            $this->db->trans_start();
+            $this->Stage_invoice_model->update($stage_id, array('paid_amount'=>$total_paid_amount));
+            $this->db->trans_complete();
+            if($this->db->trans_status() === True) {
+                add_flash_message('info', '已記錄顧客付款。');
+            } else {
+                add_flash_message('alert', '不能記錄顧客付款，請聯絡系統管理員。');
             }
             $redirect = $this->input->post('redirect');
             redirect($redirect);

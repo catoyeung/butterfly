@@ -176,10 +176,12 @@ CREATE TABLE Journal
 (journal_id int NOT NULL IDENTITY(1,1),
 stage_id int NOT NULL,
 details nvarchar(200),
+created_by int NOT NULL,
 deleted bit NOT NULL,
 created_at datetime NOT NULL,
 updated_at datetime,
-FOREIGN KEY ( stage_id ) REFERENCES Stage (stage_id)
+FOREIGN KEY ( stage_id ) REFERENCES Stage (stage_id),
+FOREIGN KEY ( created_by ) REFERENCES Staff (staff_id)
 );
 
 CREATE TABLE Journal_no_booking
@@ -277,4 +279,11 @@ amount decimal[10,2],
 paid_amount decimal[10,2],
 FOREIGN KEY ( stage_id ) REFERENCES Stage (stage_id),
 FOREIGN KEY ( invoice_branch_id ) REFERENCES Branch (branch_id)
+);
+
+CREATE TABLE Journal_no_invoice
+(journal_id int NOT NULL,
+no_invoice_reason_id int NOT NULL
+FOREIGN KEY ( journal_id ) REFERENCES Journal (journal_id),
+FOREIGN KEY ( no_invoice_reason_id ) REFERENCES No_invoice_reason (no_invoice_reason_id)
 );

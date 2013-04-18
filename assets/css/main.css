@@ -16,9 +16,22 @@ textarea {
     margin: 0;
 }
 
-input {
+input[type=text], input[type=password] {
     padding: 3px 5px;
     border: 1px solid #aaa;
+}
+
+input[type=text]:focus, input[type=password]:focus { 
+    outline: none;
+    border-color: #9ecaed;
+    box-shadow: 0 0 10px #9ecaed;
+}
+
+input[type=submit] {
+    color: #fff;
+    background: #4d90fe;
+    border: 1px solid #3079ed;
+    padding: 5px;
 }
 /*input {
   -webkit-box-sizing: border-box;
@@ -686,6 +699,10 @@ h2 {
     padding: 10px 10px;
     border: 1px solid #e3e3e3;
     font-size: 13px;
+}
+
+.customer .journal-div .journal .created_by{
+    font-weight: bold;
 }
 
 .customer .action {

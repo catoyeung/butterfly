@@ -35,16 +35,11 @@ class Customer extends MY_Controller {
         {
             $customer_life_id = $customer_life->customer_life_id;
             $customer_life_ids[] = $customer_life_id;
-            //$stages = $this->Stage_model->get_by_customer_life_id();
-            //$latest_stages[$customer_life_id] = $this->Stage_model->latest_stage_by_customer_life_id($customer_life_id);
-            //$customer_lives[$key]->journals = $this->Journal_model->get_by_customer_life_id($customer_life_id);
         }
         $stages = $this->Stage_model->get_by_customer_life_ids($customer_life_ids);
         $journals = $this->Journal_model->get_by_customer_life_ids($customer_life_ids);
-        //print_r($stages);
-        //print_r($journals);
         foreach  ($customer_lives as $key=>$customer_life) {
-            $latest_stages[$customer_life->customer_life_id] = $this->Stage_model->latest_stage_by_customer_life_id($customer_life->customer_life_id);
+            $latest_stages[$customer_life->customer_life_id] = $this->latest_stage($stages, $customer_life->customer_life_id);
             $customer_lives[$key]->journals = $this->journals_with_start_message($customer_life->customer_life_id,
                                                                                  $stages,
                                                                                  $journals);
@@ -68,7 +63,7 @@ class Customer extends MY_Controller {
             }
             $new_journal = array('is_stage_description'=>True,
                          'count'=>'',
-                         'text'=>$stage->start_message);
+                         'text'=>$this->stage_start_message($stage));
             $new_journals[] = $new_journal;
             foreach ($journals as $journal)
             {
@@ -76,7 +71,9 @@ class Customer extends MY_Controller {
                 {
                     $new_journal = array('is_stage_description'=>False,
                                 'count'=>$count,
-                                 'text'=>$this->journal_reason_category($journal).'，'.$journal->details);
+                                 'text'=>$this->journal_reason_category($journal).'，'.$journal->details,
+                                'created_by'=>$journal->display_name,
+                                'created_at'=>$journal->created_at);
                     $count++;
                     $new_journals[] = $new_journal;
                 } else {
@@ -94,6 +91,44 @@ class Customer extends MY_Controller {
             return $journal->no_booking_reason_category;
         if ($journal->no_showup_reason_category != '')
             return $journal->no_showup_reason_category;
+        if ($journal->no_invoice_reason_category != '')
+            return $journal->no_invoice_reason_category;
         return '';
+    }
+    
+    private function stage_start_message($stage)
+    {
+        if ($stage->stage_type == 'no_booking') {
+            return $stage->display_name.'在'.remove_microsec($stage->created_at).'輸入客戶查詢。';
+        } elseif ($stage->stage_type == 'booking') {
+            return '顧客已預約，時間由'.remove_microsec($stage->booking_start_time).
+                    '到'.remove_microsec($stage->booking_end_time).
+                    '，分店'.$stage->booking_branch.'。';
+        } elseif ($stage->stage_type == 'showup') {
+            return '顧客已出席，時間'.remove_microsec($stage->showup_time).'，分店'.$stage->showup_branch.'。';
+        } elseif ($stage->stage_type == 'invoice') {
+            return '顧客已開單，時間'.remove_microsec($stage->invoice_time).
+                    '，分店'.$stage->invoice_branch.
+                    '，療程'.$stage->therapy_name.
+                    '，詳情'.$stage->therapy_details.
+                    '，價錢 $'.$stage->amount.
+                    '，已付 $'.$stage->paid_amount.
+                    '。';
+        }
+    }
+    
+    private function latest_stage($stages, $customer_life_id)
+    {
+        $latest_stage_time = strtotime('1970-01-01 00:00:00');
+        foreach ($stages as $stage)
+        {
+            if ($stage->customer_life_id != $customer_life_id) continue;
+            $stage_time = strtotime($stage->created_at);
+            if ($stage_time > $latest_stage_time) {
+                $latest_stage_time = $stage_time;
+                $latest_stage = $stage;
+            }
+        }
+        return $latest_stage;
     }
 }

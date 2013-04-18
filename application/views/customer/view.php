@@ -160,7 +160,7 @@ $('.chosen').chosen();
             class="stage-description"
             {{/is_stage_description}}>
             <td width="15">{{count}}</td>
-            <td width="*">{{no_booking_reason_category}}{{text}}</td>
+            <td width="*">{{no_booking_reason_category}}{{text}} <span class="created_by">{{created_by}}</span> {{created_at}}</td>
         </tr>
         {{/journals}}
         {{/journals.length}}
@@ -177,7 +177,10 @@ $('.chosen').chosen();
 
 <script id="journal-action-template" type="text/template">
 <div class="action">
-    {{#showup}}
+    {{#invoice}}
+    <button class="pay-btn" customer_life_id="{{customer_life_id}}">付款</button><!--
+    -->{{/invoice}}<!--
+    -->{{#showup}}
     <button class="invoice-btn" customer_life_id="{{customer_life_id}}">開單</button><!--
     -->{{/showup}}<!--
     -->{{#booking}}
@@ -186,7 +189,11 @@ $('.chosen').chosen();
     -->{{#no_booking}}<!--
     --><button class="booking-btn" customer_life_id="{{customer_life_id}}">預約</button><!--
     -->{{/no_booking}}<!--
-    --><button class="journal-create-btn" customer_life_id="{{customer_life_id}}">新增紀錄</button>
+    -->{{#invoice}}<!--
+    -->{{/invoice}}<!--
+    -->{{^invoice}}<!--
+    --><button class="journal-create-btn" customer_life_id="{{customer_life_id}}">新增紀錄</button><!--
+    -->{{/invoice}}
 </div>
 </script>
 
@@ -341,7 +348,7 @@ $('.chosen').chosen();
                             <tr>
                                 <td></td>
                                 <td>
-                                    <button class="booking-journal-confirm-btn" stage_id="{{latest_stage.stage_id}}">新增</button><button class="journal-cancel-btn">取消</button>
+                                    <button class="showup-journal-confirm-btn" stage_id="{{latest_stage.stage_id}}">新增</button><button class="journal-cancel-btn">取消</button>
                                 </td> 
                             </tr>
                         </table>
@@ -481,6 +488,45 @@ $('.chosen').chosen();
 </div>
 </script>
 
+<script id="pay-div-template" type="text/template">
+<div id="popup-action">
+    <div class="outer">
+        <div class="middle">
+            <div class="inner">
+                <div id="popup-action-div">
+                    <div class="title">付款</div>
+                    <table>
+                    <tr>
+                        <th>金額</th>
+                        <td>$ {{stage.amount}}</td>
+                    </tr>
+                    <tr>
+                        <th>已款</th>
+                        <td>$ {{stage.paid_amount}}</td>
+                    </tr>
+                    <tr>
+                        <th>
+                            今次付款
+                        </th>
+                        <td>
+                            <input id="paid_amount" style="width: 100px" type="text" name="pay_amount"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th></th>
+                        <td>
+                            <button class="pay-confirm-btn" customer_life_id="{{customer_life_id}}">付款</button><button class="invoice-cancel-btn">取消</button>
+                        </td>
+                    </tr>
+                    
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</script>
+
 <script>
 var customer_lives = JSON.parse('<?php echo json_encode($customer_lives) ?>');
 var latest_stages = JSON.parse('<?php echo json_encode($latest_stages) ?>');
@@ -508,6 +554,8 @@ for (var i=0;i<customer_lives.length;i++)
         data.booking = true;
     } else if (lastest_stage.stage_type == 'showup') {
         data.showup = true;
+    } else if (lastest_stage.stage_type == 'invoice') {
+        data.invoice = true;
     }
     var action_html = Mustache.to_html(template, data);
     
@@ -561,6 +609,41 @@ function tpEndOnMinuteShowCallback(hour, minute) {
     return false;
 }
 
+$("body").on("click", ".pay-btn", function(event){
+    event.preventDefault();
+    var data = {};
+    data.customer_life_id = $(this).attr('customer_life_id');
+    var lastest_stage = latest_stages[$(this).attr('customer_life_id')];
+    data.stage = lastest_stage;
+    var template = $('#pay-div-template').html();
+    var html = Mustache.to_html(template, data);
+    overlay(html);
+});
+
+$("body").on("click", ".pay-cancel-btn", function(event){
+    event.preventDefault();
+    removeOverlay();
+});
+
+$("body").on("click", ".pay-confirm-btn", function(event){
+    event.preventDefault();
+    var paidAmount = $("#paid_amount").val();
+    var payDate = $("#pay_datepicker").val();
+    var payTime = $("#pay_timepicker").val();
+    var lastest_stage = latest_stages[$(this).attr('customer_life_id')];
+    var stageId = lastest_stage.stage_id;
+    var form = $('<form style="display: hidden;"></form>');
+    form.attr('method', 'post');
+    form.attr('action', '<?php echo base_url().'customer_life/pay/'; ?>'+$(this).attr('customer_life_id'));
+    form.append('<input name="stage_id" value="'+stageId+'"/>');
+    form.append('<input name="date" value="'+payDate+'"/>');
+    form.append('<input name="time" value="'+payTime+'"/>');
+    form.append('<input name="paid_amount" value="'+paidAmount+'"/>');
+    form.append('<input name="redirect" value="<?php echo current_url() ?>"/>');
+    form.appendTo('body');
+    form.submit();
+});
+
 
 $("body").on("click", ".invoice-btn", function(event){
     event.preventDefault();
@@ -587,6 +670,8 @@ $("body").on("click", ".invoice-confirm-btn", function(event){
     var invoiceTime = $("#invoice_timepicker").val();
     var therapyId = $("#therapy_id").val();
     var therapyDetails = $("#therapy_details").val();
+    var amount = $("#amount").val();
+    var paidAmount = $("#paid_amount").val();
     var form = $('<form style="display: hidden;"></form>');
     form.attr('method', 'post');
     form.attr('action', '<?php echo base_url().'customer_life/invoice/'; ?>'+$(this).attr('customer_life_id'));
@@ -595,6 +680,8 @@ $("body").on("click", ".invoice-confirm-btn", function(event){
     form.append('<input name="time" value="'+invoiceTime+'"/>');
     form.append('<input name="therapy_id" value="'+therapyId+'"/>');
     form.append('<input name="therapy_details" value="'+therapyDetails+'"/>');
+    form.append('<input name="amount" value="'+amount+'"/>');
+    form.append('<input name="paid_amount" value="'+paidAmount+'"/>');
     form.append('<input name="redirect" value="<?php echo current_url() ?>"/>');
     form.appendTo('body');
     form.submit();
@@ -726,9 +813,25 @@ $("body").on("click", ".booking-journal-confirm-btn", function(event){
     var form = $('<form style="display: hidden;"></form>');
     form.attr('method', 'post');
     form.attr('action', '<?php echo base_url().'journal/create'; ?>');
-    form.append('<input name="journal_type" value="booking"/>');
+    form.append('<input name="journal_type" value="no_showup"/>');
     form.append('<input name="stage_id" value="'+$(this).attr('stage_id')+'"/>');
     form.append('<input name="reason_id" value="'+noShowupReasonId+'"/>');
+    form.append('<input name="details" value="'+details+'"/>');
+    form.append('<input name="redirect" value="customer/view"/>');
+    form.appendTo('body');
+    form.submit();
+});
+
+$("body").on("click", ".showup-journal-confirm-btn", function(event){
+    event.preventDefault();
+    var noInvoiceReasonId = $("select[name='no_invoice_reason_id']").val();
+    var details = $("input[name='no_invoice_reason_details']").val();
+    var form = $('<form style="display: hidden;"></form>');
+    form.attr('method', 'post');
+    form.attr('action', '<?php echo base_url().'journal/create'; ?>');
+    form.append('<input name="journal_type" value="no_invoice"/>');
+    form.append('<input name="stage_id" value="'+$(this).attr('stage_id')+'"/>');
+    form.append('<input name="reason_id" value="'+noInvoiceReasonId+'"/>');
     form.append('<input name="details" value="'+details+'"/>');
     form.append('<input name="redirect" value="customer/view"/>');
     form.appendTo('body');

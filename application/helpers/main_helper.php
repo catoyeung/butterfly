@@ -22,7 +22,7 @@ function add_flash_message($type='info', $message='default message') {
 
 function remove_microsec($datetime) {
     $pattern = '/(.*):(\d{2}):(\d{2}).(\d{3})/';
-    $replacement = '$1:$2';
+    $replacement = '$1:$2:$3';
     return preg_replace($pattern, $replacement, $datetime);
 }
 

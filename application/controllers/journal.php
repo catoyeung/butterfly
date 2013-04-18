@@ -7,6 +7,7 @@ class Journal extends MY_Controller {
         $this->load->model('Journal_model');
         $this->load->model('Journal_no_booking_model');
         $this->load->model('Journal_no_showup_model');
+        $this->load->model('Journal_no_invoice_model');
     }
     
     public function create() {
@@ -29,10 +30,15 @@ class Journal extends MY_Controller {
                 $result = $this->Journal_no_booking_model->create(array('journal_id'=>$journal_id,
                                                           'no_booking_reason_id'=>$reason_id,
                                             ));
-            } elseif ($journal_type == 'booking')
+            } elseif ($journal_type == 'no_showup')
             {
                 $result = $this->Journal_no_showup_model->create(array('journal_id'=>$journal_id,
                                                           'no_showup_reason_id'=>$reason_id,
+                                            ));
+            } elseif ($journal_type == 'no_invoice')
+            {
+                $result = $this->Journal_no_invoice_model->create(array('journal_id'=>$journal_id,
+                                                          'no_invoice_reason_id'=>$reason_id,
                                             ));
             }
             $this->db->trans_complete();
